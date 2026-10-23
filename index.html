@@ -3,137 +3,1145 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NULL TOOLS</title>
+    <title>NULL TOOLS — All-In-One Reverse Engineering Suite</title>
     <link rel="icon" type="image/svg+xml" href="icons/icon-192.svg" />
     <link rel="apple-touch-icon" href="icons/icon-192.svg" />
     <link rel="manifest" href="manifest.json" />
     <meta name="theme-color" content="#070709" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-
     <div class="container">
-        <!-- HEADER -->
+        <!-- Header -->
         <header class="header">
             <div class="logo-badge">
                 <span class="logo-badge-dot"></span>
-                Null Tools
+                NULL&trade; REVERSE ENGINEERING &bull; DEVELOPER TOOLKIT
             </div>
-            <h1>NULL TOOLS</h1>
-            <p class="subtitle">Transform bytes across C#, C++, and Python &mdash; plus external bone offsets</p>
+            <h1>NULL <span>TOOLS</span></h1>
+            <p class="subtitle">Complete unified reverse-engineering suite: Il2CppDumper bone extraction, signature cleaning, AOB diffing, collider calculations, pattern shifts, 2-tap offset analysis, and multi-language byte forge.</p>
         </header>
 
-        <!-- TABS -->
-        <nav class="tabs" id="tabContainer" aria-label="Tool Tabs">
-            <button class="tab-btn active" data-tab="aob">
-                <span class="tab-icon">⚡</span> AOB Converter
-            </button>
-            <button class="tab-btn" data-tab="bones">
-                <span class="tab-icon">🦴</span> External Bones Finder
-            </button>
+        <!-- 8-Tab Navigation Bar -->
+        <nav class="nav-tab-container" aria-label="Tool Navigation">
+            <div class="nav-tabs">
+                <a href="#bones-offset-finder" class="tab-link active" id="tabLinkBones">
+                    <span class="tab-icon">🦴</span>
+                    <span>Bones Offset Finder</span>
+                    <span class="tab-badge-pill">DUMP</span>
+                </a>
+                <a href="#aob-cleaner" class="tab-link" id="tabLinkCleaner">
+                    <span class="tab-icon">🧹</span>
+                    <span>AOB Cleaner</span>
+                    <span class="tab-badge-pill">MASK</span>
+                </a>
+                <a href="#aob-merger" class="tab-link" id="tabLinkMerger">
+                    <span class="tab-icon">⚡</span>
+                    <span>AOB Merger</span>
+                    <span class="tab-badge-pill">DIFF</span>
+                </a>
+                <a href="#collider-offset" class="tab-link" id="tabLinkCollider">
+                    <span class="tab-icon">🎯</span>
+                    <span>Collider Offset</span>
+                    <span class="tab-badge-pill">CALC</span>
+                </a>
+                <a href="#offsets-finder" class="tab-link" id="tabLinkFinder">
+                    <span class="tab-icon">🔍</span>
+                    <span>Offsets Finder</span>
+                    <span class="tab-badge-pill">SHIFT</span>
+                </a>
+                <a href="#offsets-calculator" class="tab-link" id="tabLinkCalculator">
+                    <span class="tab-icon">🧮</span>
+                    <span>Offsets Calculator</span>
+                    <span class="tab-badge-pill">2-TAP</span>
+                </a>
+                <a href="#byte-forge" class="tab-link" id="tabLinkByteForge">
+                    <span class="tab-icon">🔄</span>
+                    <span>Byte Forge</span>
+                    <span class="tab-badge-pill">CONVERT</span>
+                </a>
+                <a href="#external-bones" class="tab-link" id="tabLinkExternalBones">
+                    <span class="tab-icon">☠️</span>
+                    <span>External Bones</span>
+                    <span class="tab-badge-pill">DELTA</span>
+                </a>
+            </div>
         </nav>
 
-        <!-- ─── TAB 1: AOB CONVERTER ─── -->
-        <section class="tab-panel active" id="panel-aob">
-            <div class="card" id="mainCard">
-                <div class="card-content">
-                    <div class="app-meta">
-                        <div class="app-icon">&lt;/&gt;</div>
-                        <div class="app-text">
-                            <h3>Byte Forge</h3>
-                            <div class="version-row">
-                                <span class="version-badge" id="conversionLabel">C# → C++</span>
-                                <span class="file-size">live conversion</span>
-                            </div>
+        <!-- ==================================================================
+             TAB 1 — BONES OFFSET FINDER (FireHawk Panels Bones Offset Finder)
+             ================================================================== -->
+        <div class="tool-view-panel active" id="viewToolBones">
+            <!-- Auto Dumper Notification Toast (FireHawk Style) -->
+            <div class="dumper-popup" id="dumperPopup" style="display: block;" role="status" aria-live="polite">
+                <div class="dumper-popup-card">
+                    <div class="dumper-popup-ring" aria-hidden="true"></div>
+                    <button class="dumper-popup-close" id="dumperPopupClose" title="Dismiss">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                    <div class="dumper-popup-header">
+                        <span class="dumper-popup-badge">💡 QUICK TIP</span>
+                    </div>
+                    <div class="dumper-popup-main">
+                        <div class="dumper-popup-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        </div>
+                        <div class="dumper-popup-content">
+                            <h4 class="dumper-popup-title">No dump loaded yet?</h4>
+                            <p class="dumper-popup-body">Get <code>dump.cs</code> &amp; <code>libil2cpp.so</code> in 1 click with our <strong>Free Auto Dumper</strong> (no root, 1 click).</p>
                         </div>
                     </div>
-
-                    <!-- TOOLBAR -->
-                    <div class="toolbar">
-                        <div class="search-wrap">
-                            <select id="conversionType" class="search-input" style="padding-left:16px;">
-                                <option value="cs-cpp">C# → C++</option>
-                                <option value="cs-py">C# → Python</option>
-                                <option value="cpp-cs">C++ → C#</option>
-                                <option value="cpp-py">C++ → Python</option>
-                                <option value="py-cs">Python → C#</option>
-                                <option value="py-cpp">Python → C++</option>
-                            </select>
-                        </div>
-                        <div class="stats" id="statsBox"><b id="byteCountDisplay">0</b> bytes</div>
+                    <div class="dumper-popup-actions">
+                        <a href="https://drive.google.com/drive/u/2/folders/1zgFVcDAbi-XnuCMjXqAHyi3aeIxcPRvr" target="_blank" rel="noopener noreferrer" class="dumper-popup-btn-primary" id="dumperPopupDownload">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                            Download Dumper
+                        </a>
+                        <button class="dumper-popup-btn-secondary" id="dumperPopupDismiss">Maybe later</button>
                     </div>
-
-                    <!-- Input -->
-                    <input type="text" id="aobInput" class="aob-input" placeholder="Paste AOB bytes (e.g. 90 90 ?? AB)…" autocomplete="off" />
-                    
-                    <!-- Output -->
-                    <div id="aobOutput" class="aob-output"></div>
-
-                    <!-- Actions -->
-                    <div class="action-row">
-                        <button id="copyBtn" class="btn btn-copy" type="button">
-                            <span>Copy</span>
-                            <svg viewBox="0 0 24 24"><path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
-                        </button>
-                        <button id="deleteBtn" class="btn btn-delete" type="button">
-                            <span>Delete</span>
-                            <svg viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-                        </button>
+                    <div class="dumper-popup-footer">
+                        <button class="dumper-popup-btn-never" id="dumperPopupNever">Don't show this again</button>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- ─── TAB 2: EXTERNAL BONES FINDER ─── -->
-        <section class="tab-panel" id="panel-bones">
-            <div class="card">
-                <div class="card-content">
-                    <div class="app-meta">
-                        <div class="app-icon">🦴</div>
-                        <div class="app-text">
-                            <h3>External Bones Finder</h3>
-                            <div class="version-row">
-                                <span class="version-badge">chest → 6 bones</span>
-                                <span class="file-size">instant offsets</span>
+            <div class="card card-glow-red">
+                <div class="card-header-bar">
+                    <div class="card-title-group">
+                        <div>
+                            <h2>🦴 Bones &amp; Memory Offset Finder</h2>
+                            <p>Drop <code>dump.cs</code> (Il2CppDumper) and optional <code>libil2cpp.so</code> to extract player skeleton bones, core offsets, method RVAs and generate patch signatures.</p>
+                        </div>
+                    </div>
+                    <div class="card-meta-actions">
+                        <span class="badge badge-purple" id="headerArch">AUTO</span>
+                        <span class="badge badge-cyan"><b id="headerItems">0</b> Items</span>
+                        <button type="button" class="btn btn-secondary btn-sm" id="btnLoadSampleDump">
+                            <span>⚡ Load Sample dump.cs</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Drop Zones Grid -->
+                <div class="drop-zones-grid">
+                    <!-- Dropzone 1: dump.cs (Required) -->
+                    <div class="drop-card" id="dropDump" tabindex="0">
+                        <input type="file" id="fileDumpInput" accept=".cs,.txt" style="display:none;" />
+                        <div class="drop-icon-box cyan-glow">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                        </div>
+                        <div class="drop-info">
+                            <div class="drop-title" id="dumpTitle">Drop <code>dump.cs</code> Here</div>
+                            <div class="drop-desc" id="dumpDesc">Primary Il2CppDumper output &bull; Click to browse</div>
+                        </div>
+                        <span class="badge badge-red" id="dumpBadge">REQUIRED</span>
+                    </div>
+
+                    <!-- Dropzone 2: libil2cpp.so (Optional) -->
+                    <div class="drop-card drop-card-optional" id="dropSo" tabindex="0">
+                        <input type="file" id="fileSoInput" accept=".so" style="display:none;" />
+                        <div class="drop-icon-box emerald-glow">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                                <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                                <line x1="6" y1="6" x2="6.01" y2="6"></line>
+                                <line x1="6" y1="18" x2="6.01" y2="18"></line>
+                            </svg>
+                        </div>
+                        <div class="drop-info">
+                            <div class="drop-title" id="soTitle">Drop <code>libil2cpp.so</code> (Optional)</div>
+                            <div class="drop-desc" id="soDesc">Unlocks exact binary Scan AOB extraction</div>
+                        </div>
+                        <span class="badge" id="soBadge">OPTIONAL</span>
+                    </div>
+                </div>
+
+                <!-- Controls Cluster -->
+                <div class="controls-cluster">
+                    <div class="form-group">
+                        <label class="form-label" for="versionSelect">Target Game Architecture</label>
+                        <select id="versionSelect" class="form-select">
+                            <option value="auto" selected>Auto-Detect Architecture &amp; Patterns (Adaptive)</option>
+                            <option value="v8_normal">Free Fire Normal (v8 / 64-Bit / ARM64)</option>
+                            <option value="v7_normal">Free Fire Normal (v7 / 32-Bit / ARMv7)</option>
+                            <option value="v8_max">Free Fire Max (v8 / 64-Bit / ARM64)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-label-row">
+                            <label class="form-label" for="scanLengthSelect">Scan AOB Length</label>
+                            <div class="quick-pills-row">
+                                <button type="button" class="pill-btn" data-bytes="32">32B</button>
+                                <button type="button" class="pill-btn" data-bytes="48">48B</button>
+                                <button type="button" class="pill-btn active" data-bytes="64">64B</button>
+                                <button type="button" class="pill-btn" data-bytes="80">80B</button>
+                                <button type="button" class="pill-btn" data-bytes="96">96B</button>
+                                <button type="button" class="pill-btn" data-bytes="128">128B</button>
+                            </div>
+                        </div>
+                        <div class="scan-length-inputs-row">
+                            <select id="scanLengthSelect" class="form-select" style="flex:1;">
+                                <option value="64" selected>64 Bytes (16 Instructions &bull; Recommended Standard)</option>
+                                <option value="80">80 Bytes (20 Instructions &bull; Deep Scan)</option>
+                                <option value="96">96 Bytes (24 Instructions &bull; High Precision)</option>
+                                <option value="128">128 Bytes (32 Instructions &bull; Maximum Depth)</option>
+                                <option value="48">48 Bytes (12 Instructions)</option>
+                                <option value="32">32 Bytes (8 Instructions)</option>
+                                <option value="custom">Custom Byte Length...</option>
+                            </select>
+                            <div class="custom-bytes-input-wrapper" id="customBytesWrapper" style="display:none;">
+                                <input type="number" id="customByteInput" class="custom-byte-input" min="8" max="256" step="4" value="64" />
+                                <span class="custom-byte-addon">B</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="bones-input-row">
-                        <input type="text" id="chestOffsetInput" class="aob-input" placeholder="Chest offset (e.g. 0xA6)" autocomplete="off" />
-                        <button id="calcBonesBtn" class="btn-calc" type="button">Calculate Bone Offsets</button>
+                    <div>
+                        <button type="button" class="btn btn-primary" id="btnAnalyze" style="height:42px;width:100%;">
+                            <span>⚡ ANALYZE DUMP &amp; AOB</span>
+                        </button>
                     </div>
+                </div>
 
-                    <div class="bones-results" id="bonesResults">
-                        <div class="bones-empty" id="bonesEmpty"><span>Enter a chest offset and click calculate.</span></div>
-                        <table class="bones-table" id="bonesTable" style="display:none;">
+                <!-- Progress Bar -->
+                <div class="progress-bar-wrapper" id="progressWrapper">
+                    <div class="progress-bar-track">
+                        <div class="progress-bar-fill" id="progressBar"></div>
+                    </div>
+                    <div class="progress-meta">
+                        <span id="progressText">Parsing file...</span>
+                        <span id="progressPercent">0%</span>
+                    </div>
+                </div>
+
+                <!-- Subtabs Navigation -->
+                <div class="subtabs-bar">
+                    <button type="button" class="subtab-btn active" data-tab="tabBones" id="btnTabBones">
+                        <span>🦴 Player Bones</span>
+                        <span class="subtab-badge" id="badgeBones">0</span>
+                    </button>
+                    <button type="button" class="subtab-btn" data-tab="tabCore" id="btnTabCore">
+                        <span>⚙️ Core Offsets</span>
+                        <span class="subtab-badge" id="badgeCore">0</span>
+                    </button>
+                    <button type="button" class="subtab-btn" data-tab="tabPatches" id="btnTabPatches">
+                        <span>⚡ Patches &amp; Dual AOB</span>
+                        <span class="subtab-badge" style="color:#34d399;" id="badgePatches">0</span>
+                    </button>
+                    <button type="button" class="subtab-btn" data-tab="tabBypass" id="btnTabBypass">
+                        <span>🛡️ Anti-Detect Bypass</span>
+                        <span class="subtab-badge" style="color:#fbbf24;" id="badgeBypass">0</span>
+                    </button>
+                    <button type="button" class="subtab-btn" data-tab="tabSearch" id="btnTabSearch">
+                        <span>🔍 Live Dump Search</span>
+                    </button>
+                    <button type="button" class="subtab-btn" data-tab="tabExport" id="btnTabExport">
+                        <span>📄 Code Generator</span>
+                    </button>
+                </div>
+
+                <!-- Subtab Filter Bar -->
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap;">
+                    <div style="flex:1;min-width:240px;">
+                        <input type="text" id="bonesFilterInput" class="form-input" placeholder="Filter current view by name, offset, class..." autocomplete="off" />
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-secondary btn-sm" id="btnQuickSaveTxt">
+                            <span>💾 Save Offsets.txt</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Subpanel 1: Player Bones -->
+                <div class="subtab-panel" id="tabBones" style="display:block;">
+                    <div class="aob-banner">
+                        <span class="aob-banner-icon">✓</span>
+                        <span>Real-time RVA to Hex offset resolution with automatic pointer validation. Click any chip to instant copy.</span>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table" id="tableBones">
                             <thead>
                                 <tr>
-                                    <th>Bone</th>
-                                    <th>Offset</th>
+                                    <th>Semantic Bone</th>
+                                    <th>Offset (Hex)</th>
+                                    <th>Dec</th>
+                                    <th>Node Type</th>
+                                    <th>Description</th>
+                                    <th style="width:110px;">Action</th>
                                 </tr>
                             </thead>
-                            <tbody id="bonesBody"></tbody>
+                            <tbody id="bonesTbody">
+                                <tr class="empty-table-row"><td colspan="6">No dump loaded yet. Drop your <code>dump.cs</code> file above or click "Load Sample dump.cs".</td></tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
+
+                <!-- Subpanel 2: Core Offsets -->
+                <div class="subtab-panel" id="tabCore" style="display:none;">
+                    <div class="aob-banner">
+                        <span class="aob-banner-icon">⚙️</span>
+                        <span>Core Player, Movement, Camera, Combat, and Weapon Field Offsets extracted from dump.cs.</span>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table" id="tableCore">
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Semantic Name</th>
+                                    <th>Offset (Hex)</th>
+                                    <th>Type</th>
+                                    <th>Class</th>
+                                    <th>Description</th>
+                                    <th style="width:110px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="coreTbody">
+                                <tr class="empty-table-row"><td colspan="7">No core offsets extracted. Drop <code>dump.cs</code> or click "Load Sample dump.cs".</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Subpanel 3: Patches & Dual AOB -->
+                <div class="subtab-panel" id="tabPatches" style="display:none;">
+                    <div class="aob-banner">
+                        <span class="aob-banner-icon">⚡</span>
+                        <span>Dual AOB Signatures: Original Scan AOB from binary and Replacement Patch bytes for runtime hooking.</span>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table" id="tablePatches">
+                            <thead>
+                                <tr>
+                                    <th>Feature Name</th>
+                                    <th>Method RVA</th>
+                                    <th>Class</th>
+                                    <th>Scan AOB (Original Bytes)</th>
+                                    <th>Replace AOB (Patch Bytes)</th>
+                                    <th>Signature</th>
+                                    <th style="width:110px;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="patchesTbody">
+                                <tr class="empty-table-row"><td colspan="7">No patch methods extracted yet.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Subpanel 4: Anti-Detect Bypass -->
+                <div class="subtab-panel" id="tabBypass" style="display:none;">
+                    <div class="aob-banner">
+                        <span class="aob-banner-icon">🛡️</span>
+                        <span>Anti-Cheat &amp; Integrity Check Bypass Methods. Ready for patch AOB injection or Frida hooking.</span>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table" id="tableBypass">
+                            <thead>
+                                <tr>
+                                    <th>Bypass Name</th>
+                                    <th>Method RVA</th>
+                                    <th>Class</th>
+                                    <th>Scan AOB (Original Bytes)</th>
+                                    <th>Replace AOB (Patch Bytes)</th>
+                                    <th>Signature</th>
+                                    <th style="width:110px;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bypassTbody">
+                                <tr class="empty-table-row"><td colspan="7">No bypass methods extracted yet.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Subpanel 5: Live Dump Search -->
+                <div class="subtab-panel" id="tabSearch" style="display:none;">
+                    <div style="display:flex;gap:10px;margin-bottom:14px;">
+                        <input type="text" id="customSearchQuery" class="form-input" placeholder="Search classes, methods, bones, RVAs (e.g., GetTransform, Head, Camera, 0x1A0)..." style="flex:1;" />
+                        <button type="button" class="btn btn-primary btn-sm" id="btnRunSearch">
+                            <span>🔍 Deep Search</span>
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table" id="tableSearch">
+                            <thead>
+                                <tr>
+                                    <th>Matched Item</th>
+                                    <th>Offset / RVA</th>
+                                    <th>Type</th>
+                                    <th>Class</th>
+                                    <th>Raw Signature</th>
+                                    <th style="width:110px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="searchTbody">
+                                <tr class="empty-table-row"><td colspan="6">Enter a query above to search through the entire dump.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Subpanel 6: Code Generator -->
+                <div class="subtab-panel" id="tabExport" style="display:none;">
+                    <div class="code-export-toolbar">
+                        <div class="code-lang-selector">
+                            <button type="button" class="btn-lang active" data-lang="cpp" id="btnLangCpp">C++ (Direct Mem)</button>
+                            <button type="button" class="btn-lang" data-lang="cs" id="btnLangCs">C# (Unity Engine)</button>
+                            <button type="button" class="btn-lang" data-lang="frida" id="btnLangFrida">Frida Hook (ARM64)</button>
+                            <button type="button" class="btn-lang" data-lang="gg" id="btnLangGg">GameGuardian (Lua)</button>
+                            <button type="button" class="btn-lang" data-lang="json" id="btnLangJson">JSON Schema</button>
+                        </div>
+                        <div style="display:flex;gap:8px;">
+                            <button type="button" class="btn btn-secondary btn-sm" id="btnCopyGenerated">Copy Code</button>
+                            <button type="button" class="btn btn-primary btn-sm" id="btnDownloadGenerated">Download File</button>
+                        </div>
+                    </div>
+                    <div class="code-editor-box">
+                        <pre><code id="codeOutput">// Code will appear here after parsing...</code></pre>
+                    </div>
+                </div>
             </div>
-        </section>
+        </div>
+        
 
-        <!-- FOOTER -->
-        <footer class="footer-mark">&copy; 2026 NULL&trade; ALL RIGHTS RESERVED</footer>
+        <!-- ==========================================================================
+             TOOL 2 — AOB CLEANER
+             ========================================================================== -->
+        <div class="tool-view-panel" id="viewToolCleaner">
+            <div class="card card-glow-red">
+                <div class="card-header-bar">
+                    <div class="card-title-group">
+                        <div>
+                            <h2>🧹 AoB Masker &amp; Signature Studio</h2>
+                            <p>Preserves custom hex bytes, masks remaining wildcards (??), and formats for IDA, Cheat Engine, C++ &amp; C# scanners.</p>
+                        </div>
+                    </div>
+                    <div class="card-meta-actions">
+                        <button type="button" class="btn btn-secondary btn-sm" id="btnLoadSampleCleaner">
+                            <span>⚡ Load Sample</span>
+                        </button>
+                        <button type="button" class="btn btn-ghost btn-sm" id="btnClearCleanerAll">
+                            <span>🗑️ Reset</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="two-column-grid">
+                    <!-- Left: Input & Rules -->
+                    <div>
+                        <div class="form-group">
+                            <div class="form-label-row">
+                                <label class="form-label" for="rawAobInput">1. Raw AoB Input</label>
+                                <div style="display:flex;gap:6px;">
+                                    <button type="button" class="btn-icon" id="btnPasteCleanerInput" title="Paste from clipboard">📋</button>
+                                    <label class="btn-icon" title="Upload hex or text file" style="cursor:pointer;">
+                                        <input type="file" id="cleanerFileUploader" accept=".txt,.hex,.bin,.dat" style="display:none;" />
+                                        📁
+                                    </label>
+                                </div>
+                            </div>
+                            <div id="cleanerDropZone" style="position:relative;">
+                                <textarea id="rawAobInput" class="form-textarea" placeholder="Paste your raw hex bytes here, e.g.:&#10;00 70 84 E0 00 00 A0 E3 00 50 A0 E3 74 E5 83 EB...&#10;(Supports spaces, 0x prefixes, commas, C-arrays, continuous hex)" spellcheck="false"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Preservation Rules Card -->
+                        <div style="background:rgba(12,12,18,0.7);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px;">
+                            <div class="form-group">
+                                <div class="form-label-row">
+                                    <label class="form-label" for="preserveBytesInput">2. Bytes to Preserve / Filter</label>
+                                    <div class="segmented-group" id="filterModeToggle">
+                                        <button type="button" class="segmented-btn active" data-mode="keep">Keep Listed</button>
+                                        <button type="button" class="segmented-btn" data-mode="mask">Mask Listed</button>
+                                    </div>
+                                </div>
+                                <input type="text" id="preserveBytesInput" class="form-input" value="04 A0 E1" placeholder="e.g. 04 A0 E1" spellcheck="false" />
+                                <div class="form-hint">Specified bytes will be preserved; remaining bytes become <code>??</code> wildcards.</div>
+                            </div>
+
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;">
+                                <div class="form-group" style="margin-bottom:0;">
+                                    <label class="form-label">Zero Byte (00) Policy</label>
+                                    <div style="display:flex;flex-direction:column;gap:6px;font-size:0.8rem;color:var(--text-muted);margin-top:4px;">
+                                        <label style="display:flex;align-items:center;gap:6px;cursor:pointer;">
+                                            <input type="radio" name="cleaner-zero-policy" value="preserve" checked /> Preserve 00
+                                        </label>
+                                        <label style="display:flex;align-items:center;gap:6px;cursor:pointer;">
+                                            <input type="radio" name="cleaner-zero-policy" value="mask" /> Mask 00 (??)
+                                        </label>
+                                        <label style="display:flex;align-items:center;gap:6px;cursor:pointer;">
+                                            <input type="radio" name="cleaner-zero-policy" value="follow" /> Follow Rules
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div style="display:flex;flex-direction:column;gap:10px;">
+                                    <div class="form-group" style="margin-bottom:0;">
+                                        <label class="form-label">Granularity</label>
+                                        <select id="cleanerMatchGranularity" class="form-select" style="padding:7px 10px;font-size:0.8rem;">
+                                            <option value="byte" selected>Any matching byte</option>
+                                            <option value="sequence">Contiguous sequence</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" style="margin-bottom:0;">
+                                        <label class="form-label">Wildcard Token</label>
+                                        <select id="cleanerWildcardToken" class="form-select" style="padding:7px 10px;font-size:0.8rem;">
+                                            <option value="??" selected>?? (IDA / Cheat Engine)</option>
+                                            <option value="?">? (Single char)</option>
+                                            <option value="**">** (Asterisks)</option>
+                                            <option value="XX">XX (Alphanumeric)</option>
+                                            <option value="0x??">0x?? (Literal C)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Output & Code -->
+                    <div>
+                        <div class="form-group">
+                            <div class="form-label-row">
+                                <label class="form-label" for="cleanedAobOutput">3. Cleaned AoB Result</label>
+                                <div style="display:flex;gap:8px;">
+                                    <button type="button" class="btn btn-primary btn-sm" id="btnCopyCleanerOutput">📋 Copy AoB</button>
+                                    <button type="button" class="btn btn-secondary btn-sm" id="btnDownloadCleanerOutput">💾 Export</button>
+                                </div>
+                            </div>
+
+                            <!-- Format Tabs -->
+                            <div class="segmented-group" id="cleanerFormatTabs" style="margin-bottom:8px;width:100%;overflow-x:auto;">
+                                <button type="button" class="segmented-btn active" data-format="standard">Standard AoB</button>
+                                <button type="button" class="segmented-btn" data-format="ida">IDA Pattern</button>
+                                <button type="button" class="segmented-btn" data-format="cpp-sig">C++ Sig &amp; Mask</button>
+                                <button type="button" class="segmented-btn" data-format="byte-array">C# / C++ Array</button>
+                                <button type="button" class="segmented-btn" data-format="compact">Compact Hex</button>
+                            </div>
+
+                            <div style="position:relative;">
+                                <textarea id="cleanedAobOutput" class="form-textarea" style="min-height:200px;" readonly placeholder="Cleaned AoB signature will appear here..." spellcheck="false"></textarea>
+                                <div style="display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:0.75rem;color:var(--text-dim);margin-top:4px;">
+                                    <span id="cleanerByteCount">0 bytes</span>
+                                    <span id="cleanerCharCount">0 chars</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- C++ / C# Code Preview Card -->
+                        <div class="code-preview-card" id="cleanerCodePreviewCard">
+                            <div class="code-preview-header">
+                                <span id="cleanerCodePreviewTitle">Signature &amp; Mask Output</span>
+                                <button type="button" class="btn btn-secondary btn-sm" id="btnCopyCodePreview">Copy Snippet</button>
+                            </div>
+                            <pre class="code-preview-content" id="cleanerCodePreviewContent"></pre>
+                        </div>
+
+                        <!-- Footer Appearance Controls -->
+                        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:14px;flex-wrap:wrap;gap:10px;">
+                            <div style="display:flex;align-items:center;gap:8px;">
+                                <span style="font-size:0.78rem;font-weight:700;color:var(--text-muted);">Case:</span>
+                                <div class="segmented-group">
+                                    <button type="button" class="segmented-btn active" id="btnCaseUpper">UPPER</button>
+                                    <button type="button" class="segmented-btn" id="btnCaseLower">lower</button>
+                                </div>
+                            </div>
+
+                            <div style="display:flex;align-items:center;gap:8px;">
+                                <span style="font-size:0.78rem;font-weight:700;color:var(--text-muted);">Bytes per line:</span>
+                                <select id="cleanerBytesPerLine" class="form-select" style="width:160px;padding:6px 10px;font-size:0.8rem;">
+                                    <option value="0" selected>Continuous (Wrap)</option>
+                                    <option value="8">8 Bytes / Line</option>
+                                    <option value="16">16 Bytes / Line</option>
+                                    <option value="32">32 Bytes / Line</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ==================================================================
+             TAB 3 — AOB MERGER (Firehawk Panels AOB Merger)
+             ================================================================== -->
+        <div class="tool-view-panel" id="viewToolMerger">
+            <div class="card card-glow-red">
+                <div class="card-header-bar">
+                    <div class="card-title-group">
+                        <div>
+                            <h2>⚡ AOB Merger &amp; Diff Tool</h2>
+                            <p>Compare two Array of Bytes sequences. Matching bytes are kept, differing bytes automatically become wildcards (<code>??</code>).</p>
+                        </div>
+                    </div>
+                    <div class="card-meta-actions">
+                        <button type="button" class="btn btn-secondary btn-sm" id="mergerBtnDemo">
+                            <span>⚡ Load Demo</span>
+                        </button>
+                        <button type="button" class="btn btn-secondary btn-sm" id="mergerBtnFormat">
+                            <span>✨ Format Spacing</span>
+                        </button>
+                        <button type="button" class="btn btn-ghost btn-sm" id="mergerBtnClear">
+                            <span>🗑️ Clear All</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Alert Banner for Mismatches -->
+                <div id="mergerAlertBanner" class="alert-banner hidden">
+                    <div class="alert-info-group">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                            <line x1="12" y1="9" x2="12" y2="13"/>
+                            <line x1="12" y1="17" x2="12.01" y2="17"/>
+                        </svg>
+                        <div>
+                            <strong class="alert-title" style="color:#ffffff;font-size:0.88rem;">Byte Count Mismatch</strong>
+                            <p id="mergerAlertMessage" style="font-size:0.8rem;color:var(--text-muted);margin-top:2px;">AOB 1 and AOB 2 must have the exact same number of bytes to merge.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-primary btn-sm" id="mergerBtnMakeSame">
+                            <span>✂️ Make it Same</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="two-column-grid">
+                    <!-- AOB 1 -->
+                    <div class="form-group">
+                        <div class="form-label-row">
+                            <label class="form-label" for="mergerAob1">1. AOB 1 Input</label>
+                            <div style="display:flex;align-items:center;gap:8px;">
+                                <span class="badge badge-cyan" id="mergerAob1Count">0 Bytes</span>
+                                <button type="button" class="btn-icon" id="mergerPasteAob1" title="Paste from clipboard">📋</button>
+                            </div>
+                        </div>
+                        <textarea id="mergerAob1" class="form-textarea" placeholder="Enter first AOB (e.g. FF FF FF FF 00 00 00 00 10 20)..." spellcheck="false"></textarea>
+                    </div>
+
+                    <!-- AOB 2 -->
+                    <div class="form-group">
+                        <div class="form-label-row">
+                            <label class="form-label" for="mergerAob2">2. AOB 2 Input</label>
+                            <div style="display:flex;align-items:center;gap:8px;">
+                                <span class="badge badge-purple" id="mergerAob2Count">0 Bytes</span>
+                                <button type="button" class="btn-icon" id="mergerPasteAob2" title="Paste from clipboard">📋</button>
+                            </div>
+                        </div>
+                        <textarea id="mergerAob2" class="form-textarea" placeholder="Enter second AOB (e.g. FF FF 00 00 00 00 00 00 10 25)..." spellcheck="false"></textarea>
+                    </div>
+                </div>
+
+                <!-- Merged AOB Output -->
+                <div class="form-group" style="margin-top:14px;">
+                    <div class="form-label-row">
+                        <label class="form-label" for="mergerMergedOutput">3. Merged AOB Result</label>
+                        <div style="display:flex;align-items:center;gap:8px;">
+                            <span class="badge badge-emerald" id="mergerMergedCount">0 Bytes</span>
+                            <span class="badge badge-amber" id="mergerWildcardCount">0 Wildcards</span>
+                        </div>
+                    </div>
+                    <textarea id="mergerMergedOutput" class="form-textarea" style="min-height:140px;" readonly placeholder="Merged AOB pattern will appear here automatically..." spellcheck="false"></textarea>
+                    <div style="display:flex;gap:10px;margin-top:10px;justify-content:flex-end;">
+                        <button type="button" class="btn btn-primary" id="mergerBtnCopy">
+                            <span>📋 Copy Merged AOB</span>
+                        </button>
+                        <button type="button" class="btn btn-secondary" id="mergerBtnDownload">
+                            <span>💾 Save as TXT</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ==================================================================
+             TAB 4 — COLLIDER OFFSET (Aimbot AI Offset Finder)
+             ================================================================== -->
+        <div class="tool-view-panel" id="viewToolCollider">
+            <div class="card card-glow-red">
+                <div class="card-header-bar">
+                    <div class="card-title-group">
+                        <div>
+                            <h2>🎯 Collider &amp; Aimbot Offset Converter</h2>
+                            <p>Calculate exact bidirectional transformations between Collider Read offsets and Basic Write / Read offsets.</p>
+                        </div>
+                    </div>
+                    <div class="card-meta-actions">
+                        <button type="button" class="btn btn-secondary btn-sm" id="btnLoadColliderSample">
+                            <span>⚡ Load Sample Offsets</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mode Switcher -->
+                <div style="display:flex;gap:10px;justify-content:center;margin-bottom:24px;flex-wrap:wrap;">
+                    <button type="button" class="segmented-btn active" id="colliderTabBasic" style="padding:10px 22px;font-size:0.85rem;">
+                        COLLIDER OFFSET TO BASIC
+                    </button>
+                    <button type="button" class="segmented-btn" id="colliderTabCollider" style="padding:10px 22px;font-size:0.85rem;">
+                        BASIC OFFSET TO COLLIDER
+                    </button>
+                </div>
+
+                <!-- Mode 1: Collider to Basic -->
+                <div id="colliderViewBasic" style="display:block;">
+                    <div class="two-column-grid">
+                        <!-- Card 1: Basic Write Offset Finder -->
+                        <div style="background:rgba(12,12,18,0.7);border:1px solid var(--border);border-radius:var(--radius-md);padding:18px;">
+                            <h3 style="font-size:0.95rem;font-weight:700;color:var(--text-main);margin-bottom:10px;">BASIC AIMBOT WRITE OFFSET FINDER</h3>
+                            <div class="instruction-box">
+                                Put your <strong>Collider Read Offset</strong> (e.g. 0xFD). The formula <code>read - 0x48</code> calculates the exact basic write offset.
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="colliderBasicRead">Collider Read Offset</label>
+                                <div class="input-with-prefix">
+                                    <span class="input-prefix">0x</span>
+                                    <input type="text" id="colliderBasicRead" class="form-input" value="0xFD" placeholder="0xFD" spellcheck="false" />
+                                </div>
+                            </div>
+                            <div class="result-stat-box">
+                                <div>
+                                    <div style="font-size:0.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;">Neck Aimbot Write Offset</div>
+                                    <div class="result-stat-val" id="colliderBasicResult">0xB5</div>
+                                </div>
+                                <button type="button" class="btn btn-secondary btn-sm" id="btnCopyBasicOffset">COPY</button>
+                            </div>
+                        </div>
+
+                        <!-- Card 2: Basic Read Offset Finder -->
+                        <div style="background:rgba(12,12,18,0.7);border:1px solid var(--border);border-radius:var(--radius-md);padding:18px;">
+                            <h3 style="font-size:0.95rem;font-weight:700;color:var(--text-main);margin-bottom:10px;">BASIC AIMBOT READ OFFSET FINDER</h3>
+                            <div class="instruction-box">
+                                Calculate the exact basic read offset. Choose whether to calculate from <strong>Collider Read</strong> (<code>- 0x44</code>) or <strong>Basic Write</strong> (<code>+ 0x04</code>).
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="colliderReadMethod">Calculation Method</label>
+                                <select id="colliderReadMethod" class="form-select">
+                                    <option value="collider" selected>From Collider Read (val - 0x44)</option>
+                                    <option value="write">From Basic Write (val + 0x04)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" id="colliderReadMethodLabel" for="colliderGuessOffset">Collider Read Offset</label>
+                                <div class="input-with-prefix">
+                                    <span class="input-prefix">0x</span>
+                                    <input type="text" id="colliderGuessOffset" class="form-input" value="0xFD" placeholder="0xFD" spellcheck="false" />
+                                </div>
+                            </div>
+                            <div class="result-stat-box">
+                                <div>
+                                    <div style="font-size:0.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;">Basic Read Offset (Head)</div>
+                                    <div class="result-stat-val" id="colliderGuessResult">0xB9</div>
+                                </div>
+                                <button type="button" class="btn btn-secondary btn-sm" id="btnCopyGuessResult">COPY</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mode 2: Basic to Collider -->
+                <div id="colliderViewCollider" style="display:none;">
+                    <div class="two-column-grid">
+                        <!-- Card 1: Write Aimbot Offset Collider -->
+                        <div style="background:rgba(12,12,18,0.7);border:1px solid var(--border);border-radius:var(--radius-md);padding:18px;">
+                            <h3 style="font-size:0.95rem;font-weight:700;color:var(--text-main);margin-bottom:10px;">WRITE AIMBOT OFFSET COLLIDER</h3>
+                            <div class="instruction-box">
+                                Base Address: internal offset (e.g. 0x4E8). Target Offset: offset from READ COLLIDER (e.g. 0xFD). Output is always negative <code>-(base - target - 0x54)</code>.
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="colliderT1Base">Base Address (Internal Offset)</label>
+                                <div class="input-with-prefix">
+                                    <span class="input-prefix">0x</span>
+                                    <input type="text" id="colliderT1Base" class="form-input" value="0x4E8" placeholder="0x4E8" spellcheck="false" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="colliderT1Bond">Target Offset</label>
+                                <div class="input-with-prefix">
+                                    <span class="input-prefix">0x</span>
+                                    <input type="text" id="colliderT1Bond" class="form-input" value="0xFD" placeholder="0xFD" spellcheck="false" />
+                                </div>
+                            </div>
+                            <div class="result-stat-box">
+                                <div>
+                                    <div style="font-size:0.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;">Collider Write Offset</div>
+                                    <div class="result-stat-val" id="colliderT1Result">-0x397</div>
+                                </div>
+                                <button type="button" class="btn btn-secondary btn-sm" id="btnCopyT1Result">COPY</button>
+                            </div>
+                        </div>
+
+                        <!-- Card 2: Read Offset Aimbot Collider -->
+                        <div style="background:rgba(12,12,18,0.7);border:1px solid var(--border);border-radius:var(--radius-md);padding:18px;">
+                            <h3 style="font-size:0.95rem;font-weight:700;color:var(--text-main);margin-bottom:10px;">READ OFFSET AIMBOT COLLIDER</h3>
+                            <div class="instruction-box">
+                                Put basic write value (e.g. 0xB5 <code>+ 0x48</code>) or read value (0xB9 <code>+ 0x44</code>) to calculate the collider read offset for Target Offset.
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="colliderT2Method">Calculation Method</label>
+                                <select id="colliderT2Method" class="form-select">
+                                    <option value="write" selected>From Basic Write (val + 0x48)</option>
+                                    <option value="read">From Basic Read (val + 0x44)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" id="colliderT2InputLabel" for="colliderT2Read">Basic Write Value</label>
+                                <div class="input-with-prefix">
+                                    <span class="input-prefix">0x</span>
+                                    <input type="text" id="colliderT2Read" class="form-input" value="0xB5" placeholder="0xB5" spellcheck="false" />
+                                </div>
+                            </div>
+                            <div class="result-stat-box">
+                                <div>
+                                    <div style="font-size:0.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;">Collider Read Offset</div>
+                                    <div class="result-stat-val" id="colliderT2Result">0xFD</div>
+                                </div>
+                                <button type="button" class="btn btn-secondary btn-sm" id="btnCopyT2Result">COPY</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ==================================================================
+             TAB 5 — OFFSETS FINDER (Neck Offset Finder & Variations)
+             ================================================================== -->
+        <div class="tool-view-panel" id="viewToolFinder">
+            <div class="card card-glow-red">
+                <div class="card-header-bar">
+                    <div class="card-title-group">
+                        <div>
+                            <h2>🔍 Offsets Finder &amp; AOB Variation Engine</h2>
+                            <p>Generate parallel decremented Chest &amp; Head offset pairs while shifting the AOB byte-by-byte in real-time.</p>
+                        </div>
+                    </div>
+                    <div class="card-meta-actions">
+                        <button type="button" class="btn btn-secondary btn-sm" id="finderBtnPresetSample">
+                            <span>⚡ Load Sample (b8 / b4)</span>
+                        </button>
+                        <button type="button" class="btn btn-secondary btn-sm" id="finderBtnFormatAob">
+                            <span>✨ Format AOB</span>
+                        </button>
+                        <button type="button" class="btn btn-ghost btn-sm" id="finderBtnClearInputs">
+                            <span>🗑️ Clear</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Inputs Grid -->
+                <div class="form-group">
+                    <div class="form-label-row">
+                        <label class="form-label" for="finderAobInput">AOB Signature Sequence</label>
+                        <span class="badge badge-emerald" id="finderAobDetectedFormat">0 Bytes</span>
+                    </div>
+                    <textarea id="finderAobInput" class="form-textarea" placeholder="Paste your base AOB hex sequence here..." spellcheck="false"></textarea>
+                    <div class="form-hint">Decrements 1 byte from the front per variation step.</div>
+                </div>
+
+                <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:16px;margin-bottom:16px;">
+                    <div class="form-group" style="margin-bottom:0;">
+                        <div class="form-label-row">
+                            <label class="form-label" for="finderChestInput">🛡️ Chest Offset (Base)</label>
+                            <span class="badge badge-cyan" id="finderChestDetectedFormat">Hex / Dec</span>
+                        </div>
+                        <div class="input-with-prefix">
+                            <span class="input-prefix">0x</span>
+                            <input type="text" id="finderChestInput" class="form-input" value="b8" placeholder="e.g. b8 or 218" spellcheck="false" />
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom:0;">
+                        <div class="form-label-row">
+                            <label class="form-label" for="finderHeadInput">🎯 Head Offset (Base)</label>
+                            <span class="badge badge-purple" id="finderHeadDetectedFormat">Hex / Dec</span>
+                        </div>
+                        <div class="input-with-prefix">
+                            <span class="input-prefix">0x</span>
+                            <input type="text" id="finderHeadInput" class="form-input" value="b4" placeholder="e.g. b4 or 214" spellcheck="false" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slider & Toggles -->
+                <div style="background:rgba(12,12,18,0.6);border:1px solid var(--border);border-radius:var(--radius-md);padding:14px;margin-bottom:20px;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+                        <div style="flex:1;min-width:240px;">
+                            <div class="form-label-row" style="margin-bottom:6px;">
+                                <label class="form-label">Conversion Steps</label>
+                                <span class="slider-val-box" id="finderSliderValDisplay">20</span>
+                            </div>
+                            <div class="slider-wrapper">
+                                <input type="range" id="finderCountSlider" class="slider-custom" min="1" max="100" value="20" step="1" />
+                                <input type="number" id="finderCountNumInput" class="form-input" min="1" max="500" value="20" style="width:75px;padding:6px;text-align:center;font-family:var(--font-mono);" />
+                            </div>
+                        </div>
+
+                        <div style="display:flex;flex-direction:column;gap:8px;font-size:0.8rem;color:var(--text-muted);">
+                            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                                <input type="checkbox" id="finderLowercaseToggle" />
+                                <span>Lowercase Hex (b7 / ff)</span>
+                            </label>
+                            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                                <input type="checkbox" id="finderPrefixToggle" />
+                                <span>Include '0x' prefix in offsets</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Views & Actions -->
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap;">
+                    <div class="segmented-group">
+                        <button type="button" class="segmented-btn active" id="finderTabGrid">Table View</button>
+                        <button type="button" class="segmented-btn" id="finderTabRaw">Raw Text View</button>
+                        <button type="button" class="segmented-btn" id="finderTabCode">C# / C++ Array</button>
+                    </div>
+
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                        <button type="button" class="btn btn-secondary btn-sm" id="finderBtnCopyAobsOnly">Copy AOBs Only</button>
+                        <button type="button" class="btn btn-secondary btn-sm" id="finderBtnCopyAllData">Copy All Data</button>
+                        <button type="button" class="btn btn-primary btn-sm" id="finderBtnDownloadTxt">Save to TXT</button>
+                    </div>
+                </div>
+
+                <!-- Results Output Area -->
+                <div id="finderResultsContainer"></div>
+
+            </div>
+        </div>
+
+        <!-- ==================================================================
+             TAB 6 — OFFSETS CALCULATOR (Firehawk Panels Offset Calculator)
+             ================================================================== -->
+        <div class="tool-view-panel" id="viewToolCalculator">
+            <div class="card card-glow-red">
+                <div class="card-header-bar">
+                    <div class="card-title-group">
+                        <div>
+                            <h2>🧮 2-Tap Interactive AOB Offset Calculator</h2>
+                            <p>Tap any byte to set <strong>START</strong> (🟢), then tap another byte to set <strong>END</strong> (🔵). Recalculates anchor distance, read offset &amp; write offset with zero delay.</p>
+                        </div>
+                    </div>
+                    <div class="card-meta-actions">
+                        <button type="button" class="btn btn-secondary btn-sm" id="calcBtnResetSample">
+                            <span>⚡ Reset Reference AOB</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Hero Result Banner -->
+                <div class="hero-result-banner">
+                    <div class="hero-stats-grid">
+                        <!-- Delta -->
+                        <div class="hero-stat-card">
+                            <span class="hero-stat-label">Anchor Distance (Delta)</span>
+                            <div class="hero-stat-number" id="calcHeroDeltaHex" style="color:#ef4444;">+0x278</div>
+                            <span class="hero-stat-sub" id="calcHeroDeltaDec">+632 bytes</span>
+                        </div>
+
+                        <!-- New Read -->
+                        <div class="hero-stat-card">
+                            <span class="hero-stat-label">Recalculated Read Offset</span>
+                            <div class="hero-stat-number" id="calcHeroReadVal" style="color:#38bdf8;">0x474</div>
+                            <span class="hero-stat-sub" id="calcHeroReadSub">0x6EC - 0x278 (+1140 dec)</span>
+                        </div>
+
+                        <!-- New Write -->
+                        <div class="hero-stat-card">
+                            <span class="hero-stat-label">Recalculated Write Offset</span>
+                            <div class="hero-stat-number" id="calcHeroWriteVal" style="color:#f43f5e;">-0x20</div>
+                            <span class="hero-stat-sub" id="calcHeroWriteSub">0x258 - 0x278 (-32 dec)</span>
+                        </div>
+
+                        <div>
+                            <button type="button" class="btn btn-primary" id="calcBtnCopyResult" style="width:100%;padding:14px;">
+                                <span>📋 Copy Offsets</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Offset Bases -->
+                <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:16px;margin-bottom:20px;">
+                    <div class="form-group" style="margin-bottom:0;">
+                        <label class="form-label" for="calcReadOffset">Read Offset (Base)</label>
+                        <div class="input-with-prefix">
+                            <span class="input-prefix">0x</span>
+                            <input type="text" id="calcReadOffset" class="form-input" value="0x6EC" placeholder="0x6EC" spellcheck="false" />
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom:0;">
+                        <label class="form-label" for="calcWriteOffset">Write Offset (Base)</label>
+                        <div class="input-with-prefix">
+                            <span class="input-prefix">0x</span>
+                            <input type="text" id="calcWriteOffset" class="form-input" value="0x258" placeholder="0x258" spellcheck="false" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AOB Textarea -->
+                <div class="form-group">
+                    <div class="form-label-row">
+                        <label class="form-label" for="calcAobTextarea">Array of Bytes (AOB) Pattern</label>
+                        <span class="badge badge-cyan" id="calcTotalBytesLabel">964 bytes (0x3C4)</span>
+                    </div>
+                    <textarea id="calcAobTextarea" class="form-textarea" style="min-height:90px;" placeholder="Paste raw AOB pattern..." spellcheck="false"></textarea>
+                </div>
+
+                <!-- Interactive Byte Stream Grid -->
+                <div class="form-group">
+                    <div class="form-label-row" style="margin-bottom:8px;">
+                        <label class="form-label">Interactive Byte Grid (Tap Start 🟢 &bull; Tap End 🔵)</label>
+                    </div>
+                    <div class="byte-stream-box">
+                        <div class="bytes-grid" id="calcBytesGrid"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ==================================================================
+             TAB 7 — BYTE FORGE (AOB Multi-Language Converter)
+             ================================================================== -->
+        <div class="tool-view-panel" id="viewToolByteForge">
+            <div class="card card-glow-red">
+                <div class="card-header-bar">
+                    <div class="card-title-group">
+                        <div>
+                            <h2>🔄 Byte Forge &bull; Multi-Language AOB Converter</h2>
+                            <p>Transform raw hex bytes across C#, C++, and Python representations with automatic wildcard handling.</p>
+                        </div>
+                    </div>
+                    <div class="card-meta-actions">
+                        <span class="badge badge-cyan" id="byteForgeConversionLabel">C# → C++</span>
+                        <button type="button" class="btn btn-secondary btn-sm" id="byteForgeBtnSample">
+                            <span>⚡ Load Sample</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-label-row">
+                        <label class="form-label" for="byteForgeConversionType">Conversion Direction</label>
+                        <span class="badge"><b id="byteForgeCountDisplay">0</b> bytes</span>
+                    </div>
+                    <select id="byteForgeConversionType" class="form-select">
+                        <option value="cs-cpp" selected>C# → C++</option>
+                        <option value="cs-py">C# → Python</option>
+                        <option value="cpp-cs">C++ → C#</option>
+                        <option value="cpp-py">C++ → Python</option>
+                        <option value="py-cs">Python → C#</option>
+                        <option value="py-cpp">Python → C++</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="byteForgeInput">Input AOB Bytes</label>
+                    <input type="text" id="byteForgeInput" class="form-input" placeholder="Paste AOB bytes (e.g. 90 90 ?? AB 00 12 FF)..." autocomplete="off" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Converted Output</label>
+                    <div id="byteForgeOutput" class="aob-output"></div>
+                </div>
+
+                <div style="display:flex;gap:12px;margin-top:14px;justify-content:flex-end;">
+                    <button type="button" class="btn btn-secondary" id="byteForgeDeleteBtn">
+                        <span>🗑️ Delete / Clear</span>
+                    </button>
+                    <button type="button" class="btn btn-primary" id="byteForgeCopyBtn">
+                        <span>📋 Copy Output</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ==================================================================
+             TAB 8 — EXTERNAL BONES QUICK CALCULATOR
+             ================================================================== -->
+        <div class="tool-view-panel" id="viewToolExternalBones">
+            <div class="card card-glow-red">
+                <div class="card-header-bar">
+                    <div class="card-title-group">
+                        <div>
+                            <h2>☠️ External Bones Quick Calculator</h2>
+                            <p>Calculate 6 essential external bone offsets (Head, Neck, Neck Left/Right, Left/Right Shoulder) from a single Chest offset.</p>
+                        </div>
+                    </div>
+                    <div class="card-meta-actions">
+                        <button type="button" class="btn btn-secondary btn-sm" id="quickBonesBtnSample">
+                            <span>⚡ Load 0xA6 Sample</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div style="display:flex;gap:12px;align-items:center;margin-bottom:18px;flex-wrap:wrap;">
+                    <div class="input-with-prefix" style="flex:1;min-width:200px;">
+                        <span class="input-prefix">0x</span>
+                        <input type="text" id="quickChestInput" class="form-input" placeholder="Chest offset (e.g. 0xA6 or A6)..." autocomplete="off" />
+                    </div>
+                    <button type="button" class="btn btn-primary" id="quickCalcBonesBtn" style="padding:12px 24px;">
+                        <span>Calculate Bone Offsets</span>
+                    </button>
+                </div>
+
+                <div class="table-responsive" style="margin-top:10px;">
+                    <div id="quickBonesEmpty" style="padding:28px 16px;text-align:center;color:var(--text-muted);font-size:0.85rem;">
+                        <span>Enter a chest offset above and click calculate.</span>
+                    </div>
+                    <table class="data-table" id="quickBonesTable" style="display:none;">
+                        <thead>
+                            <tr>
+                                <th>Bone Semantic Target</th>
+                                <th>Calculated Hex Offset</th>
+                            </tr>
+                        </thead>
+                        <tbody id="quickBonesBody"></tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Global Toast Notification -->
+        <div class="toast-notification" id="globalToast" role="status" aria-live="polite">
+            <span class="toast-icon">✓</span>
+            <span id="globalToastMessage">Notification</span>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer-mark">
+            &copy; 2026 NULL&trade; ALL RIGHTS RESERVED &bull; ALL-IN-ONE DEVELOPER TOOLKIT
+        </footer>
     </div>
 
-    <!-- TOAST NOTIFICATION -->
-    <div class="download-status" id="downloadStatus">
-        <span>⚡</span>
-        <span id="statusMessage">Ready</span>
-    </div>
-
-    <!-- SCRIPTS -->
-    <script src="js/script.js"></script>
+    <!-- Application Scripts -->
+    <script src="js/sample-data.js"></script>
+    <script src="js/tool1-bones.js"></script>
+    <script src="js/tool2-aob-cleaner.js"></script>
+    <script src="js/tool3-aob-merger.js"></script>
+    <script src="js/tool4-collider.js"></script>
+    <script src="js/tool5-offsets-finder.js"></script>
+    <script src="js/tool6-offsets-calc.js"></script>
+    <script src="js/tool7-byte-forge.js"></script>
+    <script src="js/tool8-external-bones.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>
