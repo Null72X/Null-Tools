@@ -2,12 +2,9 @@
    TOOL 8 — EXTERNAL BONES QUICK CALCULATOR
    Calculates 6 player bone offsets from a single chest offset
    ========================================================================== */
-
 const Tool8ExternalBones = (function () {
     'use strict';
-
     let el = {};
-
     function init() {
         el = {
             chestInput: document.getElementById('quickChestInput'),
@@ -17,23 +14,22 @@ const Tool8ExternalBones = (function () {
             bonesEmpty: document.getElementById('quickBonesEmpty'),
             btnSample: document.getElementById('quickBonesBtnSample')
         };
-
         bindEvents();
     }
-
     function parseHex(str) {
-        if (!str) return null;
+        if (!str)
+            return null;
         const clean = str.trim().replace(/^0x/i, '').replace(/^#/, '');
-        if (!/^[0-9A-Fa-f]+$/.test(clean)) return null;
+        if (!/^[0-9A-Fa-f]+$/.test(clean))
+            return null;
         return parseInt(clean, 16);
     }
-
     function toHexStr(num) {
         return '0x' + num.toString(16).toUpperCase().padStart(2, '0');
     }
-
     function calculateBones() {
-        if (!el.chestInput || !el.bonesTable || !el.bonesEmpty || !el.bonesBody) return;
+        if (!el.chestInput || !el.bonesTable || !el.bonesEmpty || !el.bonesBody)
+            return;
         const raw = el.chestInput.value.trim();
         const chestVal = parseHex(raw);
         if (chestVal === null) {
@@ -43,7 +39,6 @@ const Tool8ExternalBones = (function () {
             window.NullApp.showToast('Invalid hex value');
             return;
         }
-
         const boneDefs = [
             { name: 'Head', delta: -0x4 },
             { name: 'Neck', delta: 0x4 },
@@ -52,12 +47,10 @@ const Tool8ExternalBones = (function () {
             { name: 'Left Shoulder', delta: 0x40 },
             { name: 'Right Shoulder', delta: 0x44 },
         ];
-
         const rows = boneDefs.map(def => ({
             name: def.name,
             offsetStr: toHexStr(chestVal + def.delta)
         }));
-
         el.bonesBody.innerHTML = rows.map(row => `
             <tr>
                 <td style="font-weight:600;color:var(--text-main);">${row.name}</td>
@@ -66,15 +59,13 @@ const Tool8ExternalBones = (function () {
                 </td>
             </tr>
         `).join('');
-
         el.bonesEmpty.style.display = 'none';
         el.bonesTable.style.display = 'table';
         window.NullApp.showToast(`Calculated ${rows.length} bone offsets from ${toHexStr(chestVal)}`);
     }
-
     function bindEvents() {
-        if (el.calcBtn) el.calcBtn.addEventListener('click', calculateBones);
-
+        if (el.calcBtn)
+            el.calcBtn.addEventListener('click', calculateBones);
         if (el.chestInput) {
             el.chestInput.addEventListener('keydown', function (e) {
                 if (e.key === 'Enter') {
@@ -83,15 +74,14 @@ const Tool8ExternalBones = (function () {
                 }
             });
         }
-
         if (el.btnSample) {
             el.btnSample.addEventListener('click', function () {
-                if (el.chestInput) el.chestInput.value = '0xA6';
+                if (el.chestInput)
+                    el.chestInput.value = '0xA6';
                 calculateBones();
             });
         }
     }
-
     return {
         init,
         calculateBones,
@@ -99,7 +89,10 @@ const Tool8ExternalBones = (function () {
         toHexStr
     };
 })();
-
-if (typeof window !== 'undefined') window.Tool8ExternalBones = Tool8ExternalBones;
-if (typeof globalThis !== 'undefined') globalThis.Tool8ExternalBones = Tool8ExternalBones;
-if (typeof module !== 'undefined' && module.exports) module.exports = Tool8ExternalBones;
+if (typeof window !== 'undefined')
+    window.Tool8ExternalBones = Tool8ExternalBones;
+if (typeof globalThis !== 'undefined')
+    globalThis.Tool8ExternalBones = Tool8ExternalBones;
+if (typeof module !== 'undefined' && module.exports)
+    module.exports = Tool8ExternalBones;
+//# sourceMappingURL=tool8-external-bones.js.map

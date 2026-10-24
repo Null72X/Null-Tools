@@ -1,0 +1,16 @@
+{
+  "name": "null-tools",
+  "version": "1.0.0",
+  "description": "Null Tools — Unified Reverse Engineering Suites & Memory Offset Analysis Platform",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "test": "node test-suite.js",
+    "serve": "node test-server.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.0",
+    "typescript": "^5.6.3"
+  }
+}

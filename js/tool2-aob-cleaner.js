@@ -2,10 +2,8 @@
    TOOL 2 — AOB CLEANER / MASKER STUDIO
    High-performance Array of Bytes cleaner, pattern generator & signature builder
    ========================================================================== */
-
 const Tool2AobCleaner = (function () {
     'use strict';
-
     const state = {
         rawInput: '',
         preserveInput: '04 A0 E1',
@@ -18,9 +16,7 @@ const Tool2AobCleaner = (function () {
         bytesPerLine: 0,
         parsedBytes: []
     };
-
     let el = {};
-
     function init() {
         el = {
             rawAobInput: document.getElementById('rawAobInput'),
@@ -30,30 +26,24 @@ const Tool2AobCleaner = (function () {
             btnPasteInput: document.getElementById('btnPasteCleanerInput'),
             btnLoadSample: document.getElementById('btnLoadSampleCleaner'),
             btnClearAll: document.getElementById('btnClearCleanerAll'),
-
             filterModeToggle: document.getElementById('filterModeToggle'),
             zeroPolicyRadios: document.querySelectorAll('input[name="cleaner-zero-policy"]'),
             matchGranularity: document.getElementById('cleanerMatchGranularity'),
             wildcardToken: document.getElementById('cleanerWildcardToken'),
-
             formatTabs: document.querySelectorAll('#cleanerFormatTabs .segmented-btn'),
             cleanedOutput: document.getElementById('cleanedAobOutput'),
             byteCountLabel: document.getElementById('cleanerByteCount'),
             charCountLabel: document.getElementById('cleanerCharCount'),
-
             caseUpperBtn: document.getElementById('btnCaseUpper'),
             caseLowerBtn: document.getElementById('btnCaseLower'),
             bytesPerLineSelect: document.getElementById('cleanerBytesPerLine'),
-
             codePreviewCard: document.getElementById('cleanerCodePreviewCard'),
             codePreviewTitle: document.getElementById('cleanerCodePreviewTitle'),
             codePreviewContent: document.getElementById('cleanerCodePreviewContent'),
             btnCopyCodePreview: document.getElementById('btnCopyCodePreview'),
-
             btnCopyOutput: document.getElementById('btnCopyCleanerOutput'),
             btnDownloadOutput: document.getElementById('btnDownloadCleanerOutput')
         };
-
         bindEvents();
         // Set default sample
         if (el.rawAobInput && !el.rawAobInput.value.trim()) {
@@ -62,7 +52,6 @@ const Tool2AobCleaner = (function () {
             processAoB();
         }
     }
-
     function bindEvents() {
         if (el.rawAobInput) {
             el.rawAobInput.addEventListener('input', () => {
@@ -70,14 +59,12 @@ const Tool2AobCleaner = (function () {
                 processAoB();
             });
         }
-
         if (el.preserveBytesInput) {
             el.preserveBytesInput.addEventListener('input', () => {
                 state.preserveInput = el.preserveBytesInput.value;
                 processAoB();
             });
         }
-
         // Paste button
         if (el.btnPasteInput) {
             el.btnPasteInput.addEventListener('click', () => {
@@ -93,29 +80,29 @@ const Tool2AobCleaner = (function () {
                 });
             });
         }
-
         // Load Sample
         if (el.btnLoadSample) {
             el.btnLoadSample.addEventListener('click', () => {
-                if (el.rawAobInput) el.rawAobInput.value = SAMPLE_DATA.aobCleanerSample;
-                if (el.preserveBytesInput) el.preserveBytesInput.value = SAMPLE_DATA.aobCleanerPreserve;
+                if (el.rawAobInput)
+                    el.rawAobInput.value = SAMPLE_DATA.aobCleanerSample;
+                if (el.preserveBytesInput)
+                    el.preserveBytesInput.value = SAMPLE_DATA.aobCleanerPreserve;
                 state.rawInput = SAMPLE_DATA.aobCleanerSample;
                 state.preserveInput = SAMPLE_DATA.aobCleanerPreserve;
                 processAoB();
                 window.NullApp.showToast('Loaded sample AoB and preservation rules!');
             });
         }
-
         // Reset All
         if (el.btnClearAll) {
             el.btnClearAll.addEventListener('click', () => {
-                if (el.rawAobInput) el.rawAobInput.value = '';
+                if (el.rawAobInput)
+                    el.rawAobInput.value = '';
                 state.rawInput = '';
                 processAoB();
                 window.NullApp.showToast('AoB Cleaner inputs cleared');
             });
         }
-
         // Filter Mode Toggle (Keep Listed vs Mask Listed)
         if (el.filterModeToggle) {
             el.filterModeToggle.querySelectorAll('button').forEach(btn => {
@@ -127,7 +114,6 @@ const Tool2AobCleaner = (function () {
                 });
             });
         }
-
         // Zero Policy Radios
         el.zeroPolicyRadios.forEach(radio => {
             radio.addEventListener('change', (e) => {
@@ -137,7 +123,6 @@ const Tool2AobCleaner = (function () {
                 }
             });
         });
-
         // Granularity & Wildcard Token
         if (el.matchGranularity) {
             el.matchGranularity.addEventListener('change', (e) => {
@@ -145,14 +130,12 @@ const Tool2AobCleaner = (function () {
                 processAoB();
             });
         }
-
         if (el.wildcardToken) {
             el.wildcardToken.addEventListener('change', (e) => {
                 state.wildcardToken = e.target.value;
                 renderOutput();
             });
         }
-
         // Format Tabs
         el.formatTabs.forEach(btn => {
             btn.addEventListener('click', () => {
@@ -162,7 +145,6 @@ const Tool2AobCleaner = (function () {
                 renderOutput();
             });
         });
-
         // Case controls
         if (el.caseUpperBtn && el.caseLowerBtn) {
             el.caseUpperBtn.addEventListener('click', () => {
@@ -178,14 +160,12 @@ const Tool2AobCleaner = (function () {
                 renderOutput();
             });
         }
-
         if (el.bytesPerLineSelect) {
             el.bytesPerLineSelect.addEventListener('change', (e) => {
                 state.bytesPerLine = parseInt(e.target.value, 10) || 0;
                 renderOutput();
             });
         }
-
         // Copy & Download
         if (el.btnCopyOutput) {
             el.btnCopyOutput.addEventListener('click', () => {
@@ -193,7 +173,6 @@ const Tool2AobCleaner = (function () {
                 window.NullApp.copyToClipboard(text, 'Cleaned AoB copied to clipboard!');
             });
         }
-
         if (el.btnDownloadOutput) {
             el.btnDownloadOutput.addEventListener('click', () => {
                 const text = el.cleanedOutput ? el.cleanedOutput.value : '';
@@ -204,20 +183,17 @@ const Tool2AobCleaner = (function () {
                 window.NullApp.downloadTextFile(`aob_cleaned_${Date.now()}.txt`, text);
             });
         }
-
         if (el.btnCopyCodePreview) {
             el.btnCopyCodePreview.addEventListener('click', () => {
                 const code = el.codePreviewContent ? el.codePreviewContent.textContent : '';
                 window.NullApp.copyToClipboard(code, 'Code snippet copied to clipboard!');
             });
         }
-
         // File Drag & Drop
         if (el.dropZone && el.fileUploader) {
             setupFileDrop(el.dropZone, el.fileUploader, handleUploadedFile);
         }
     }
-
     function setupFileDrop(dropEl, fileInput, handler) {
         ['dragenter', 'dragover'].forEach(name => {
             dropEl.addEventListener(name, (e) => {
@@ -226,7 +202,6 @@ const Tool2AobCleaner = (function () {
                 dropEl.classList.add('drag-over');
             });
         });
-
         ['dragleave', 'drop'].forEach(name => {
             dropEl.addEventListener(name, (e) => {
                 e.preventDefault();
@@ -234,62 +209,61 @@ const Tool2AobCleaner = (function () {
                 dropEl.classList.remove('drag-over');
             });
         });
-
         dropEl.addEventListener('drop', (e) => {
             const files = e.dataTransfer.files;
-            if (files && files.length > 0) handler(files[0]);
+            if (files && files.length > 0)
+                handler(files[0]);
         });
-
         fileInput.addEventListener('change', (e) => {
-            if (e.target.files && e.target.files.length > 0) handler(e.target.files[0]);
+            if (e.target.files && e.target.files.length > 0)
+                handler(e.target.files[0]);
         });
     }
-
     function handleUploadedFile(file) {
-        if (!file) return;
+        if (!file)
+            return;
         const reader = new FileReader();
-
         if (file.name.endsWith('.bin') || file.name.endsWith('.dat')) {
             reader.onload = (e) => {
-                const buffer = e.target.result;
+                const buffer = e.target?.result;
                 const u8 = new Uint8Array(buffer);
                 const hexArray = [];
                 for (let i = 0; i < u8.length; i++) {
                     hexArray.push(u8[i].toString(16).padStart(2, '0').toUpperCase());
                 }
                 const hexStr = hexArray.join(' ');
-                if (el.rawAobInput) el.rawAobInput.value = hexStr;
+                if (el.rawAobInput)
+                    el.rawAobInput.value = hexStr;
                 state.rawInput = hexStr;
                 processAoB();
                 window.NullApp.showToast(`Loaded ${u8.length} bytes from ${file.name}`);
             };
             reader.readAsArrayBuffer(file);
-        } else {
+        }
+        else {
             reader.onload = (e) => {
-                if (el.rawAobInput) el.rawAobInput.value = e.target.result;
-                state.rawInput = e.target.result;
+                if (el.rawAobInput)
+                    el.rawAobInput.value = e.target.result;
+                state.rawInput = e.target?.result || "";
                 processAoB();
                 window.NullApp.showToast(`Loaded ${file.name}`);
             };
             reader.readAsText(file);
         }
     }
-
     function parseHexBytes(str) {
-        if (!str || !str.trim()) return [];
+        if (!str || !str.trim())
+            return [];
         let cleaned = str.replace(/\/\*[\s\S]*?\*\/|\/\/.*/g, '');
         cleaned = cleaned.replace(/0x|0X|,|;|\\x|\\X/g, ' ');
         const tokens = cleaned.match(/[0-9A-Fa-f]{1,2}/g) || [];
         return tokens.map(t => t.padStart(2, '0').toUpperCase());
     }
-
     function processAoB() {
         const rawTokens = parseHexBytes(state.rawInput);
         const preserveTokens = parseHexBytes(state.preserveInput);
         const preserveSet = new Set(preserveTokens);
-
         state.parsedBytes = [];
-
         // Pre-calculate sequence matches if sequence granularity is selected
         const sequenceMatches = new Set();
         if (state.granularity === 'sequence' && preserveTokens.length > 0) {
@@ -303,34 +277,34 @@ const Tool2AobCleaner = (function () {
                     }
                 }
                 if (match) {
-                    for (let j = 0; j < seqLen; j++) sequenceMatches.add(i + j);
+                    for (let j = 0; j < seqLen; j++)
+                        sequenceMatches.add(i + j);
                 }
             }
         }
-
         rawTokens.forEach((hex, idx) => {
             const isZero = (hex === '00');
             let isRuleMatched = false;
-
             if (state.granularity === 'byte') {
                 isRuleMatched = preserveSet.has(hex);
-            } else {
+            }
+            else {
                 isRuleMatched = sequenceMatches.has(idx);
             }
-
             let keep = false;
             if (state.filterMode === 'keep') {
                 keep = isRuleMatched;
-            } else {
+            }
+            else {
                 keep = !isRuleMatched;
             }
-
             // Zero Byte Policy
             if (isZero) {
-                if (state.zeroPolicy === 'preserve') keep = true;
-                else if (state.zeroPolicy === 'mask') keep = false;
+                if (state.zeroPolicy === 'preserve')
+                    keep = true;
+                else if (state.zeroPolicy === 'mask')
+                    keep = false;
             }
-
             state.parsedBytes.push({
                 index: idx,
                 originalHex: hex,
@@ -338,35 +312,33 @@ const Tool2AobCleaner = (function () {
                 isPreserved: keep
             });
         });
-
         renderOutput();
     }
-
     function renderOutput() {
-        if (!el.cleanedOutput) return;
-
+        if (!el.cleanedOutput)
+            return;
         if (state.parsedBytes.length === 0) {
             el.cleanedOutput.value = '';
-            if (el.byteCountLabel) el.byteCountLabel.textContent = '0 bytes';
-            if (el.charCountLabel) el.charCountLabel.textContent = '0 chars';
-            if (el.codePreviewCard) el.codePreviewCard.classList.remove('visible');
+            if (el.byteCountLabel)
+                el.byteCountLabel.textContent = '0 bytes';
+            if (el.charCountLabel)
+                el.charCountLabel.textContent = '0 chars';
+            if (el.codePreviewCard)
+                el.codePreviewCard.classList.remove('visible');
             return;
         }
-
         const wildcard = state.wildcardToken;
         const isUpper = state.letterCase === 'upper';
-
         const tokens = state.parsedBytes.map(b => {
             if (b.isPreserved) {
                 return isUpper ? b.originalHex.toUpperCase() : b.originalHex.toLowerCase();
-            } else {
+            }
+            else {
                 return wildcard;
             }
         });
-
         let formattedText = '';
         const bpl = state.bytesPerLine;
-
         switch (state.activeFormat) {
             case 'standard': {
                 if (bpl > 0) {
@@ -375,13 +347,14 @@ const Tool2AobCleaner = (function () {
                         lines.push(tokens.slice(i, i + bpl).join(' '));
                     }
                     formattedText = lines.join('\n');
-                } else {
+                }
+                else {
                     formattedText = tokens.join(' ');
                 }
-                if (el.codePreviewCard) el.codePreviewCard.classList.remove('visible');
+                if (el.codePreviewCard)
+                    el.codePreviewCard.classList.remove('visible');
                 break;
             }
-
             case 'ida': {
                 const idaTokens = state.parsedBytes.map(b => {
                     return b.isPreserved ? (isUpper ? b.originalHex.toUpperCase() : b.originalHex.toLowerCase()) : '?';
@@ -392,47 +365,48 @@ const Tool2AobCleaner = (function () {
                         lines.push(idaTokens.slice(i, i + bpl).join(' '));
                     }
                     formattedText = lines.join('\n');
-                } else {
+                }
+                else {
                     formattedText = idaTokens.join(' ');
                 }
-                if (el.codePreviewCard) el.codePreviewCard.classList.remove('visible');
+                if (el.codePreviewCard)
+                    el.codePreviewCard.classList.remove('visible');
                 break;
             }
-
             case 'compact': {
                 formattedText = tokens.join('');
-                if (el.codePreviewCard) el.codePreviewCard.classList.remove('visible');
+                if (el.codePreviewCard)
+                    el.codePreviewCard.classList.remove('visible');
                 break;
             }
-
             case 'cpp-sig': {
                 formattedText = tokens.join(' ');
                 let sigPattern = '';
                 let maskStr = '';
-
                 state.parsedBytes.forEach(b => {
                     if (b.isPreserved) {
                         const h = isUpper ? b.originalHex.toUpperCase() : b.originalHex.toLowerCase();
                         sigPattern += `\\x${h}`;
                         maskStr += 'x';
-                    } else {
+                    }
+                    else {
                         sigPattern += '\\x00';
                         maskStr += '?';
                     }
                 });
-
-                if (el.codePreviewTitle) el.codePreviewTitle.textContent = 'C / C++ Memory Scanner Signature & Mask';
+                if (el.codePreviewTitle)
+                    el.codePreviewTitle.textContent = 'C / C++ Memory Scanner Signature & Mask';
                 if (el.codePreviewContent) {
                     el.codePreviewContent.textContent =
-`// C/C++ Signature & Mask Pattern
+                        `// C/C++ Signature & Mask Pattern
 const char* pattern = "${sigPattern}";
 const char* mask    = "${maskStr}";
 const size_t length = ${state.parsedBytes.length};`;
                 }
-                if (el.codePreviewCard) el.codePreviewCard.classList.add('visible');
+                if (el.codePreviewCard)
+                    el.codePreviewCard.classList.add('visible');
                 break;
             }
-
             case 'byte-array': {
                 formattedText = tokens.join(' ');
                 const hexArr = state.parsedBytes.map(b => {
@@ -440,24 +414,25 @@ const size_t length = ${state.parsedBytes.length};`;
                     return `0x${h}`;
                 });
                 const maskChars = state.parsedBytes.map(b => (b.isPreserved ? 'x' : '?')).join('');
-
-                if (el.codePreviewTitle) el.codePreviewTitle.textContent = 'C# / C++ Byte Array & Mask';
+                if (el.codePreviewTitle)
+                    el.codePreviewTitle.textContent = 'C# / C++ Byte Array & Mask';
                 if (el.codePreviewContent) {
                     el.codePreviewContent.textContent =
-`// C# Byte Array & Mask
+                        `// C# Byte Array & Mask
 byte[] pattern = new byte[] { ${hexArr.join(', ')} };
 string mask = "${maskChars}";`;
                 }
-                if (el.codePreviewCard) el.codePreviewCard.classList.add('visible');
+                if (el.codePreviewCard)
+                    el.codePreviewCard.classList.add('visible');
                 break;
             }
         }
-
         el.cleanedOutput.value = formattedText;
-        if (el.byteCountLabel) el.byteCountLabel.textContent = `${state.parsedBytes.length.toLocaleString()} bytes`;
-        if (el.charCountLabel) el.charCountLabel.textContent = `${formattedText.length.toLocaleString()} chars`;
+        if (el.byteCountLabel)
+            el.byteCountLabel.textContent = `${state.parsedBytes.length.toLocaleString()} bytes`;
+        if (el.charCountLabel)
+            el.charCountLabel.textContent = `${formattedText.length.toLocaleString()} chars`;
     }
-
     return {
         init,
         getState: () => state,
@@ -465,7 +440,10 @@ string mask = "${maskChars}";`;
         parseHexBytes
     };
 })();
-
-if (typeof window !== 'undefined') window.Tool2AobCleaner = Tool2AobCleaner;
-if (typeof globalThis !== 'undefined') globalThis.Tool2AobCleaner = Tool2AobCleaner;
-if (typeof module !== 'undefined' && module.exports) module.exports = Tool2AobCleaner;
+if (typeof window !== 'undefined')
+    window.Tool2AobCleaner = Tool2AobCleaner;
+if (typeof globalThis !== 'undefined')
+    globalThis.Tool2AobCleaner = Tool2AobCleaner;
+if (typeof module !== 'undefined' && module.exports)
+    module.exports = Tool2AobCleaner;
+//# sourceMappingURL=tool2-aob-cleaner.js.map

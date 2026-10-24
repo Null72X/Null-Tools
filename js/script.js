@@ -9,35 +9,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const deleteBtn = document.getElementById('deleteBtn');
     const statusEl = document.getElementById('downloadStatus');
     const statusMsg = document.getElementById('statusMessage');
-
     // Bones refs
     const chestInput = document.getElementById('chestOffsetInput');
     const calcBtn = document.getElementById('calcBonesBtn');
     const bonesBody = document.getElementById('bonesBody');
     const bonesTable = document.getElementById('bonesTable');
     const bonesEmpty = document.getElementById('bonesEmpty');
-
     // Tabs
     const tabBtns = document.querySelectorAll('.tab-btn');
     const panels = {
         aob: document.getElementById('panel-aob'),
         bones: document.getElementById('panel-bones'),
     };
-
     let statusTimeout;
-
     function showStatus(message, icon = '⚡') {
-        if (!statusEl) return;
+        if (!statusEl)
+            return;
         const iconSpan = statusEl.querySelector('span:first-child');
-        if (iconSpan) iconSpan.textContent = icon;
-        if (statusMsg) statusMsg.textContent = message;
+        if (iconSpan)
+            iconSpan.textContent = icon;
+        if (statusMsg)
+            statusMsg.textContent = message;
         statusEl.classList.add('show');
         clearTimeout(statusTimeout);
         statusTimeout = setTimeout(() => {
             statusEl.classList.remove('show');
         }, 3000);
     }
-
     // ── Tab switching ──
     tabBtns.forEach(btn => {
         btn.addEventListener('click', function () {
@@ -51,60 +49,47 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     });
-
     // ── AOB conversion functions ──
     function aobToCpp(aob) {
         return aob.trim().split(/\s+/).map(p => p === '??' ? "'?'" : '0x' + p.toUpperCase()).join(', ');
     }
-
     function aobToPython(aob) {
         return aob.trim().split(/\s+/).map(p => p === '??' ? '.' : '\\x' + p.toUpperCase()).join('');
     }
-
     function cppToCs(aob) {
         return aob.replace(/[{};]/g, '').split(/,|\s+/).filter(Boolean).map(p => {
             p = p.replace(/0x/gi, '').trim();
             return p === '??' || p === "'?'" ? '??' : p.toUpperCase();
         }).join(' ');
     }
-
     function cppToPython(aob) {
         return aob.replace(/[{};]/g, '').split(/,|\s+/).filter(Boolean).map(p => {
             p = p.trim();
-            if (p === '??' || p === "'?'") return '.';
+            if (p === '??' || p === "'?'")
+                return '.';
             return '\\x' + p.replace(/0x/gi, '').toUpperCase();
         }).join('');
     }
-
     function csToCpp(aob) { return ' ' + aobToCpp(aob) + ' '; }
-
     function csToPython(aob) { return aobToPython(aob); }
-
     function pyToCs(aob) {
-        return ' ' + aob.replace(/'/g, '').split(/\\x|(?=\.)/).filter(Boolean).map(p =>
-            p === '.' ? '??' : p.toUpperCase()
-        ).join(' ') + ' ';
+        return ' ' + aob.replace(/'/g, '').split(/\\x|(?=\.)/).filter(Boolean).map(p => p === '.' ? '??' : p.toUpperCase()).join(' ') + ' ';
     }
-
     function pyToCpp(aob) {
-        return ' ' + aob.replace(/'/g, '').split(/\\x|(?=\.)/).filter(Boolean).map(p =>
-            p === '.' ? "'?'" : '0x' + p.toUpperCase()
-        ).join(', ') + ' ';
+        return ' ' + aob.replace(/'/g, '').split(/\\x|(?=\.)/).filter(Boolean).map(p => p === '.' ? "'?'" : '0x' + p.toUpperCase()).join(', ') + ' ';
     }
-
     // ── Update AOB conversion ──
     function updateConversion() {
-        if (!input || !output || !byteCountDisplay) return;
+        if (!input || !output || !byteCountDisplay)
+            return;
         const val = input.value.trim();
         if (!val) {
             output.textContent = '';
             byteCountDisplay.textContent = '0';
             return;
         }
-
         const bytes = val.split(/\s+/).filter(Boolean);
         byteCountDisplay.textContent = bytes.length;
-
         let result = '';
         const mode = select ? select.value : 'cs-cpp';
         switch (mode) {
@@ -131,9 +116,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         output.textContent = result;
     }
-
     function updateLabel() {
-        if (!select || !conversionLabel) return;
+        if (!select || !conversionLabel)
+            return;
         const mode = select.value;
         const map = {
             'cs-cpp': 'C# → C++',
@@ -145,20 +130,19 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         conversionLabel.textContent = map[mode] || 'C# → C++';
     }
-
     // ── Bones calculation ──
     function parseHex(str) {
         const clean = str.trim().replace(/^0x/i, '').replace(/^#/, '');
-        if (!/^[0-9A-Fa-f]+$/.test(clean)) return null;
+        if (!/^[0-9A-Fa-f]+$/.test(clean))
+            return null;
         return parseInt(clean, 16);
     }
-
     function toHexStr(num) {
         return '0x' + num.toString(16).toUpperCase().padStart(2, '0');
     }
-
     function calculateBones() {
-        if (!chestInput || !bonesTable || !bonesEmpty || !bonesBody) return;
+        if (!chestInput || !bonesTable || !bonesEmpty || !bonesBody)
+            return;
         const raw = chestInput.value.trim();
         const chestVal = parseHex(raw);
         if (chestVal === null) {
@@ -168,7 +152,6 @@ document.addEventListener('DOMContentLoaded', () => {
             showStatus('Invalid hex value', '⚠️');
             return;
         }
-
         const boneDefs = [
             { name: 'Head', delta: -0x4 },
             { name: 'Neck', delta: 0x4 },
@@ -177,27 +160,23 @@ document.addEventListener('DOMContentLoaded', () => {
             { name: 'Left Shoulder', delta: 0x40 },
             { name: 'Right Shoulder', delta: 0x44 },
         ];
-
         const rows = boneDefs.map(def => ({
             name: def.name,
             offsetStr: toHexStr(chestVal + def.delta)
         }));
-
         bonesBody.innerHTML = rows.map(row => `
             <tr>
                 <td class="bone-name">${row.name}</td>
                 <td class="bone-offset">${row.offsetStr}</td>
             </tr>
         `).join('');
-
         bonesEmpty.style.display = 'none';
         bonesTable.style.display = 'table';
         showStatus(`Calculated ${rows.length} bone offsets from ${toHexStr(chestVal)}`, '🦴');
     }
-
     // ── Events: AOB ──
-    if (input) input.addEventListener('input', updateConversion);
-
+    if (input)
+        input.addEventListener('input', updateConversion);
     if (select) {
         select.addEventListener('change', function () {
             updateLabel();
@@ -205,7 +184,6 @@ document.addEventListener('DOMContentLoaded', () => {
             showStatus('Switched to ' + this.options[this.selectedIndex].text, '🔄');
         });
     }
-
     if (copyBtn) {
         copyBtn.addEventListener('click', function () {
             const text = output ? output.textContent : '';
@@ -226,20 +204,22 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
-
     if (deleteBtn) {
         deleteBtn.addEventListener('click', function () {
-            if (input) input.value = '';
-            if (output) output.textContent = '';
-            if (byteCountDisplay) byteCountDisplay.textContent = '0';
-            if (input) input.focus();
+            if (input)
+                input.value = '';
+            if (output)
+                output.textContent = '';
+            if (byteCountDisplay)
+                byteCountDisplay.textContent = '0';
+            if (input)
+                input.focus();
             showStatus('Cleared', '✕');
         });
     }
-
     // ── Events: Bones ──
-    if (calcBtn) calcBtn.addEventListener('click', calculateBones);
-
+    if (calcBtn)
+        calcBtn.addEventListener('click', calculateBones);
     if (chestInput) {
         chestInput.addEventListener('keydown', function (e) {
             if (e.key === 'Enter') {
@@ -248,14 +228,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-
     // ── Initialize Default State ──
     updateLabel();
     updateConversion();
-
     if (bonesEmpty && bonesTable) {
         bonesEmpty.style.display = 'block';
         bonesTable.style.display = 'none';
         bonesEmpty.innerHTML = '<span>Enter a chest offset and click calculate.</span>';
     }
 });
+//# sourceMappingURL=script.js.map

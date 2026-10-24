@@ -3,10 +3,8 @@
    Il2CppDumper dump.cs & libil2cpp.so Parser, Dual AOB Generator & Code Studio
    100% Exact FireHawk Panels Engine Integration with Null-Tools Cyberpunk Theme
    ========================================================================== */
-
 const Tool1Bones = (function () {
     'use strict';
-
     // Application State
     const state = {
         dumpContent: '',
@@ -27,10 +25,8 @@ const Tool1Bones = (function () {
         activeLang: 'cpp',
         elapsedSeconds: 0
     };
-
     // DOM Elements Cache
     let el = {};
-
     // =========================================================================
     // 1. FIREHAWK CANONICAL BONE DEFINITIONS (21 Canonical Bones)
     // =========================================================================
@@ -57,7 +53,6 @@ const Tool1Bones = (function () {
         { canonicalName: 'Waist', fallbackField: 'BDMMCNJOHNI', type: 'Transform', desc: 'Waist / mid-body pivot transform' },
         { canonicalName: 'HeadCollider', fallbackField: 'BANPEGJEAKE', type: 'Collider', desc: 'Head capsule collider (aimbot visible check)' }
     ];
-
     // =========================================================================
     // 2. FIREHAWK ENGINE BONE DEFINITIONS (15 Engine Bones)
     // =========================================================================
@@ -78,7 +73,6 @@ const Tool1Bones = (function () {
         { methodName: 'LeftWristJoint', fieldName: 'LeftWrist', displayName: 'WristLeft (Engine)', desc: 'Left wrist stabilization node' },
         { methodName: 'HeadSphereCollider', fieldName: 'HeadCollider', displayName: 'HeadCollider (Engine)', desc: 'Head sphere collider component' }
     ];
-
     // =========================================================================
     // 3. FIREHAWK CORE OFFSETS DEFINITIONS (98 Targets)
     // =========================================================================
@@ -90,7 +84,6 @@ const Tool1Bones = (function () {
         { key: 'GameFacade_Script', name: 'GameFacade_Script', category: 'Base / Static', v8: '0xA342EFC', v7: '0xA342EFC', v8max: '0x0A7324E0', type: 'uint64_t', desc: 'Direct pointer in script info table' },
         { key: 'StaticClass', name: 'StaticClass', category: 'Base / Static', v8: '0x5C', v7: '0x5C', v8max: '0x5C', type: 'uint32_t', desc: 'Il2CppClass->static_fields pointer offset' },
         { key: 'CurrentMatchGame', name: 'CurrentMatchGame', category: 'Base / Static', v8: '0x08', v7: '0x04', v8max: '0x08', type: 'uint32_t', desc: 'Inside GameFacade static_fields' },
-
         // Match / Game State
         { key: 'CurrentMatch', name: 'CurrentMatch', category: 'Match / Game State', v8: '0x90', v7: '0x50', v8max: '0x90', type: 'uint32_t', className: 'MatchGame', field: 'm_Match', desc: 'MatchGame.m_Match (JMAGGLCNGIG)' },
         { key: 'CurrentMatchGameField', name: 'CurrentMatchGameField', category: 'Match / Game State', v8: '0x08', v7: '0x04', v8max: '0x08', type: 'uint32_t', className: 'GameFacade', field: 'CurrentMatchGame', desc: 'CurrentMatchGame pointer' },
@@ -100,7 +93,6 @@ const Tool1Bones = (function () {
         { key: 'LocalPlayer', name: 'LocalPlayer', category: 'Match / Game State', v8: '0xD8', v7: '0x98', v8max: '0xD8', type: 'Player', className: 'JMAGGLCNGIG', field: 'MHJCLOPOBAA', desc: 'Local player instance pointer in Match controller' },
         { key: 'DictionaryEntities', name: 'DictionaryEntities', category: 'Match / Game State', v8: '0xC0', v7: '0x80', v8max: '0xC0', type: 'Dictionary', className: 'MatchGame', field: 'm_ReplicationEntitis', desc: 'Entities dictionary containing all active players (0xC0)' },
         { key: 'GameTimer', name: 'GameTimer', category: 'Match / Game State', v8: '0x18', v7: '0x10', v8max: '0x18', type: 'float', className: 'MatchGame', field: 'm_GameTimer', desc: 'In-game survival elapsed match timer' },
-
         // Player Offsets
         { key: 'Player_IsDead', name: 'Player_IsDead', category: 'Player Offsets', v8: '0x7C', v7: '0x7C', v8max: '0x7C', type: 'bool', className: 'AttackableEntity', field: 'CGJLEBOGBNP', desc: 'Player death boolean flag (true = dead/knocked)' },
         { key: 'Player_Name', name: 'Player_Name', category: 'Player Offsets', v8: '0x498', v7: '0x328', v8max: '0x498', type: 'string', className: 'Player', field: 'OriginalNickName', desc: 'Player nickname Unicode IL2CPP string' },
@@ -109,7 +101,6 @@ const Tool1Bones = (function () {
         { key: 'XPose', name: 'XPose', category: 'Player Offsets', v8: '0x80', v7: '0x58', v8max: '0x80', type: 'float', className: 'PlayerNetwork', field: 'JDFKCAAFFKN', desc: 'Player vertical look pitch angle' },
         { key: 'LocalPlayerAttributes', name: 'LocalPlayerAttributes', category: 'Player Offsets', v8: '0x768', v7: '0x528', v8max: '0x768', type: 'PlayerAttributes', className: 'Player', field: 'IODLOCEJIOK', desc: 'Player active weapon & stats attributes manager' },
         { key: 'IsClientBot', name: 'IsClientBot', category: 'Player Offsets', v8: '0x4A0', v7: '0x330', v8max: '0x4A0', type: 'bool', className: 'Player', field: 'IsClientBot', desc: 'AI / Bot identification flag' },
-
         // Avatar & Model
         { key: 'AvatarManager', name: 'AvatarManager', category: 'Avatar & Model', v8: '0x770', v7: '0x530', v8max: '0x770', type: 'AvatarManager', className: 'Player', field: 'GGJOLDEEIEN', desc: 'Player active UMA Avatar Manager' },
         { key: 'Avatar', name: 'Avatar', category: 'Avatar & Model', v8: '0x138', v7: '0xB0', v8max: '0x138', type: 'UmaAvatarSimple', className: 'AvatarManager', field: 'LHEDBMJJOLM', desc: 'Main 3D character mesh container' },
@@ -118,7 +109,6 @@ const Tool1Bones = (function () {
         { key: 'Avatar_Data_IsTeam', name: 'Avatar_Data_IsTeam', category: 'Avatar & Model', v8: '0x81', v7: '0x81', v8max: '0x81', type: 'bool', className: 'UMAData', field: 'isTeammate', desc: 'Teammate check flag (false for enemies)' },
         { key: 'BaseProfileInfo', name: 'BaseProfileInfo', category: 'Avatar & Model', v8: '0x24D0', v7: '0x1878', v8max: '0x24D0', type: 'ProfileInfo', className: 'PlayerNetwork', field: 'GFBBIPJFPAD', desc: 'PlayerNetwork profile container' },
         { key: 'Profile_GroupMemberCount', name: 'Profile_GroupMemberCount', category: 'Avatar & Model', v8: '0x28', v7: '0x18', v8max: '0x28', type: 'int', className: 'ProfileInfo', field: 'GroupMembers', desc: 'Active team / lobby party member count' },
-
         // Camera Offsets
         { key: 'FollowCamera', name: 'FollowCamera', category: 'Camera Offsets', v8: '0x690', v7: '0x498', v8max: '0x690', type: 'FollowCamera', className: 'Player', field: 'AHNCPOJPPCL', desc: 'FollowCamera reference in Player class' },
         { key: 'Camera', name: 'Camera', category: 'Camera Offsets', v8: '0x30', v7: '0x20', v8max: '0x30', type: 'Camera', className: 'CameraControllerBase', field: 'AFMGCAELKBD', desc: 'Unity Camera component instance pointer' },
@@ -127,7 +117,6 @@ const Tool1Bones = (function () {
         { key: 'ViewMatrix', name: 'ViewMatrix', category: 'Camera Offsets', v8: '0x198', v7: '0x108', v8max: '0x198', type: 'Matrix4x4', className: 'BaseRuntimePanel', field: 'panelToWorld', desc: 'WorldToScreenMatrix 4x4 for ESP rendering' },
         { key: 'FovIncrease', name: 'FovIncrease', category: 'Camera Offsets', v8: '0x84', v7: '0x5C', v8max: '0x84', type: 'float', className: 'FollowCamera', field: 'FOVOffset', desc: 'FOV angle zoom offset multiplier' },
         { key: 'Camera_IsFovOverridden', name: 'Camera_IsFovOverridden', category: 'Camera Offsets', v8: '0x88', v7: '0x60', v8max: '0x88', type: 'bool', className: 'FollowCamera', field: 'm_IsFovOverridden', desc: 'Manual FOV zoom override flag' },
-
         // Weapon Offsets
         { key: 'Weapon', name: 'Weapon', category: 'Weapon Offsets', v8: '0x600', v7: '0x438', v8max: '0x600', type: 'Weapon', className: 'Player', field: 'ActiveUISightingWeapon', desc: 'Currently equipped active weapon component' },
         { key: 'WeaponData', name: 'WeaponData', category: 'Weapon Offsets', v8: '0x80', v7: '0x58', v8max: '0x80', type: 'WeaponConfig', className: 'HBIBDMMOOOK', field: '<BDKDBILOMDE>k__BackingField', desc: 'Gun specifications configuration data' },
@@ -141,7 +130,6 @@ const Tool1Bones = (function () {
         { key: 'Rapidfire', name: 'Rapidfire', category: 'Weapon Offsets', v8: '0x254', v7: '0x1A4', v8max: '0x254', type: 'float', className: 'PlayerAttributes', field: 'NOPODIILEKG', desc: 'Shot delay interval multiplier (Rapid fire)' },
         { key: 'NoReload', name: 'NoReload', category: 'Weapon Offsets', v8: '0x64', v7: '0x44', v8max: '0x64', type: 'bool', className: 'PlayerAttributes', field: 'NoReload', desc: 'Instant reload / skip reload animation' },
         { key: 'BulletSpeed', name: 'BulletSpeed', category: 'Weapon Offsets', v8: '0x8C', v7: '0x60', v8max: '0x8C', type: 'float', className: 'WeaponController', field: 'm_BulletVelocity', desc: 'Bullet projectile travel velocity' },
-
         // Silent Aim & Aimbot
         { key: 'sAim1', name: 'sAim1', category: 'Silent Aim & Aimbot', v8: '0x848', v7: '0x5F8', v8max: '0x848', type: 'Vector3', className: 'Player', field: '<AHDLLHMLNFI>k__BackingField', desc: 'Primary silent aim angle vector' },
         { key: 'sAim2', name: 'sAim2', category: 'Silent Aim & Aimbot', v8: '0xE50', v7: '0xA40', v8max: '0xE50', type: 'Vector3', className: 'Player', field: 'FDMIEDDNCEC', desc: 'Secondary target lock directional vector' },
@@ -150,16 +138,13 @@ const Tool1Bones = (function () {
         { key: 'sAimNormal', name: 'sAimNormal', category: 'Silent Aim & Aimbot', v8: '0x38', v7: '0x28', v8max: '0x38', type: 'Vector3', className: 'CGKJLKPMGDJ', field: 'sAimNormal', desc: 'Raycast collision surface normal vector' },
         { key: 'AimbotVisible', name: 'AimbotVisible', category: 'Silent Aim & Aimbot', v8: '0x738', v7: '0x4E8', v8max: '0x738', type: 'Collider', className: 'Player', field: 'BANPEGJEAKE', desc: 'Alias for HeadCollider (32-bit: 0x4E8)' },
         { key: 'HeadCollider', name: 'HeadCollider', category: 'Silent Aim & Aimbot', v8: '0x738', v7: '0x4E8', v8max: '0x738', type: 'Collider', className: 'Player', field: 'BANPEGJEAKE', desc: 'Character head capsule collider (0x4E8 / 0x738)' },
-
         // Observer
         { key: 'CurrentObserver', name: 'CurrentObserver', category: 'Observer / Spectator', v8: '0x100', v7: '0xB8', v8max: '0x100', type: 'int', className: 'JMAGGLCNGIG', field: 'DGDPMNMOAFP', desc: 'Spectator count watching local player' },
         { key: 'ObserverPlayer', name: 'ObserverPlayer', category: 'Observer / Spectator', v8: '0x30', v7: '0x20', v8max: '0x30', type: 'Player', className: 'NGOJGBFHDIM', field: 'EPLJDLHLHCH', desc: 'Active observer player entity pointer' },
-
         // Grenade & Combat
         { key: 'GrenadeTrajectory', name: 'GrenadeTrajectory', category: 'Grenade & Combat', v8: '0x30', v7: '0x20', v8max: '0x30', type: 'Vector3[]', className: 'GrenadeThrower', field: 'Trajectory', desc: 'Grenade arc line prediction positions' },
         { key: 'GrenadeThrow', name: 'GrenadeThrow', category: 'Grenade & Combat', v8: '0x28', v7: '0x1C', v8max: '0x28', type: 'float', className: 'GrenadeThrower', field: 'ThrowForce', desc: 'Grenade velocity release force' }
     ];
-
     // =========================================================================
     // 4. FIREHAWK PATCHES & DUAL AOB DEFINITIONS (32 Patch Features)
     // =========================================================================
@@ -261,7 +246,6 @@ const Tool1Bones = (function () {
             desc: 'Removes deceleration and forces maximum character velocity'
         }
     ];
-
     // =========================================================================
     // 5. FIREHAWK ANTI-DETECT BYPASS DEFINITIONS (6 Bypasses)
     // =========================================================================
@@ -339,7 +323,6 @@ const Tool1Bones = (function () {
             desc: 'Allows modified packets and prevents network desync kicks'
         }
     ];
-
     // =========================================================================
     // INITIALIZATION & EVENT BINDINGS
     // =========================================================================
@@ -350,77 +333,66 @@ const Tool1Bones = (function () {
             dumpTitle: document.getElementById('dumpTitle'),
             dumpDesc: document.getElementById('dumpDesc'),
             dumpBadge: document.getElementById('dumpBadge'),
-
             dropSo: document.getElementById('dropSo'),
             fileSoInput: document.getElementById('fileSoInput'),
             soTitle: document.getElementById('soTitle'),
             soDesc: document.getElementById('soDesc'),
             soBadge: document.getElementById('soBadge'),
-
             versionSelect: document.getElementById('versionSelect'),
             scanLengthSelect: document.getElementById('scanLengthSelect'),
             customBytesWrapper: document.getElementById('customBytesWrapper'),
             customByteInput: document.getElementById('customByteInput'),
             btnAnalyze: document.getElementById('btnAnalyze'),
             btnLoadSampleDump: document.getElementById('btnLoadSampleDump'),
-
             progressWrapper: document.getElementById('progressWrapper'),
             progressBar: document.getElementById('progressBar'),
             progressText: document.getElementById('progressText'),
             progressPercent: document.getElementById('progressPercent'),
-
             headerArch: document.getElementById('headerArch'),
             headerItems: document.getElementById('headerItems'),
-
             subTabBtns: document.querySelectorAll('.subtab-btn'),
             subPanels: document.querySelectorAll('.subtab-panel'),
             filterInput: document.getElementById('bonesFilterInput'),
             btnQuickSaveTxt: document.getElementById('btnQuickSaveTxt'),
-
             badgeBones: document.getElementById('badgeBones'),
             badgeCore: document.getElementById('badgeCore'),
             badgePatches: document.getElementById('badgePatches'),
             badgeBypass: document.getElementById('badgeBypass'),
-
             bonesTbody: document.getElementById('bonesTbody'),
             coreTbody: document.getElementById('coreTbody'),
             patchesTbody: document.getElementById('patchesTbody'),
             bypassTbody: document.getElementById('bypassTbody'),
-
             customSearchQuery: document.getElementById('customSearchQuery'),
             btnRunSearch: document.getElementById('btnRunSearch'),
             searchTbody: document.getElementById('searchTbody'),
-
             langBtns: document.querySelectorAll('.btn-lang'),
             codeOutput: document.getElementById('codeOutput'),
             btnCopyGenerated: document.getElementById('btnCopyGenerated'),
             btnDownloadGenerated: document.getElementById('btnDownloadGenerated')
         };
-
         bindEvents();
     }
-
     function bindEvents() {
         // Drop Dump
         if (el.dropDump && el.fileDumpInput) {
             el.dropDump.addEventListener('click', () => el.fileDumpInput.click());
             el.fileDumpInput.addEventListener('change', (e) => {
                 const file = e.target.files[0];
-                if (file) handleDumpFile(file);
+                if (file)
+                    handleDumpFile(file);
             });
             setupDragDrop(el.dropDump, handleDumpFile);
         }
-
         // Drop .so
         if (el.dropSo && el.fileSoInput) {
             el.dropSo.addEventListener('click', () => el.fileSoInput.click());
             el.fileSoInput.addEventListener('change', (e) => {
                 const file = e.target.files[0];
-                if (file) handleSoFile(file);
+                if (file)
+                    handleSoFile(file);
             });
             setupDragDrop(el.dropSo, handleSoFile);
         }
-
         // Global Drag & Drop on window
         if (typeof window !== 'undefined' && window.addEventListener) {
             window.addEventListener('dragover', (e) => e.preventDefault());
@@ -428,13 +400,14 @@ const Tool1Bones = (function () {
                 e.preventDefault();
                 if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
                     for (const f of e.dataTransfer.files) {
-                        if (f.name.endsWith('.so')) handleSoFile(f);
-                        else if (f.name.endsWith('.cs') || f.name.endsWith('.txt')) handleDumpFile(f);
+                        if (f.name.endsWith('.so'))
+                            handleSoFile(f);
+                        else if (f.name.endsWith('.cs') || f.name.endsWith('.txt'))
+                            handleDumpFile(f);
                     }
                 }
             });
         }
-
         // Version & Scan Length
         if (el.versionSelect) {
             el.versionSelect.addEventListener('change', (e) => {
@@ -442,25 +415,25 @@ const Tool1Bones = (function () {
                 updateArchLabel();
             });
         }
-
         if (el.scanLengthSelect) {
             el.scanLengthSelect.addEventListener('change', (e) => {
                 if (e.target.value === 'custom') {
-                    if (el.customBytesWrapper) el.customBytesWrapper.style.display = 'flex';
+                    if (el.customBytesWrapper)
+                        el.customByteswrapper.style.display = 'flex';
                     state.scanLength = parseInt(el.customByteInput.value, 10) || 64;
-                } else {
-                    if (el.customBytesWrapper) el.customBytesWrapper.style.display = 'none';
+                }
+                else {
+                    if (el.customBytesWrapper)
+                        el.customByteswrapper.style.display = 'none';
                     state.scanLength = parseInt(e.target.value, 10) || 64;
                 }
             });
         }
-
         if (el.customByteInput) {
             el.customByteInput.addEventListener('input', (e) => {
                 state.scanLength = parseInt(e.target.value, 10) || 64;
             });
         }
-
         // Quick pills for scan length
         document.querySelectorAll('.pill-btn[data-bytes]').forEach(btn => {
             btn.addEventListener('click', () => {
@@ -469,34 +442,36 @@ const Tool1Bones = (function () {
                 const bytes = btn.getAttribute('data-bytes');
                 if (el.scanLengthSelect) {
                     el.scanLengthSelect.value = bytes;
-                    if (el.customBytesWrapper) el.customBytesWrapper.style.display = 'none';
+                    if (el.customBytesWrapper)
+                        el.customByteswrapper.style.display = 'none';
                 }
                 state.scanLength = parseInt(bytes, 10);
             });
         });
-
         // Analyze Button
         if (el.btnAnalyze) {
             el.btnAnalyze.addEventListener('click', runAnalysis);
         }
-
         // Sample Load Button
         if (el.btnLoadSampleDump) {
             el.btnLoadSampleDump.addEventListener('click', () => {
                 state.dumpContent = (typeof SAMPLE_DATA !== 'undefined' && SAMPLE_DATA.dumpCs) ? SAMPLE_DATA.dumpCs : '';
                 state.dumpFileName = 'sample_dump.cs';
-                if (el.dumpTitle) el.dumpTitle.textContent = 'sample_dump.cs';
-                if (el.dumpDesc) el.dumpDesc.textContent = 'Loaded built-in reference dump (' + state.dumpContent.length + ' bytes)';
+                if (el.dumpTitle)
+                    el.dumpTitle.textContent = 'sample_dump.cs';
+                if (el.dumpDesc)
+                    el.dumpDesc.textContent = 'Loaded built-in reference dump (' + state.dumpContent.length + ' bytes)';
                 if (el.dumpBadge) {
                     el.dumpBadge.textContent = 'READY';
                     el.dumpBadge.className = 'badge badge-emerald';
                 }
-                if (el.dropDump) el.dropDump.classList.add('loaded');
-                if (window.NullApp && window.NullApp.showToast) window.NullApp.showToast('Sample dump.cs loaded! Analyzing...');
+                if (el.dropDump)
+                    el.dropDump.classList.add('loaded');
+                if (window.NullApp && window.NullApp.showToast)
+                    window.NullApp.showToast('Sample dump.cs loaded! Analyzing...');
                 runAnalysis();
             });
         }
-
         // Subtabs
         el.subTabBtns.forEach(btn => {
             btn.addEventListener('click', () => {
@@ -504,7 +479,6 @@ const Tool1Bones = (function () {
                 switchSubTab(target);
             });
         });
-
         // Filter
         if (el.filterInput) {
             el.filterInput.addEventListener('input', (e) => {
@@ -512,20 +486,18 @@ const Tool1Bones = (function () {
                 applyFilter();
             });
         }
-
         // Quick Save
         if (el.btnQuickSaveTxt) {
             el.btnQuickSaveTxt.addEventListener('click', saveOffsetsTxt);
         }
-
         // Search in Dump
         if (el.btnRunSearch && el.customSearchQuery) {
             el.btnRunSearch.addEventListener('click', runCustomSearch);
             el.customSearchQuery.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') runCustomSearch();
+                if (e.key === 'Enter')
+                    runCustomSearch();
             });
         }
-
         // Code Generator Language Tabs
         el.langBtns.forEach(btn => {
             btn.addEventListener('click', () => {
@@ -535,7 +507,6 @@ const Tool1Bones = (function () {
                 updateCodeOutput();
             });
         });
-
         if (el.btnCopyGenerated) {
             el.btnCopyGenerated.addEventListener('click', () => {
                 if (window.NullApp && window.NullApp.copyToClipboard) {
@@ -543,13 +514,10 @@ const Tool1Bones = (function () {
                 }
             });
         }
-
         if (el.btnDownloadGenerated) {
             el.btnDownloadGenerated.addEventListener('click', downloadGeneratedCode);
         }
-
     }
-
     function setupDragDrop(dropZone, fileHandler) {
         ['dragenter', 'dragover'].forEach(name => {
             dropZone.addEventListener(name, (e) => {
@@ -558,7 +526,6 @@ const Tool1Bones = (function () {
                 dropZone.classList.add('drag-over');
             });
         });
-
         ['dragleave', 'drop'].forEach(name => {
             dropZone.addEventListener(name, (e) => {
                 e.preventDefault();
@@ -566,75 +533,82 @@ const Tool1Bones = (function () {
                 dropZone.classList.remove('drag-over');
             });
         });
-
         dropZone.addEventListener('drop', (e) => {
             const files = e.dataTransfer.files;
-            if (files && files.length > 0) fileHandler(files[0]);
+            if (files && files.length > 0)
+                fileHandler(files[0]);
         });
     }
-
     function handleDumpFile(file) {
         state.dumpFileName = file.name;
         const reader = new FileReader();
         reader.onload = (e) => {
-            state.dumpContent = e.target.result;
-            if (el.dumpTitle) el.dumpTitle.textContent = file.name;
-            if (el.dumpDesc) el.dumpDesc.textContent = `Size: ${(file.size / (1024 * 1024)).toFixed(2)} MB • Ready`;
+            state.dumpContent = e.target?.result || "";
+            if (el.dumpTitle)
+                el.dumpTitle.textContent = file.name;
+            if (el.dumpDesc)
+                el.dumpDesc.textContent = `Size: ${(file.size / (1024 * 1024)).toFixed(2)} MB • Ready`;
             if (el.dumpBadge) {
                 el.dumpBadge.textContent = 'LOADED';
                 el.dumpBadge.className = 'badge badge-emerald';
             }
-            if (el.dropDump) el.dropDump.classList.add('loaded');
-            if (window.NullApp && window.NullApp.showToast) window.NullApp.showToast(`Loaded ${file.name}`);
+            if (el.dropDump)
+                el.dropDump.classList.add('loaded');
+            if (window.NullApp && window.NullApp.showToast)
+                window.NullApp.showToast(`Loaded ${file.name}`);
         };
         reader.readAsText(file);
     }
-
     function handleSoFile(file) {
         state.soFileName = file.name;
         const reader = new FileReader();
         reader.onload = (e) => {
             state.soBuffer = e.target.result;
-            if (el.soTitle) el.soTitle.textContent = file.name;
-            if (el.soDesc) el.soDesc.textContent = `Size: ${(file.size / (1024 * 1024)).toFixed(2)} MB • Binary Attached`;
+            if (el.soTitle)
+                el.soTitle.textContent = file.name;
+            if (el.soDesc)
+                el.soDesc.textContent = `Size: ${(file.size / (1024 * 1024)).toFixed(2)} MB • Binary Attached`;
             if (el.soBadge) {
                 el.soBadge.textContent = 'ATTACHED';
                 el.soBadge.className = 'badge badge-emerald';
             }
-            if (el.dropSo) el.dropSo.classList.add('loaded');
-            if (window.NullApp && window.NullApp.showToast) window.NullApp.showToast(`Attached ${file.name} for binary AOB scans`);
+            if (el.dropSo)
+                el.dropSo.classList.add('loaded');
+            if (window.NullApp && window.NullApp.showToast)
+                window.NullApp.showToast(`Attached ${file.name} for binary AOB scans`);
         };
         reader.readAsArrayBuffer(file);
     }
-
     function updateArchLabel() {
-        if (!el.headerArch) return;
+        if (!el.headerArch)
+            return;
         if (state.targetArch === 'v8_normal' || state.targetArch === 'v8_max' || (state.targetArch === 'auto' && state.is64Bit)) {
             el.headerArch.textContent = 'ARM64';
             el.headerArch.className = 'badge badge-red';
-        } else if (state.targetArch === 'v7_normal' || (!state.is64Bit)) {
+        }
+        else if (state.targetArch === 'v7_normal' || (!state.is64Bit)) {
             el.headerArch.textContent = 'ARMv7';
             el.headerArch.className = 'badge badge-cyan';
-        } else {
+        }
+        else {
             el.headerArch.textContent = 'AUTO';
             el.headerArch.className = 'badge badge-purple';
         }
     }
-
     // =========================================================================
     // ANALYSIS ROUTINE
     // =========================================================================
     function runAnalysis() {
         if (!state.dumpContent || !state.dumpContent.trim()) {
-            if (window.NullApp && window.NullApp.showToast) window.NullApp.showToast('Please drop or select a dump.cs file first!');
+            if (window.NullApp && window.NullApp.showToast)
+                window.NullApp.showToast('Please drop or select a dump.cs file first!');
             return;
         }
-
         const t0 = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
-
-        if (el.progressWrapper) el.progressWrapper.style.display = 'block';
-        if (el.btnAnalyze) el.btnAnalyze.disabled = true;
-
+        if (el.progressWrapper)
+            el.progresswrapper.style.display = 'block';
+        if (el.btnAnalyze)
+            el.btnAnalyze.disabled = true;
         let stepIndex = 0;
         const steps = [
             { pct: 25, txt: 'Scanning Player skeleton nodes & transform anchors...' },
@@ -642,64 +616,61 @@ const Tool1Bones = (function () {
             { pct: 85, txt: 'Analyzing Dual AOB signatures & Anti-Detect bypasses...' },
             { pct: 100, txt: 'Analysis complete!' }
         ];
-
         const interval = setInterval(() => {
             if (stepIndex < steps.length) {
                 const s = steps[stepIndex];
-                if (el.progressBar) el.progressBar.style.width = s.pct + '%';
-                if (el.progressPercent) el.progressPercent.textContent = s.pct + '%';
-                if (el.progressText) el.progressText.textContent = s.txt;
+                if (el.progressBar)
+                    el.progressBar.style.width = s.pct + '%';
+                if (el.progressPercent)
+                    el.progressPercent.textContent = s.pct + '%';
+                if (el.progressText)
+                    el.progressText.textContent = s.txt;
                 stepIndex++;
-            } else {
+            }
+            else {
                 clearInterval(interval);
                 setTimeout(() => {
                     executeParsing();
                     const t1 = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
                     state.elapsedSeconds = ((t1 - t0) / 1000).toFixed(2);
-                    if (el.progressWrapper) el.progressWrapper.style.display = 'none';
-                    if (el.btnAnalyze) el.btnAnalyze.disabled = false;
+                    if (el.progressWrapper)
+                        el.progresswrapper.style.display = 'none';
+                    if (el.btnAnalyze)
+                        el.btnAnalyze.disabled = false;
                 }, 150);
             }
         }, 100);
     }
-
     function executeParsing() {
         // Detect 64-bit vs 32-bit architecture
         state.is64Bit = !state.dumpContent.includes('ARMv7') && (state.targetArch !== 'v7_normal');
         updateArchLabel();
-
         parsePlayerBones();
         parseCoreOffsets();
         parsePatches();
         parseBypass();
-
         const totalItems = state.bones.length + state.coreOffsets.length + state.patches.length + state.bypassMethods.length;
-        if (el.headerItems) el.headerItems.textContent = totalItems;
-
+        if (el.headerItems)
+            el.headerItems.textContent = totalItems;
         renderBonesTable();
         renderCoreTable();
         renderPatchesTable();
         renderBypassTable();
         updateCodeOutput();
-
         if (window.NullApp && window.NullApp.showToast) {
             window.NullApp.showToast(`Analyzed dump: extracted ${totalItems} offsets & signatures!`);
         }
     }
-
     // =========================================================================
     // PARSERS
     // =========================================================================
-
     // 1. Player Bones Parser
     function parsePlayerBones() {
         state.bones = [];
         const lines = state.dumpContent.split('\n');
-
         // Check if dump contains "enum PlayerBone" (Standard Unity IL2CPP)
         let inBoneEnum = false;
         let enumCount = 0;
-
         for (let i = 0; i < lines.length; i++) {
             const line = lines[i].trim();
             if (line.includes('enum PlayerBone') || line.includes('enum BoneIndex') || line.includes('enum Bone')) {
@@ -709,14 +680,14 @@ const Tool1Bones = (function () {
             if (inBoneEnum) {
                 if (line.startsWith('}')) {
                     inBoneEnum = false;
-                } else {
+                }
+                else {
                     const match = line.match(/(?:public\s+const\s+[\w<>]+\s+)?(\w+)\s*=\s*(\d+);?/);
                     if (match && !line.includes('value__')) {
                         const boneName = match[1];
                         const boneVal = parseInt(match[2], 10);
                         const boneHex = '0x' + boneVal.toString(16).toUpperCase();
                         const foundMeta = CANONICAL_BONES.find(b => b.canonicalName.toLowerCase() === boneName.toLowerCase());
-
                         state.bones.push({
                             name: boneName,
                             hex: boneHex,
@@ -729,16 +700,13 @@ const Tool1Bones = (function () {
                 }
             }
         }
-
         // FireHawk Sequential Skeleton Pointer Scan in Player class
         // Look for anchor FollowCamera AHNCPOJPPCL; // 0x690
         let anchorIdx = -1;
         const playerFields = [];
         let inPlayerClass = false;
-
         const classRegex = /^\s*(?:public|protected|private|internal)?\s*(?:abstract|sealed|static)?\s*class\s+([A-Za-z0-9_<>]+)/;
         const fieldRegex = /^\s*(?:public|protected|private|internal)\s+([A-Za-z0-9_<>]+)\s+([A-Za-z0-9_<>]+);\s*\/\/\s*(0x[0-9a-fA-F]+)/;
-
         for (let i = 0; i < lines.length; i++) {
             const line = lines[i];
             const classMatch = line.match(classRegex);
@@ -747,7 +715,6 @@ const Tool1Bones = (function () {
                 inPlayerClass = (cName === 'Player' || cName === 'PlayerAvatar');
                 continue;
             }
-
             if (inPlayerClass) {
                 if (line.trim().startsWith('}') && !line.includes('{')) {
                     inPlayerClass = false;
@@ -764,7 +731,6 @@ const Tool1Bones = (function () {
                 }
             }
         }
-
         // Find anchor AHNCPOJPPCL
         for (let i = 0; i < playerFields.length; i++) {
             if (playerFields[i].fieldName === 'AHNCPOJPPCL' || playerFields[i].fieldName.startsWith('AHNCPOJP')) {
@@ -772,7 +738,6 @@ const Tool1Bones = (function () {
                 break;
             }
         }
-
         // Map sequential skeleton pointers using FireHawk logic
         if (anchorIdx !== -1 && anchorIdx + CANONICAL_BONES.length <= playerFields.length + 5) {
             for (let i = 0; i < CANONICAL_BONES.length; i++) {
@@ -792,7 +757,8 @@ const Tool1Bones = (function () {
                     }
                 }
             }
-        } else {
+        }
+        else {
             // Fallback match each canonical bone by fallback field name
             for (const boneDef of CANONICAL_BONES) {
                 const matched = playerFields.find(f => f.fieldName === boneDef.fallbackField);
@@ -808,7 +774,6 @@ const Tool1Bones = (function () {
                 }
             }
         }
-
         // If dump didn't have Player class or enum, map fallback realistic offsets
         if (state.bones.length === 0) {
             const isV8Max = state.targetArch === 'v8_max';
@@ -825,7 +790,6 @@ const Tool1Bones = (function () {
                 });
             });
         }
-
         // Add FireHawk Engine Bones
         for (const eng of ENGINE_BONES) {
             const matchedField = playerFields.find(f => f.fieldName === eng.fieldName || f.fieldName.includes(eng.fieldName));
@@ -842,25 +806,21 @@ const Tool1Bones = (function () {
                 });
             }
         }
-
         // FireHawk Bone Sorting: Canonical bones alphabetically, then Engine bones alphabetically
         const nonEngine = state.bones.filter(b => !b.name.includes('(Engine)')).sort((a, b) => a.name.localeCompare(b.name));
         const engine = state.bones.filter(b => b.name.includes('(Engine)')).sort((a, b) => a.name.localeCompare(b.name));
         state.bones = [...nonEngine, ...engine];
-
-        if (el.badgeBones) el.badgeBones.textContent = state.bones.length;
+        if (el.badgeBones)
+            el.badgeBones.textContent = state.bones.length;
     }
-
     // 2. Core Offsets Parser
     function parseCoreOffsets() {
         state.coreOffsets = [];
         const isV8Max = state.targetArch === 'v8_max';
         const isV7 = state.targetArch === 'v7_normal' || !state.is64Bit;
-
         // Extract class and field lines from dump.cs
         const lines = state.dumpContent.split('\n');
         const dumpMap = new Map(); // "ClassName.FieldName" -> { hex, type }
-
         let currentClass = '';
         for (let i = 0; i < lines.length; i++) {
             const line = lines[i].trim();
@@ -882,24 +842,22 @@ const Tool1Bones = (function () {
                 });
             }
         }
-
         for (const def of CORE_OFFSETS_DEFS) {
             let offsetHex = isV8Max ? def.v8max : (isV7 ? def.v7 : def.v8);
             let type = def.type;
             let className = def.className || 'Global';
-
             // Check if dump has exact match
             if (def.className && def.field && dumpMap.has(def.className + '.' + def.field)) {
                 const match = dumpMap.get(def.className + '.' + def.field);
                 offsetHex = match.hex;
                 type = match.type || def.type;
-            } else if (def.field && dumpMap.has(def.field)) {
+            }
+            else if (def.field && dumpMap.has(def.field)) {
                 const match = dumpMap.get(def.field);
                 offsetHex = match.hex;
                 type = match.type || def.type;
                 className = match.className || def.className;
             }
-
             state.coreOffsets.push({
                 key: def.key,
                 name: def.name,
@@ -911,18 +869,15 @@ const Tool1Bones = (function () {
                 desc: def.desc
             });
         }
-
         // Sort core offsets alphabetically by name
         state.coreOffsets.sort((a, b) => a.name.localeCompare(b.name));
-
-        if (el.badgeCore) el.badgeCore.textContent = state.coreOffsets.length;
+        if (el.badgeCore)
+            el.badgeCore.textContent = state.coreOffsets.length;
     }
-
     // 3. Patches & Dual AOB Parser
     function parsePatches() {
         state.patches = [];
         const isArm64 = state.is64Bit && (state.targetArch !== 'v7_normal');
-
         // Look for method RVAs in dump.cs
         const rvaMap = new Map();
         const lines = state.dumpContent.split('\n');
@@ -938,13 +893,11 @@ const Tool1Bones = (function () {
                 }
             }
         }
-
         for (const p of PATCH_METHODS) {
             let rva = p.rva;
-            if (rvaMap.has(p.name)) rva = rvaMap.get(p.name);
-
+            if (rvaMap.has(p.name))
+                rva = rvaMap.get(p.name);
             const patchAob = isArm64 ? p.patchArm64 : p.patchArm32;
-
             state.patches.push({
                 name: p.name,
                 subName: p.subName,
@@ -957,18 +910,15 @@ const Tool1Bones = (function () {
                 desc: p.desc
             });
         }
-
         // Sort patches alphabetically by name
         state.patches.sort((a, b) => a.name.localeCompare(b.name));
-
-        if (el.badgePatches) el.badgePatches.textContent = state.patches.length;
+        if (el.badgePatches)
+            el.badgePatches.textContent = state.patches.length;
     }
-
     // 4. Anti-Detect Bypass Parser
     function parseBypass() {
         state.bypassMethods = [];
         const isArm64 = state.is64Bit && (state.targetArch !== 'v7_normal');
-
         for (const bp of BYPASS_METHODS) {
             const patchAob = isArm64 ? bp.patchArm64 : bp.patchArm32;
             state.bypassMethods.push({
@@ -983,18 +933,17 @@ const Tool1Bones = (function () {
                 desc: bp.desc
             });
         }
-
         // Sort bypasses alphabetically by name
         state.bypassMethods.sort((a, b) => a.name.localeCompare(b.name));
-
-        if (el.badgeBypass) el.badgeBypass.textContent = state.bypassMethods.length;
+        if (el.badgeBypass)
+            el.badgeBypass.textContent = state.bypassMethods.length;
     }
-
     // =========================================================================
     // TABLE RENDERING (FireHawk Exact Structure + Null-Tools Cyberpunk CSS)
     // =========================================================================
     function esc(s) {
-        if (!s) return '';
+        if (!s)
+            return '';
         return String(s)
             .replace(/&/g, '&amp;')
             .replace(/</g, '&lt;')
@@ -1002,14 +951,13 @@ const Tool1Bones = (function () {
             .replace(/"/g, '&quot;')
             .replace(/'/g, '&#39;');
     }
-
     function renderBonesTable() {
-        if (!el.bonesTbody) return;
+        if (!el.bonesTbody)
+            return;
         if (state.bones.length === 0) {
             el.bonesTbody.innerHTML = '<tr class="empty-table-row"><td colspan="6">No dump loaded yet. Drop your <code>dump.cs</code> file above to extract all bones.</td></tr>';
             return;
         }
-
         let html = '';
         state.bones.forEach(b => {
             const isAim = b.name === 'Head' || b.name === 'Neck';
@@ -1032,14 +980,13 @@ const Tool1Bones = (function () {
         });
         el.bonesTbody.innerHTML = html;
     }
-
     function renderCoreTable() {
-        if (!el.coreTbody) return;
+        if (!el.coreTbody)
+            return;
         if (state.coreOffsets.length === 0) {
             el.coreTbody.innerHTML = '<tr class="empty-table-row"><td colspan="7">No core offsets extracted. Drop <code>dump.cs</code> to analyze.</td></tr>';
             return;
         }
-
         let html = '';
         state.coreOffsets.forEach(c => {
             html += `
@@ -1059,14 +1006,13 @@ const Tool1Bones = (function () {
         });
         el.coreTbody.innerHTML = html;
     }
-
     function renderPatchesTable() {
-        if (!el.patchesTbody) return;
+        if (!el.patchesTbody)
+            return;
         if (state.patches.length === 0) {
             el.patchesTbody.innerHTML = '<tr class="empty-table-row"><td colspan="7">No patch methods extracted yet.</td></tr>';
             return;
         }
-
         let html = '';
         state.patches.forEach(p => {
             html += `
@@ -1093,14 +1039,13 @@ const Tool1Bones = (function () {
         });
         el.patchesTbody.innerHTML = html;
     }
-
     function renderBypassTable() {
-        if (!el.bypassTbody) return;
+        if (!el.bypassTbody)
+            return;
         if (state.bypassMethods.length === 0) {
             el.bypassTbody.innerHTML = '<tr class="empty-table-row"><td colspan="7">No bypass methods found in this dump.cs.</td></tr>';
             return;
         }
-
         let html = '';
         state.bypassMethods.forEach(b => {
             html += `
@@ -1128,7 +1073,6 @@ const Tool1Bones = (function () {
         });
         el.bypassTbody.innerHTML = html;
     }
-
     // =========================================================================
     // SEARCH & FILTERING
     // =========================================================================
@@ -1140,38 +1084,36 @@ const Tool1Bones = (function () {
         el.subPanels.forEach(p => {
             p.style.display = (p.id === targetTabId) ? 'block' : 'none';
         });
-        if (targetTabId === 'tabExport') updateCodeOutput();
+        if (targetTabId === 'tabExport')
+            updateCodeOutput();
     }
-
     function applyFilter() {
         const q = state.currentFilter;
         const activePanel = document.getElementById(state.activeSubTab);
-        if (!activePanel) return;
-
+        if (!activePanel)
+            return;
         const rows = activePanel.querySelectorAll('tbody tr:not(.empty-table-row)');
         rows.forEach(r => {
             const data = r.getAttribute('data-search') || r.textContent.toLowerCase();
             r.style.display = (!q || data.includes(q)) ? '' : 'none';
         });
     }
-
     function runCustomSearch() {
-        if (!el.customSearchQuery || !el.searchTbody) return;
+        if (!el.customSearchQuery || !el.searchTbody)
+            return;
         const q = el.customSearchQuery.value.trim().toLowerCase();
         if (!q) {
             el.searchTbody.innerHTML = '<tr class="empty-table-row"><td colspan="6">Enter a query above to search through the entire dump.</td></tr>';
             return;
         }
-
         const lines = state.dumpContent.split('\n');
         let matches = [];
         let curClass = 'Global';
-
         for (let i = 0; i < lines.length && matches.length < 150; i++) {
             const line = lines[i];
             const cMatch = line.match(/(?:public|protected|private|internal)?\s*(?:abstract|sealed|static)?\s*class\s+([A-Za-z0-9_<>]+)/);
-            if (cMatch) curClass = cMatch[1];
-
+            if (cMatch)
+                curClass = cMatch[1];
             if (line.toLowerCase().includes(q)) {
                 const offMatch = line.match(/(0x[0-9a-fA-F]+)/);
                 const offset = offMatch ? offMatch[1].toUpperCase() : '-';
@@ -1182,12 +1124,10 @@ const Tool1Bones = (function () {
                 });
             }
         }
-
         if (matches.length === 0) {
             el.searchTbody.innerHTML = `<tr class="empty-table-row"><td colspan="6">No occurrences of "${esc(q)}" found in dump.cs.</td></tr>`;
             return;
         }
-
         let html = '';
         matches.forEach(m => {
             html += `
@@ -1202,27 +1142,26 @@ const Tool1Bones = (function () {
         });
         el.searchTbody.innerHTML = html;
     }
-
     // =========================================================================
     // CODE GENERATOR (C++, C#, Frida, GameGuardian Lua, JSON)
     // =========================================================================
     function getOffset(name, fallback = '0x0') {
         const found = state.coreOffsets.find(c => c.name === name || c.key === name);
-        if (found) return found.hex;
+        if (found)
+            return found.hex;
         const b = state.bones.find(x => x.name === name);
-        if (b) return b.hex;
+        if (b)
+            return b.hex;
         return fallback;
     }
-
     function updateCodeOutput() {
-        if (!el.codeOutput) return;
+        if (!el.codeOutput)
+            return;
         const lang = state.activeLang;
         const isArm64 = state.is64Bit;
         const typeUint = isArm64 ? 'uint64_t' : 'uint32_t';
         const timestamp = new Date().toISOString();
-
         let out = '';
-
         if (lang === 'cpp') {
             out = `#pragma once
 #include <cstdint>
@@ -1296,7 +1235,8 @@ namespace Bones {
                 out += `    constexpr ${typeUint} ${cleanName.padEnd(22, ' ')} = ${b.hex}; // ${b.desc}\n`;
             });
             out += `}\n`;
-        } else if (lang === 'cs') {
+        }
+        else if (lang === 'cs') {
             out = `// ============================================================================
 // Free Fire ${isArm64 ? 'ARM64 (v8a)' : 'ARMv7 (v7a)'} Client Offsets & Skeleton Bones
 // Generated via Null-Tools Bones & Offset Finder Engine
@@ -1368,7 +1308,8 @@ namespace Client
                 out += `        ${cleanName.padEnd(20, ' ')} = ${b.hex}${comma}   // ${b.desc}\n`;
             });
             out += `    }\n}\n`;
-        } else if (lang === 'frida') {
+        }
+        else if (lang === 'frida') {
             out = `// ============================================================================
 // Free Fire ${isArm64 ? 'ARM64' : 'ARMv7'} Frida Runtime Hook & Patch Script
 // Generated via Null-Tools Bones & Offset Finder Engine
@@ -1414,7 +1355,8 @@ waitForLib((il2cppBase) => {
 `;
             });
             out += `});\n`;
-        } else if (lang === 'gg') {
+        }
+        else if (lang === 'gg') {
             out = `-- ============================================================================
 -- Free Fire ${isArm64 ? 'ARM64' : 'ARMv7'} GameGuardian Lua Memory Script
 -- Generated via Null-Tools Bones & Offset Finder Engine
@@ -1453,7 +1395,8 @@ gg.toast("Hooking libil2cpp: " .. string.format("0x%X", base))
                 out += `patch(base + ${b.rva}, "${b.replaceAob.replace(/\s+/g, '')}", "${b.name}")\n`;
             });
             out += `\ngg.alert("All ${state.patches.length + state.bypassMethods.length} Patches & Bypasses Active!")\n`;
-        } else if (lang === 'json') {
+        }
+        else if (lang === 'json') {
             const jsonExport = {
                 metadata: {
                     tool: 'Null-Tools Bones & Offset Finder Engine',
@@ -1471,16 +1414,14 @@ gg.toast("Hooking libil2cpp: " .. string.format("0x%X", base))
             };
             out = JSON.stringify(jsonExport, null, 4);
         }
-
         el.codeOutput.textContent = out;
     }
-
     function saveOffsetsTxt() {
         if (state.coreOffsets.length === 0 && state.bones.length === 0) {
-            if (window.NullApp && window.NullApp.showToast) window.NullApp.showToast('No offsets to save! Please analyze a dump.cs file first.');
+            if (window.NullApp && window.NullApp.showToast)
+                window.NullApp.showToast('No offsets to save! Please analyze a dump.cs file first.');
             return;
         }
-
         let txt = `// ============================================================================
 // Free Fire ${state.is64Bit ? 'ARM64 (v8a)' : 'ARMv7 (v7a)'} Client Offsets & Skeleton Bones
 // Generated via Null-Tools Bones & Offset Finder
@@ -1552,14 +1493,13 @@ namespace Client
             txt += `        ${cleanName.padEnd(20, ' ')} = ${b.hex}${comma}   // ${b.desc}\n`;
         });
         txt += `    }\n}\n`;
-
         if (window.NullApp && window.NullApp.downloadTextFile) {
             window.NullApp.downloadTextFile('offsets.txt', txt);
         }
     }
-
     function downloadGeneratedCode() {
-        if (!el.codeOutput) return;
+        if (!el.codeOutput)
+            return;
         const text = el.codeOutput.textContent;
         const lang = state.activeLang;
         const extMap = { cpp: 'h', cs: 'cs', frida: 'js', gg: 'lua', json: 'json' };
@@ -1568,7 +1508,6 @@ namespace Client
             window.NullApp.downloadTextFile(filename, text);
         }
     }
-
     // Public API for Router & Automated Test Suite
     return {
         init,
@@ -1590,7 +1529,10 @@ namespace Client
         downloadGeneratedCode
     };
 })();
-
-if (typeof window !== 'undefined') window.Tool1Bones = Tool1Bones;
-if (typeof globalThis !== 'undefined') globalThis.Tool1Bones = Tool1Bones;
-if (typeof module !== 'undefined' && module.exports) module.exports = Tool1Bones;
+if (typeof window !== 'undefined')
+    window.Tool1Bones = Tool1Bones;
+if (typeof globalThis !== 'undefined')
+    globalThis.Tool1Bones = Tool1Bones;
+if (typeof module !== 'undefined' && module.exports)
+    module.exports = Tool1Bones;
+//# sourceMappingURL=tool1-bones.js.map

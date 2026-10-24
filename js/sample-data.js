@@ -2,7 +2,6 @@
    NULL ALL-IN-ONE OFFSET TOOLS — SAMPLE & PRESET DATASETS
    Realistic Il2CppDumper structures, bones, offsets, and patterns
    ========================================================================== */
-
 const SAMPLE_DATA = {
     // ------------------------------------------------------------------------
     // Tool 1: Bones & Dump Data
@@ -130,19 +129,16 @@ public class AntiCheatManager : MonoBehaviour // TypeDefIndex: 14900
     public static void ReportViolation(int code, string msg) { }
 }
 `,
-
     // ------------------------------------------------------------------------
     // Tool 2: AOB Cleaner Samples
     // ------------------------------------------------------------------------
     aobCleanerSample: `00 70 84 E0 00 00 A0 E3 00 50 A0 E3 74 E5 83 EB 5C 65 94 E5 10 0A 08 EE 00 9A 97 ED 00 00 56 E3 00 00 00 1A 2F D9 83 EB 04 0A 96 ED 00 9A 39 EE 49 8A B4 EE 10 FA F1 EE 01 50 00 93 07 00 00 9A 60 05 D4 E5 00 00 50 E3 04 00 00 0A 04 00 A0 E1 60 FF FF EB EC 0A 00 E3 00 10 A0 E3 B0 10 84 E1 49 8A B4 EE 00 00 A0 E3 10 FA F1 EE 60 55 C4 E5 01 00 00 93 04 8B BD EC F0 88 BD E8 30 48 2D E9 00 40 A0 E1 D5 03 04 E3 00 10 A0 E3 5B 50 7B EB 00 00 50 E3 0B 00 00 0A D5 03 04 E3 00 10 A0 E3 8A 50 7B EB 00 50 A0 E1 00 00 50 E3`,
     aobCleanerPreserve: `04 A0 E1`,
-
     // ------------------------------------------------------------------------
     // Tool 3: AOB Merger Samples
     // ------------------------------------------------------------------------
     aobMerger1: `FF FF FF FF 00 00 00 00 10 20 30 40 50 60 70 80 A0 B0 C0 D0`,
     aobMerger2: `FF FF 00 00 00 00 00 00 10 25 30 40 50 65 70 80 A0 B0 C0 FF`,
-
     // ------------------------------------------------------------------------
     // Tool 4: Collider Offset Samples
     // ------------------------------------------------------------------------
@@ -150,14 +146,12 @@ public class AntiCheatManager : MonoBehaviour // TypeDefIndex: 14900
     colliderBaseSample: `0x4E8`,
     basicWriteSample: `0xB5`,
     basicReadSample: `0xB9`,
-
     // ------------------------------------------------------------------------
     // Tool 5: Offsets Finder Samples
     // ------------------------------------------------------------------------
     offsetsFinderAob: `FF FF FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FF FF FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? 00 00 00 00 00 00 00 00 00 00 00 00 00 00 A5 43 ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? 80 BF`,
     offsetsFinderChest: `b8`,
     offsetsFinderHead: `b4`,
-
     // ------------------------------------------------------------------------
     // Tool 6: Offsets Calculator Sample
     // ------------------------------------------------------------------------
@@ -165,7 +159,10 @@ public class AntiCheatManager : MonoBehaviour // TypeDefIndex: 14900
     calcReadBase: `0x6EC`,
     calcWriteBase: `0x258`
 };
-
-if (typeof window !== 'undefined') window.SAMPLE_DATA = SAMPLE_DATA;
-if (typeof globalThis !== 'undefined') globalThis.SAMPLE_DATA = SAMPLE_DATA;
-if (typeof module !== 'undefined' && module.exports) module.exports = SAMPLE_DATA;
+if (typeof window !== 'undefined')
+    window.SAMPLE_DATA = SAMPLE_DATA;
+if (typeof globalThis !== 'undefined')
+    globalThis.SAMPLE_DATA = SAMPLE_DATA;
+if (typeof module !== 'undefined' && module.exports)
+    module.exports = SAMPLE_DATA;
+//# sourceMappingURL=sample-data.js.map
