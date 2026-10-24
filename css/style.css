@@ -324,181 +324,6 @@ body::before {
 }
 
 /* ==========================================================================
-   Tab Navigation System (8 Unified Tabs - Elevated, No Scroll, Pro Polish)
-   ========================================================================== */
-.nav-tab-container {
-    position: sticky;
-    top: 6px;
-    z-index: 100;
-    margin: 4px 0 16px;
-    overflow: visible;
-    background: rgba(12, 13, 18, 0.94);
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-top: 1px solid rgba(255, 255, 255, 0.14);
-    border-radius: var(--radius-lg);
-    padding: 5px;
-    box-shadow: 
-        0 10px 32px -8px rgba(0, 0, 0, 0.7),
-        0 0 20px rgba(239, 68, 68, 0.06),
-        inset 0 1px 0 rgba(255, 255, 255, 0.08);
-}
-
-.nav-tabs {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 4px 6px;
-    overflow: visible;
-    overflow-x: visible;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.nav-tabs::-webkit-scrollbar {
-    display: none;
-    width: 0;
-    height: 0;
-}
-
-.nav-tabs::-webkit-scrollbar-thumb {
-    display: none;
-}
-
-.tab-link {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 7px 11px;
-    border-radius: var(--radius-md);
-    background: transparent;
-    border: 1px solid transparent;
-    color: #94a3b8;
-    font-family: inherit;
-    font-size: 0.77rem;
-    font-weight: 700;
-    letter-spacing: 0.2px;
-    text-decoration: none;
-    white-space: nowrap;
-    cursor: pointer;
-    transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
-    flex: 1 1 auto;
-    max-width: max-content;
-    user-select: none;
-}
-
-.tab-shortcut {
-    font-family: var(--font-mono);
-    font-size: 0.62rem;
-    font-weight: 800;
-    color: rgba(255, 255, 255, 0.3);
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    border-radius: 4px;
-    padding: 1px 4px;
-    line-height: 1.1;
-    transition: all 0.18s;
-}
-
-.tab-link:hover .tab-shortcut {
-    color: rgba(255, 255, 255, 0.7);
-    border-color: rgba(255, 255, 255, 0.15);
-    background: rgba(255, 255, 255, 0.08);
-}
-
-.tab-link.active .tab-shortcut {
-    color: #fca5a5;
-    background: rgba(239, 68, 68, 0.2);
-    border-color: rgba(239, 68, 68, 0.4);
-}
-
-.tab-link .tab-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    color: #94a3b8;
-    transition: all 0.18s;
-}
-
-.tab-link:hover .tab-icon {
-    color: #ffffff;
-    transform: scale(1.1);
-}
-
-.tab-link.active .tab-icon {
-    color: #f87171;
-    transform: scale(1.08);
-    filter: drop-shadow(0 0 6px rgba(239, 68, 68, 0.7));
-}
-
-.tab-title {
-    display: inline-block;
-    font-weight: 700;
-}
-
-.tab-link .tab-badge-pill {
-    font-family: var(--font-mono);
-    font-size: 0.62rem;
-    font-weight: 800;
-    padding: 2px 6px;
-    border-radius: var(--radius-full);
-    background: rgba(255, 255, 255, 0.05);
-    color: #64748b;
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    letter-spacing: 0.3px;
-    transition: all 0.18s;
-}
-
-.tab-link:hover {
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.09);
-    transform: translateY(-1px);
-}
-
-.tab-link:hover .tab-badge-pill {
-    color: #cbd5e1;
-    border-color: rgba(255, 255, 255, 0.12);
-}
-
-.tab-link:active {
-    transform: translateY(0);
-}
-
-.tab-link.active {
-    background: linear-gradient(135deg, rgba(239, 68, 68, 0.22) 0%, rgba(185, 28, 28, 0.12) 100%);
-    border-color: rgba(239, 68, 68, 0.5);
-    color: #ffffff;
-    box-shadow: 
-        0 4px 16px rgba(239, 68, 68, 0.25),
-        inset 0 1px 0 rgba(255, 255, 255, 0.18);
-}
-
-.tab-link.active::after {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    left: 18%;
-    right: 18%;
-    height: 2px;
-    background: var(--accent-gradient);
-    border-radius: 999px;
-    box-shadow: 0 0 10px #ef4444, 0 0 4px #ef4444;
-}
-
-.tab-link.active .tab-badge-pill {
-    background: rgba(239, 68, 68, 0.22);
-    border-color: rgba(239, 68, 68, 0.5);
-    color: #fca5a5;
-    box-shadow: 0 0 8px rgba(239, 68, 68, 0.3);
-}
-
-/* ==========================================================================
    Tool Tab Views (Panels)
    ========================================================================== */
 .tool-view-panel {
@@ -1514,14 +1339,8 @@ body::before {
     .header h1 {
         font-size: 2rem;
     }
-    .nav-tab-container {
-        top: 8px;
-        padding: 4px;
-    }
-    .tab-link {
-        padding: 8px 12px;
-        font-size: 0.78rem;
-    }
+    
+    
     .card {
         padding: 16px;
     }
@@ -1946,7 +1765,7 @@ body::before {
 }
 
 /* ==========================================================================
-   NULL-AUTH DASHBOARD & SIDEBAR TAB LAYOUT (1:1 EXACT SPECIFICATION)
+   NULL-AUTH EXACT SIDEBAR & COMPACT TAB SYSTEM (MATCHING REFERENCE UI)
    ========================================================================== */
 .app-layout {
     display: flex;
@@ -1956,14 +1775,14 @@ body::before {
     z-index: 1;
 }
 
-/* Sidebar Navigation - Exact Match to Null-Auth Sidebar.tsx */
+/* Sidebar Navigation - Sleek 240px width matching Auth screenshot */
 .sidebar {
-    width: 256px;
-    min-width: 256px;
-    max-width: 256px;
-    background: rgba(9, 9, 11, 0.90);
-    backdrop-filter: blur(40px);
-    -webkit-backdrop-filter: blur(40px);
+    width: 240px;
+    min-width: 240px;
+    max-width: 240px;
+    background: rgba(9, 9, 11, 0.92);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     border-right: 1px solid rgba(39, 39, 42, 0.80);
     display: flex;
     flex-direction: column;
@@ -1973,44 +1792,44 @@ body::before {
     user-select: none;
     -webkit-user-select: none;
     z-index: 40;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.6);
 }
 
-/* Brand Logo Header (h-16 px-6 border-b border-zinc-800/80 gap-3) */
+/* Brand Logo Header (Compact 58px height) */
 .sidebar-brand {
-    height: 64px;
-    min-height: 64px;
+    height: 58px;
+    min-height: 58px;
     display: flex;
     align-items: center;
-    padding: 0 24px;
+    padding: 0 16px;
     border-bottom: 1px solid rgba(39, 39, 42, 0.80);
-    gap: 12px;
+    gap: 10px;
     position: relative;
     overflow: hidden;
 }
 
 .brand-icon-box {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
+    width: 32px;
+    height: 32px;
+    border-radius: 7px;
     background: rgba(69, 10, 10, 0.80);
     border: 1px solid rgba(153, 27, 27, 0.60);
     display: flex;
     align-items: center;
     justify-content: center;
     color: #ef4444;
-    box-shadow: 0 10px 15px -3px rgba(69, 10, 10, 0.60);
+    box-shadow: 0 4px 12px rgba(69, 10, 10, 0.60);
     flex-shrink: 0;
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.25s ease;
 }
 
 .brand-icon-box:hover {
-    transform: scale(1.10);
+    transform: scale(1.08);
 }
 
 .brand-shield-icon {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
 }
 
 .brand-text-wrap {
@@ -2021,148 +1840,171 @@ body::before {
 
 .brand-title {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 1.125rem;
+    font-size: 1.02rem;
     font-weight: 800;
     color: #ffffff;
-    letter-spacing: 0.025em;
+    letter-spacing: 0.015em;
     display: flex;
     align-items: center;
-    gap: 6px;
-    line-height: 1.75rem;
+    gap: 5px;
+    line-height: 1.25;
 }
 
 .brand-sparkle-icon {
-    width: 14px;
-    height: 14px;
+    width: 13px;
+    height: 13px;
     color: #ef4444;
 }
 
 .brand-badge {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 2px 8px;
+    gap: 5px;
+    padding: 1px 6px;
     border-radius: 9999px;
     background: rgba(239, 68, 68, 0.10);
     border: 1px solid rgba(239, 68, 68, 0.20);
     color: #f87171;
-    font-size: 9px;
+    font-size: 8.5px;
     font-weight: 700;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    margin-top: -2px;
+    margin-top: 1px;
     width: fit-content;
 }
 
-/* Sidebar Nav (flex-1 px-3.5 py-6 space-y-1.5) */
+/* Sidebar Nav - Tight 12px 10px padding & 4px gap */
 .sidebar-nav {
     flex: 1;
-    padding: 24px 14px;
+    padding: 14px 10px;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
     overflow-y: auto;
 }
 
-/* Tab Links (flex items-center justify-between px-3.5 py-2.5 rounded-lg text-xs font-semibold) */
-.sidebar-link {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 14px;
-    border-radius: 8px;
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 1rem;
-    color: #a1a1aa;
+/* Small, Compact Tabs - Exact Proportion to Auth Screenshot */
+.sidebar-link,
+.tab-link {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 7px 10px !important;
+    min-height: 34px !important;
+    border-radius: 7px !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 11.5px !important;
+    font-weight: 600 !important;
+    line-height: 1.2 !important;
+    color: #a1a1aa !important;
     text-decoration: none !important;
-    transition: all 150ms ease;
-    border: 1px solid transparent;
-    background: transparent;
-    cursor: pointer;
+    transition: all 120ms ease !important;
+    border: 1px solid transparent !important;
+    background: transparent !important;
+    cursor: pointer !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    position: relative !important;
 }
 
-.sidebar-link:hover {
-    color: #f4f4f5;
-    background: rgba(24, 24, 27, 0.60);
-    border-color: rgba(255, 255, 255, 0.04);
+.sidebar-link:hover,
+.tab-link:hover {
+    color: #f4f4f5 !important;
+    background: rgba(24, 24, 27, 0.60) !important;
+    border-color: transparent !important;
+    transform: none !important;
 }
 
-/* Active Tab Link (bg-zinc-900 text-red-400 border border-zinc-800 shadow-sm font-bold) */
-.sidebar-link.active {
-    background: #18181b;
-    color: #f87171;
-    border: 1px solid #27272a;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    font-weight: 700;
+/* Active Tab Link - Exact Dark Zinc Pill + Coral Red + Border */
+.sidebar-link.active,
+.tab-link.active {
+    background: #18181b !important;
+    color: #f87171 !important;
+    border: 1px solid rgba(39, 39, 42, 0.90) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+    font-weight: 700 !important;
+    transform: none !important;
+}
+
+/* Remove any old bottom indicator line */
+.sidebar-link.active::after,
+.tab-link.active::after {
+    display: none !important;
+    content: none !important;
 }
 
 .sidebar-link-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    min-width: 0;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    min-width: 0 !important;
 }
 
 .sidebar-link-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 16px;
-    height: 16px;
-    color: #a1a1aa;
-    flex-shrink: 0;
-    transition: color 150ms ease;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 15px !important;
+    height: 15px !important;
+    color: #a1a1aa !important;
+    flex-shrink: 0 !important;
+    transition: color 120ms ease !important;
 }
 
 .sidebar-link-icon svg {
-    width: 16px;
-    height: 16px;
+    width: 15px !important;
+    height: 15px !important;
+    stroke-width: 2 !important;
 }
 
-.sidebar-link.active .sidebar-link-icon {
-    color: #f87171;
+.sidebar-link.active .sidebar-link-icon,
+.tab-link.active .sidebar-link-icon {
+    color: #f87171 !important;
 }
 
 .sidebar-link-title {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 12px;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    font-size: 11.5px !important;
+    font-weight: 600 !important;
+    letter-spacing: normal !important;
 }
 
-/* Active Indicator Dot (w-1.5 h-1.5 rounded-full bg-red-500) */
+/* Small Red Active Indicator Dot (5px) on Right */
 .tab-active-dot {
-    display: none;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #ef4444;
-    box-shadow: 0 0 6px rgba(239, 68, 68, 0.6);
-    flex-shrink: 0;
+    display: none !important;
+    width: 5.5px !important;
+    height: 5.5px !important;
+    border-radius: 50% !important;
+    background: #ef4444 !important;
+    box-shadow: 0 0 6px rgba(239, 68, 68, 0.6) !important;
+    flex-shrink: 0 !important;
+    margin-left: 6px !important;
 }
 
-.sidebar-link.active .tab-active-dot {
-    display: block;
+.sidebar-link.active .tab-active-dot,
+.tab-link.active .tab-active-dot {
+    display: block !important;
 }
 
-/* Sidebar Footer (p-3.5 border-t border-zinc-800/80 space-y-2) */
+/* Sidebar Footer (Compact) */
 .sidebar-footer {
-    padding: 14px;
+    padding: 10px;
     border-top: 1px solid rgba(39, 39, 42, 0.80);
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
     background: rgba(9, 9, 11, 0.60);
 }
 
-/* Status Box (px-2.5 py-2 rounded-lg bg-zinc-900/70 border border-zinc-800/80) */
 .sidebar-status-box {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 8px 10px;
-    border-radius: 8px;
+    padding: 6px 8px;
+    border-radius: 7px;
     background: rgba(24, 24, 27, 0.70);
     border: 1px solid rgba(39, 39, 42, 0.80);
 }
@@ -2170,22 +2012,21 @@ body::before {
 .sidebar-status-left {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 7px;
     min-width: 0;
 }
 
-/* Green Pulse Dot (w-2 h-2 rounded-full bg-emerald-400 shrink-0) */
 .sidebar-status-dot {
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
     background: #34d399;
-    box-shadow: 0 0 8px rgba(52, 211, 153, 0.6);
+    box-shadow: 0 0 6px rgba(52, 211, 153, 0.6);
     flex-shrink: 0;
 }
 
 .sidebar-status-text {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
     color: #e4e4e7;
     white-space: nowrap;
@@ -2194,28 +2035,27 @@ body::before {
 }
 
 .sidebar-status-badge {
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 700;
     color: #71717a;
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
 
-/* Action Button */
 .sidebar-action-btn {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 8px 12px;
-    border-radius: 8px;
-    font-size: 12px;
+    padding: 6px 10px;
+    border-radius: 7px;
+    font-size: 11px;
     font-weight: 600;
     color: #a1a1aa;
     background: transparent;
     border: 1px solid transparent;
     cursor: pointer;
-    transition: all 150ms ease;
+    transition: all 120ms ease;
 }
 
 .sidebar-action-btn:hover {
@@ -2225,16 +2065,16 @@ body::before {
 }
 
 .sidebar-kbd {
-    padding: 2px 6px;
+    padding: 1px 5px;
     border-radius: 4px;
     background: #27272a;
     border: 1px solid #3f3f46;
     color: #a1a1aa;
-    font-size: 10px;
+    font-size: 9.5px;
     font-family: var(--font-mono);
 }
 
-/* Right Main Content Area (flex-1 flex flex-col min-w-0) */
+/* Right Main Content Area */
 .main-content-wrapper {
     flex: 1;
     display: flex;
@@ -2244,11 +2084,12 @@ body::before {
     overflow-y: auto;
 }
 
-/* Workspace Topbar Header Matching Null-Auth Header.tsx */
+/* Workspace Topbar Header */
 .workspace-topbar {
-    min-height: 64px;
+    min-height: 58px;
+    height: 58px;
     border-bottom: 1px solid rgba(39, 39, 42, 0.80);
-    padding: 14px 32px;
+    padding: 0 28px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -2263,33 +2104,33 @@ body::before {
 .topbar-tool-info {
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 2px;
     min-width: 0;
 }
 
 .topbar-title-row {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
 }
 
 .topbar-tool-title {
-    font-size: 1.5rem;
+    font-size: 1.35rem;
     font-weight: 700;
     color: #ffffff;
     letter-spacing: -0.025em;
     margin: 0;
-    line-height: 1.25;
+    line-height: 1.2;
 }
 
 .topbar-badge {
     display: inline-flex;
     align-items: center;
-    padding: 2px 8px;
+    padding: 1.5px 7px;
     border-radius: 9999px;
-    font-size: 9px;
+    font-size: 8.5px;
     font-weight: 700;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     background: rgba(239, 68, 68, 0.10);
     border: 1px solid rgba(239, 68, 68, 0.20);
@@ -2297,24 +2138,27 @@ body::before {
 }
 
 .topbar-tool-subheading {
-    font-size: 12px;
+    font-size: 11.5px;
     color: #a1a1aa;
     margin: 0;
-    line-height: 1.4;
+    line-height: 1.35;
     max-width: 750px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .topbar-actions {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     flex-shrink: 0;
 }
 
-/* Workspace Body (p-8 matching Null-Auth DashboardLayout) */
+/* Workspace Body */
 .workspace-body {
     flex: 1;
-    padding: 32px;
+    padding: 24px 28px 48px;
     max-width: 1440px;
     width: 100%;
     margin: 0 auto;
@@ -2339,23 +2183,26 @@ body::before {
     .sidebar-nav {
         flex-direction: row;
         overflow-x: auto;
-        padding: 10px 14px;
-        gap: 6px;
+        padding: 8px 10px;
+        gap: 5px;
     }
-    .sidebar-link {
-        padding: 8px 12px;
-        white-space: nowrap;
+    .sidebar-link,
+    .tab-link {
+        padding: 6px 10px !important;
+        white-space: nowrap !important;
+        width: auto !important;
     }
     .sidebar-footer {
         display: none;
     }
     .workspace-topbar {
-        padding: 12px 16px;
+        padding: 10px 14px;
         height: auto;
+        min-height: auto;
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 8px;
     }
     .workspace-body {
-        padding: 20px 14px 40px;
+        padding: 16px 12px 36px;
     }
 }
