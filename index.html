@@ -27,45 +27,69 @@
 
         <!-- 8-Tab Navigation Bar -->
         <nav class="nav-tab-container" aria-label="Tool Navigation">
-            <div class="nav-tabs">
-                <a href="#bones-offset-finder" class="tab-link active" id="tabLinkBones">
-                    <span class="tab-icon">🦴</span>
-                    <span>Bones Offset Finder</span>
+            <div class="nav-tabs" role="tablist">
+                <a href="#bones-offset-finder" class="tab-link active" id="tabLinkBones" role="tab" aria-selected="true" data-index="1" title="Shortcut: Press 1">
+                    <span class="tab-shortcut">1</span>
+                    <span class="tab-icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><path d="M8 20v2h8v-2"/><path d="M12.5 17l-.5-1-.5 1"/><path d="M16 20a3 3 0 0 0 3-3V11a7 7 0 1 0-14 0v6a3 3 0 0 0 3 3"/></svg>
+                    </span>
+                    <span class="tab-title">Bones Offset Finder</span>
                     <span class="tab-badge-pill">DUMP</span>
                 </a>
-                <a href="#aob-cleaner" class="tab-link" id="tabLinkCleaner">
-                    <span class="tab-icon">🧹</span>
-                    <span>AOB Cleaner</span>
+                <a href="#aob-cleaner" class="tab-link" id="tabLinkCleaner" role="tab" aria-selected="false" data-index="2" title="Shortcut: Press 2">
+                    <span class="tab-shortcut">2</span>
+                    <span class="tab-icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="22" y1="12" x2="18" y2="12"/><line x1="6" y1="12" x2="2" y2="12"/><line x1="12" y1="6" x2="12" y2="2"/><line x1="12" y1="22" x2="12" y2="18"/></svg>
+                    </span>
+                    <span class="tab-title">AOB Cleaner</span>
                     <span class="tab-badge-pill">MASK</span>
                 </a>
-                <a href="#aob-merger" class="tab-link" id="tabLinkMerger">
-                    <span class="tab-icon">⚡</span>
-                    <span>AOB Merger</span>
+                <a href="#aob-merger" class="tab-link" id="tabLinkMerger" role="tab" aria-selected="false" data-index="3" title="Shortcut: Press 3">
+                    <span class="tab-shortcut">3</span>
+                    <span class="tab-icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="6" y1="9" x2="6" y2="15"/><path d="M18 15V9a6 6 0 0 0-6-6H6"/></svg>
+                    </span>
+                    <span class="tab-title">AOB Merger</span>
                     <span class="tab-badge-pill">DIFF</span>
                 </a>
-                <a href="#collider-offset" class="tab-link" id="tabLinkCollider">
-                    <span class="tab-icon">🎯</span>
-                    <span>Collider Offset</span>
+                <a href="#collider-offset" class="tab-link" id="tabLinkCollider" role="tab" aria-selected="false" data-index="4" title="Shortcut: Press 4">
+                    <span class="tab-shortcut">4</span>
+                    <span class="tab-icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                    </span>
+                    <span class="tab-title">Collider Offset</span>
                     <span class="tab-badge-pill">CALC</span>
                 </a>
-                <a href="#offsets-finder" class="tab-link" id="tabLinkFinder">
-                    <span class="tab-icon">🔍</span>
-                    <span>Offsets Finder</span>
+                <a href="#offsets-finder" class="tab-link" id="tabLinkFinder" role="tab" aria-selected="false" data-index="5" title="Shortcut: Press 5">
+                    <span class="tab-shortcut">5</span>
+                    <span class="tab-icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                    </span>
+                    <span class="tab-title">Offsets Finder</span>
                     <span class="tab-badge-pill">SHIFT</span>
                 </a>
-                <a href="#offsets-calculator" class="tab-link" id="tabLinkCalculator">
-                    <span class="tab-icon">🧮</span>
-                    <span>Offsets Calculator</span>
+                <a href="#offsets-calculator" class="tab-link" id="tabLinkCalculator" role="tab" aria-selected="false" data-index="6" title="Shortcut: Press 6">
+                    <span class="tab-shortcut">6</span>
+                    <span class="tab-icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M8 18h.01M12 18h.01"/></svg>
+                    </span>
+                    <span class="tab-title">Offsets Calculator</span>
                     <span class="tab-badge-pill">2-TAP</span>
                 </a>
-                <a href="#byte-forge" class="tab-link" id="tabLinkByteForge">
-                    <span class="tab-icon">🔄</span>
-                    <span>Byte Forge</span>
+                <a href="#byte-forge" class="tab-link" id="tabLinkByteForge" role="tab" aria-selected="false" data-index="7" title="Shortcut: Press 7">
+                    <span class="tab-shortcut">7</span>
+                    <span class="tab-icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                    </span>
+                    <span class="tab-title">Byte Forge</span>
                     <span class="tab-badge-pill">CONVERT</span>
                 </a>
-                <a href="#external-bones" class="tab-link" id="tabLinkExternalBones">
-                    <span class="tab-icon">☠️</span>
-                    <span>External Bones</span>
+                <a href="#external-bones" class="tab-link" id="tabLinkExternalBones" role="tab" aria-selected="false" data-index="8" title="Shortcut: Press 8">
+                    <span class="tab-shortcut">8</span>
+                    <span class="tab-icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6a6 6 0 1 0 6 6"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/></svg>
+                    </span>
+                    <span class="tab-title">External Bones</span>
                     <span class="tab-badge-pill">DELTA</span>
                 </a>
             </div>

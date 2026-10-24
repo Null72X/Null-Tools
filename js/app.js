@@ -80,7 +80,7 @@ const NullApp = (function () {
         showToast(`Saved ${filename}`);
     }
 
-    // Tab Switching & Navigation
+    // Tab Switching & Navigation (Enhanced)
     function switchTab(routeHash, updateHistory = true) {
         if (!ROUTES[routeHash]) {
             routeHash = DEFAULT_ROUTE;
@@ -89,23 +89,35 @@ const NullApp = (function () {
         currentTabId = routeHash;
         const targetViewId = ROUTES[routeHash];
 
-        // Update Tab Links
+        // Update Tab Links (Classes, ARIA, and focusability)
         document.querySelectorAll('.tab-link').forEach(link => {
             const href = link.getAttribute('href');
-            link.classList.toggle('active', href === routeHash);
+            const isActive = (href === routeHash);
+            link.classList.toggle('active', isActive);
+            link.setAttribute('aria-selected', isActive ? 'true' : 'false');
+            link.setAttribute('tabindex', isActive ? '0' : '-1');
         });
 
         // Update Tool View Panels
         document.querySelectorAll('.tool-view-panel').forEach(panel => {
-            panel.classList.toggle('active', panel.id === targetViewId);
+            const isActive = (panel.id === targetViewId);
+            panel.classList.toggle('active', isActive);
+            if (isActive) {
+                panel.setAttribute('tabindex', '-1');
+            }
         });
+
+        // Save preference in localStorage
+        try {
+            localStorage.setItem('null_active_tab', routeHash);
+        } catch (e) {}
 
         // Update URL hash without causing full page reload
         if (updateHistory && window.location.hash !== routeHash) {
             history.pushState(null, null, routeHash);
         }
 
-        // Scroll active tab into view if needed (mobile horizontal scroll)
+        // Scroll active tab into view if needed
         const activeLink = document.querySelector(`.tab-link[href="${routeHash}"]`);
         if (activeLink && activeLink.scrollIntoView) {
             activeLink.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
@@ -122,14 +134,69 @@ const NullApp = (function () {
             });
         });
 
+        // Keyboard Navigation (Shortcuts: 1-8, Alt+1-8, ArrowLeft/ArrowRight)
+        if (typeof document !== 'undefined') {
+            document.addEventListener('keydown', (e) => {
+                const activeElem = document.activeElement;
+                const tag = (activeElem && activeElem.tagName) ? activeElem.tagName.toLowerCase() : '';
+                if (tag === 'input' || tag === 'textarea' || (activeElem && activeElem.isContentEditable)) {
+                    return; // Ignore inside input fields
+                }
+
+                const tabs = Array.from(document.querySelectorAll('.tab-link'));
+                if (!tabs.length) return;
+
+                // Numbers 1-8 (directly or with Alt)
+                const num = parseInt(e.key, 10);
+                if (!isNaN(num) && num >= 1 && num <= tabs.length && !e.ctrlKey && !e.metaKey) {
+                    e.preventDefault();
+                    const targetTab = tabs[num - 1];
+                    if (targetTab) {
+                        const route = targetTab.getAttribute('href');
+                        switchTab(route, true);
+                        targetTab.focus();
+                    }
+                    return;
+                }
+
+                // Arrow keys Left & Right
+                if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                    const currentIdx = tabs.findIndex(t => t.getAttribute('href') === currentTabId);
+                    if (currentIdx !== -1) {
+                        e.preventDefault();
+                        const nextIdx = (e.key === 'ArrowRight') 
+                            ? (currentIdx + 1) % tabs.length 
+                            : (currentIdx - 1 + tabs.length) % tabs.length;
+                        const nextTab = tabs[nextIdx];
+                        if (nextTab) {
+                            switchTab(nextTab.getAttribute('href'), true);
+                            nextTab.focus();
+                        }
+                    }
+                }
+            });
+        }
+
         // Back / Forward Browser History
         window.addEventListener('popstate', () => {
             const hash = window.location.hash || DEFAULT_ROUTE;
             switchTab(hash, false);
         });
 
-        // Initial Route
-        const initialHash = window.location.hash || DEFAULT_ROUTE;
+        // Initial Route: URL hash -> localStorage -> default
+        let initialHash = window.location.hash;
+        if (!initialHash || !ROUTES[initialHash]) {
+            try {
+                const saved = localStorage.getItem('null_active_tab');
+                if (saved && ROUTES[saved]) {
+                    initialHash = saved;
+                }
+            } catch (e) {}
+        }
+        if (!initialHash || !ROUTES[initialHash]) {
+            initialHash = DEFAULT_ROUTE;
+        }
+
         switchTab(initialHash, false);
     }
 
