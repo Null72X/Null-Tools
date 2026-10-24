@@ -313,115 +313,49 @@ const NullApp = (function () {
     // ------------------------------------------------------------------------
     // High-Performance 60FPS Interactive Canvas Particle System
     // ------------------------------------------------------------------------
-    function initCanvasParticles() {
-        if (typeof window === 'undefined' || typeof document === 'undefined') return;
-        const canvas = document.getElementById('particlesCanvas') as HTMLCanvasElement | null;
-        if (!canvas) return;
+        // ------------------------------------------------------------------------
+    // Exact Null-Auth 50 Floating DOM Particles Atmosphere
+    // ------------------------------------------------------------------------
+    function initDOMParticles(): void {
+        const container = document.querySelector('.particles-container');
+        if (!container) return;
 
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return;
-
-        let width = (canvas.width = window.innerWidth);
-        let height = (canvas.height = window.innerHeight);
-
-        const mouse = { x: -1000, y: -1000, radius: 120 };
-
-        window.addEventListener('resize', () => {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        });
-
-        window.addEventListener('mousemove', (e: MouseEvent) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-        });
-
-        const palette = [
-            { color: '239, 68, 68', glow: 'rgba(239, 68, 68, 0.6)' },
-            { color: '220, 38, 38', glow: 'rgba(220, 38, 38, 0.5)' },
-            { color: '255, 255, 255', glow: 'rgba(255, 255, 255, 0.4)' },
-            { color: '168, 85, 247', glow: 'rgba(168, 85, 247, 0.5)' },
-            { color: '6, 182, 212', glow: 'rgba(6, 182, 212, 0.4)' }
+        const colorPalette = [
+            { color: 'rgba(239, 68, 68, 0.45)', glow: '0 0 12px rgba(239, 68, 68, 0.7)' },
+            { color: 'rgba(239, 68, 68, 0.30)', glow: '0 0 8px rgba(239, 68, 68, 0.5)' },
+            { color: 'rgba(220, 38, 38, 0.40)', glow: '0 0 15px rgba(220, 38, 38, 0.6)' },
+            { color: 'rgba(255, 255, 255, 0.20)', glow: '0 0 6px rgba(255, 255, 255, 0.4)' },
+            { color: 'rgba(168, 85, 247, 0.30)', glow: '0 0 12px rgba(168, 85, 247, 0.5)' },
         ];
 
-        const particleCount = Math.min(55, Math.floor((width * height) / 22000));
-        const particles: any[] = [];
+        const animations = ['animate-float-slow', 'animate-float-medium', 'animate-pulse-glow'];
 
-        for (let i = 0; i < particleCount; i++) {
-            const pColor = palette[Math.floor(Math.random() * palette.length)];
-            const baseAlpha = Math.random() * 0.35 + 0.15;
-            particles.push({
-                x: Math.random() * width,
-                y: Math.random() * height,
-                vx: (Math.random() - 0.5) * 0.5,
-                vy: (Math.random() - 0.5) * 0.5,
-                radius: Math.random() * 2 + 1,
-                color: pColor.color,
-                glow: pColor.glow,
-                baseAlpha,
-                currentAlpha: baseAlpha
-            });
+        for (let i = 0; i < 50; i++) {
+            const dot = document.createElement('div');
+            const palette = colorPalette[Math.floor(Math.random() * colorPalette.length)];
+            const size = Math.floor(Math.random() * 5) + 2;
+            const x = Math.floor(Math.random() * 100);
+            const y = Math.floor(Math.random() * 100);
+            const duration = Math.floor(Math.random() * 12) + 5;
+            const delay = Math.floor(Math.random() * 8);
+            const animClass = animations[Math.floor(Math.random() * animations.length)];
+
+            dot.className = `particle-dot ${animClass}`;
+            dot.style.width = `${size}px`;
+            dot.style.height = `${size}px`;
+            dot.style.left = `${x}%`;
+            dot.style.top = `${y}%`;
+            dot.style.backgroundColor = palette.color;
+            dot.style.boxShadow = palette.glow;
+            dot.style.animationDuration = `${duration}s`;
+            dot.style.animationDelay = `${delay}s`;
+
+            container.appendChild(dot);
         }
-
-        function render() {
-            if (!ctx) return;
-            ctx.clearRect(0, 0, width, height);
-
-            for (let i = 0; i < particles.length; i++) {
-                const p = particles[i];
-                p.x += p.vx;
-                p.y += p.vy;
-
-                if (p.x < 0) p.x = width;
-                else if (p.x > width) p.x = 0;
-                if (p.y < 0) p.y = height;
-                else if (p.y > height) p.y = 0;
-
-                const dx = p.x - mouse.x;
-                const dy = p.y - mouse.y;
-                const dist = Math.hypot(dx, dy);
-
-                if (dist < mouse.radius) {
-                    const angle = Math.atan2(dy, dx);
-                    const force = (mouse.radius - dist) / mouse.radius;
-                    p.x += Math.cos(angle) * force * 2;
-                    p.y += Math.sin(angle) * force * 2;
-                    p.currentAlpha = Math.min(0.9, p.baseAlpha + 0.35);
-                } else {
-                    p.currentAlpha += (p.baseAlpha - p.currentAlpha) * 0.05;
-                }
-
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fillStyle = "rgba(" + p.color + ", " + p.currentAlpha + ")";
-                ctx.shadowColor = p.glow;
-                ctx.shadowBlur = 8;
-                ctx.fill();
-                ctx.shadowBlur = 0;
-
-                for (let j = i + 1; j < particles.length; j++) {
-                    const p2 = particles[j];
-                    const dist2 = Math.hypot(p.x - p2.x, p.y - p2.y);
-                    if (dist2 < 80) {
-                        const alpha = (1 - dist2 / 80) * 0.12;
-                        ctx.beginPath();
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(p2.x, p2.y);
-                        ctx.strokeStyle = "rgba(239, 68, 68, " + alpha + ")";
-                        ctx.lineWidth = 0.7;
-                        ctx.stroke();
-                    }
-                }
-            }
-
-            requestAnimationFrame(render);
-        }
-
-        render();
     }
 
     function init() {
-        initCanvasParticles();
+        initDOMParticles();
         initCommandPalette();
         initRouting();
 

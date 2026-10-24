@@ -16,102 +16,147 @@
 <body>
     <!-- Ambient Glow Orbs & Particles Background Matching Null-Auth -->
     <div class="particles-container">
-        <canvas id="particlesCanvas"></canvas>
         <div class="glow-orb orb-1"></div>
         <div class="glow-orb orb-2"></div>
         <div class="glow-orb orb-3"></div>
     </div>
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <div class="logo-badge">
-                <span class="logo-badge-dot"></span>
-                NULL&trade; REVERSE ENGINEERING &bull; DEVELOPER TOOLKIT
+    <div class="app-layout">
+        <!-- Sidebar Navigation (Exact Null-Auth Sidebar Layout) -->
+        <aside class="sidebar" id="sidebar">
+            <!-- Brand Logo Header -->
+            <div class="sidebar-brand">
+                <div class="brand-icon-box">
+                    <svg class="brand-shield-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <div class="brand-text-wrap">
+                    <div class="brand-title">
+                        <span>Null-Tools</span>
+                        <svg class="brand-sparkle-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3L12 3z"/></svg>
+                    </div>
+                    <div class="brand-badge">
+                        <span class="logo-badge-dot"></span>
+                        <span>DEVELOPER TOOLKIT</span>
+                    </div>
+                </div>
             </div>
-            <h1>NULL <span>TOOLS</span></h1>
-                        <p class="subtitle">Complete unified reverse-engineering suite: Il2CppDumper bone extraction, signature cleaning, AOB diffing, collider calculations, pattern shifts, 2-tap offset analysis, and multi-language byte forge.</p>
-            <div class="header-actions">
-                <button type="button" class="header-action-btn" id="btnCommandPalette" title="Search all tools (Ctrl+K)">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-                    <span>Search</span>
-                    <kbd>Ctrl+K</kbd>
-                </button>
-                <button type="button" class="header-action-btn" id="btnShortcutsHelp" title="View keyboard shortcuts (?)">
-                    <kbd>?</kbd>
-                    <span>Shortcuts</span>
-                </button>
-            </div>
-        </header>
 
-        <!-- 8-Tab Navigation Bar -->
-        <nav class="nav-tab-container" aria-label="Tool Navigation">
-            <div class="nav-tabs" role="tablist">
-                <a href="#bones-offset-finder" class="tab-link active" id="tabLinkBones" role="tab" aria-selected="true" data-index="1" title="Shortcut: Press 1">
-                    <span class="tab-shortcut">1</span>
-                    <span class="tab-icon">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><path d="M8 20v2h8v-2"/><path d="M12.5 17l-.5-1-.5 1"/><path d="M16 20a3 3 0 0 0 3-3V11a7 7 0 1 0-14 0v6a3 3 0 0 0 3 3"/></svg>
-                    </span>
-                    <span class="tab-title">Bones Offset Finder</span>
-                    <span class="tab-badge-pill">DUMP</span>
+            <!-- Navigation Links (Sidebar Tabs) -->
+            <nav class="sidebar-nav" aria-label="Tool Navigation">
+                <a href="#bones-offset-finder" class="tab-link sidebar-link active" id="tabLinkBones" role="tab" aria-selected="true" data-index="1" data-title="Bones Offset Finder" data-badge="DUMP" data-subtitle="Extract bones offsets, class names, field offsets and signatures from dump.cs with automatic pattern normalization." title="Shortcut: Press 1">
+                    <div class="sidebar-link-left">
+                        <span class="sidebar-link-icon">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><path d="M8 20v2h8v-2"/><path d="M12.5 17l-.5-1-.5 1"/><path d="M16 20a3 3 0 0 0 3-3V11a7 7 0 1 0-14 0v6a3 3 0 0 0 3 3"/></svg>
+                        </span>
+                        <span class="sidebar-link-title">Bones Offset Finder</span>
+                    </div>
+                    <span class="tab-active-dot"></span>
                 </a>
-                <a href="#aob-cleaner" class="tab-link" id="tabLinkCleaner" role="tab" aria-selected="false" data-index="2" title="Shortcut: Press 2">
-                    <span class="tab-shortcut">2</span>
-                    <span class="tab-icon">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="22" y1="12" x2="18" y2="12"/><line x1="6" y1="12" x2="2" y2="12"/><line x1="12" y1="6" x2="12" y2="2"/><line x1="12" y1="22" x2="12" y2="18"/></svg>
-                    </span>
-                    <span class="tab-title">AOB Cleaner</span>
-                    <span class="tab-badge-pill">MASK</span>
+                <a href="#aob-cleaner" class="tab-link sidebar-link" id="tabLinkCleaner" role="tab" aria-selected="false" data-index="2" data-title="AOB Cleaner" data-badge="MASK" data-subtitle="Wildcard masking, arm64 instruction simplification, and signature cleaning for reverse engineers." title="Shortcut: Press 2">
+                    <div class="sidebar-link-left">
+                        <span class="sidebar-link-icon">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="22" y1="12" x2="18" y2="12"/><line x1="6" y1="12" x2="2" y2="12"/><line x1="12" y1="6" x2="12" y2="2"/><line x1="12" y1="22" x2="12" y2="18"/></svg>
+                        </span>
+                        <span class="sidebar-link-title">AOB Cleaner</span>
+                    </div>
+                    <span class="tab-active-dot"></span>
                 </a>
-                <a href="#aob-merger" class="tab-link" id="tabLinkMerger" role="tab" aria-selected="false" data-index="3" title="Shortcut: Press 3">
-                    <span class="tab-shortcut">3</span>
-                    <span class="tab-icon">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="6" y1="9" x2="6" y2="15"/><path d="M18 15V9a6 6 0 0 0-6-6H6"/></svg>
-                    </span>
-                    <span class="tab-title">AOB Merger</span>
-                    <span class="tab-badge-pill">DIFF</span>
+                <a href="#aob-merger" class="tab-link sidebar-link" id="tabLinkMerger" role="tab" aria-selected="false" data-index="3" data-title="AOB Merger" data-badge="DIFF" data-subtitle="Multi-signature pattern comparison and consensus wildcard generator." title="Shortcut: Press 3">
+                    <div class="sidebar-link-left">
+                        <span class="sidebar-link-icon">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="6" y1="9" x2="6" y2="15"/><path d="M18 15V9a6 6 0 0 0-6-6H6"/></svg>
+                        </span>
+                        <span class="sidebar-link-title">AOB Merger</span>
+                    </div>
+                    <span class="tab-active-dot"></span>
                 </a>
-                <a href="#collider-offset" class="tab-link" id="tabLinkCollider" role="tab" aria-selected="false" data-index="4" title="Shortcut: Press 4">
-                    <span class="tab-shortcut">4</span>
-                    <span class="tab-icon">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-                    </span>
-                    <span class="tab-title">Collider Offset</span>
-                    <span class="tab-badge-pill">CALC</span>
+                <a href="#collider-offset" class="tab-link sidebar-link" id="tabLinkCollider" role="tab" aria-selected="false" data-index="4" data-title="Collider Offset" data-badge="CALC" data-subtitle="Compute relative spatial bounds, 3D extents, and box collider offsets." title="Shortcut: Press 4">
+                    <div class="sidebar-link-left">
+                        <span class="sidebar-link-icon">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                        </span>
+                        <span class="sidebar-link-title">Collider Offset</span>
+                    </div>
+                    <span class="tab-active-dot"></span>
                 </a>
-                <a href="#offsets-finder" class="tab-link" id="tabLinkFinder" role="tab" aria-selected="false" data-index="5" title="Shortcut: Press 5">
-                    <span class="tab-shortcut">5</span>
-                    <span class="tab-icon">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
-                    </span>
-                    <span class="tab-title">Offsets Finder</span>
-                    <span class="tab-badge-pill">SHIFT</span>
+                <a href="#offsets-finder" class="tab-link sidebar-link" id="tabLinkFinder" role="tab" aria-selected="false" data-index="5" data-title="Offsets Finder" data-badge="SHIFT" data-subtitle="Search, scan, and compute displacement shifts across executable dumps." title="Shortcut: Press 5">
+                    <div class="sidebar-link-left">
+                        <span class="sidebar-link-icon">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                        </span>
+                        <span class="sidebar-link-title">Offsets Finder</span>
+                    </div>
+                    <span class="tab-active-dot"></span>
                 </a>
-                <a href="#offsets-calculator" class="tab-link" id="tabLinkCalculator" role="tab" aria-selected="false" data-index="6" title="Shortcut: Press 6">
-                    <span class="tab-shortcut">6</span>
-                    <span class="tab-icon">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M8 18h.01M12 18h.01"/></svg>
-                    </span>
-                    <span class="tab-title">Offsets Calculator</span>
-                    <span class="tab-badge-pill">2-TAP</span>
+                <a href="#offsets-calculator" class="tab-link sidebar-link" id="tabLinkCalculator" role="tab" aria-selected="false" data-index="6" data-title="Offsets Calculator" data-badge="2-TAP" data-subtitle="2-tap interactive pointer chain arithmetic, displacement, and struct offset calculator." title="Shortcut: Press 6">
+                    <div class="sidebar-link-left">
+                        <span class="sidebar-link-icon">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M8 18h.01M12 18h.01"/></svg>
+                        </span>
+                        <span class="sidebar-link-title">Offsets Calculator</span>
+                    </div>
+                    <span class="tab-active-dot"></span>
                 </a>
-                <a href="#byte-forge" class="tab-link" id="tabLinkByteForge" role="tab" aria-selected="false" data-index="7" title="Shortcut: Press 7">
-                    <span class="tab-shortcut">7</span>
-                    <span class="tab-icon">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                    </span>
-                    <span class="tab-title">Byte Forge</span>
-                    <span class="tab-badge-pill">CONVERT</span>
+                <a href="#byte-forge" class="tab-link sidebar-link" id="tabLinkByteForge" role="tab" aria-selected="false" data-index="7" data-title="Byte Forge" data-badge="CONVERT" data-subtitle="Convert raw hex instructions to C++, C#, Python, Rust, and Go byte arrays and patch definitions." title="Shortcut: Press 7">
+                    <div class="sidebar-link-left">
+                        <span class="sidebar-link-icon">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                        </span>
+                        <span class="sidebar-link-title">Byte Forge</span>
+                    </div>
+                    <span class="tab-active-dot"></span>
                 </a>
-                <a href="#external-bones" class="tab-link" id="tabLinkExternalBones" role="tab" aria-selected="false" data-index="8" title="Shortcut: Press 8">
-                    <span class="tab-shortcut">8</span>
-                    <span class="tab-icon">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6a6 6 0 1 0 6 6"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/></svg>
-                    </span>
-                    <span class="tab-title">External Bones</span>
-                    <span class="tab-badge-pill">DELTA</span>
+                <a href="#external-bones" class="tab-link sidebar-link" id="tabLinkExternalBones" role="tab" aria-selected="false" data-index="8" data-title="External Bones" data-badge="DELTA" data-subtitle="Advanced multi-dump offset tracking, memory layout deltas, and cross-version bone comparison." title="Shortcut: Press 8">
+                    <div class="sidebar-link-left">
+                        <span class="sidebar-link-icon">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6a6 6 0 1 0 6 6"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/></svg>
+                        </span>
+                        <span class="sidebar-link-title">External Bones</span>
+                    </div>
+                    <span class="tab-active-dot"></span>
                 </a>
+            </nav>
+
+            <!-- Sidebar Footer Status & Shortcut Trigger -->
+            <div class="sidebar-footer">
+                <div class="sidebar-status-box">
+                    <div class="sidebar-status-left">
+                        <span class="sidebar-status-dot"></span>
+                        <span class="sidebar-status-text">8 Engines Active</span>
+                    </div>
+                    <span class="sidebar-status-badge">ONLINE</span>
+                </div>
+                <button type="button" class="sidebar-action-btn" id="btnShortcutsHelp" title="View keyboard shortcuts (?)">
+                    <div class="flex items-center gap-2">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        <span>Shortcuts</span>
+                    </div>
+                    <kbd class="sidebar-kbd">?</kbd>
+                </button>
             </div>
-        </nav>
+        </aside>
+
+        <!-- Right Main Workspace -->
+        <div class="main-content-wrapper">
+            <!-- Workspace Topbar Header (Header Component Matching Null-Auth) -->
+            <header class="workspace-topbar">
+                <div class="topbar-tool-info">
+                    <div class="topbar-title-row">
+                        <h1 class="topbar-tool-title" id="activeToolHeading">Bones Offset Finder</h1>
+                        <span class="topbar-badge" id="activeToolBadge">DUMP</span>
+                    </div>
+                    <p class="topbar-tool-subheading" id="activeToolSubheading">Extract bones offsets, class names, field offsets and signatures from dump.cs with automatic pattern normalization.</p>
+                </div>
+                <div class="topbar-actions">
+                    <button type="button" class="header-action-btn" id="btnCommandPalette" title="Search all tools (Ctrl+K)">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                        <span>Search</span>
+                        <kbd>Ctrl+K</kbd>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Main Workspace Body -->
+            <main class="workspace-body">
 
         <!-- ==================================================================
              TAB 1 — BONES OFFSET FINDER (FireHawk Panels Bones Offset Finder)
@@ -1167,11 +1212,12 @@
 
         <!-- Footer -->
         <footer class="footer-mark">
-            &copy; 2026 NULL&trade; ALL RIGHTS RESERVED &bull; ALL-IN-ONE DEVELOPER TOOLKIT
-        </footer>
+                    &copy; 2026 NULL&trade; ALL RIGHTS RESERVED &bull; ALL-IN-ONE DEVELOPER TOOLKIT
+                </footer>
+            </main>
+        </div>
     </div>
-
-    <!-- Application Scripts -->
+<!-- Application Scripts -->
     <script src="js/sample-data.js"></script>
     <script src="js/tool1-bones.js"></script>
     <script src="js/tool2-aob-cleaner.js"></script>
