@@ -50,7 +50,7 @@ body {
         radial-gradient(circle at 10% 80%, rgba(6, 182, 212, 0.04), transparent 35%),
         var(--bg);
     color: var(--text-main);
-    padding: 30px 18px 60px;
+    padding: 8px 14px 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -88,27 +88,27 @@ body::before {
 }
 
 /* ==========================================================================
-   Header & Branding
+   Header & Branding (Compacted to elevate tabs)
    ========================================================================== */
 .header {
     text-align: center;
-    margin-bottom: 24px;
+    margin-bottom: 4px;
 }
 
 .logo-badge {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 6px 16px;
+    gap: 6px;
+    padding: 3px 12px;
     border-radius: var(--radius-full);
     background: rgba(239, 68, 68, 0.1);
     border: 1px solid rgba(239, 68, 68, 0.25);
     color: var(--accent-red-hover);
-    font-size: 0.75rem;
+    font-size: 0.68rem;
     font-weight: 700;
-    letter-spacing: 1.2px;
+    letter-spacing: 1.1px;
     text-transform: uppercase;
-    margin-bottom: 12px;
+    margin-bottom: 5px;
 }
 
 .logo-badge-dot {
@@ -126,14 +126,14 @@ body::before {
 }
 
 .header h1 {
-    font-size: 2.6rem;
+    font-size: 1.85rem;
     font-weight: 800;
-    letter-spacing: -0.8px;
+    letter-spacing: -0.6px;
     background: linear-gradient(180deg, #ffffff 25%, #cbd5e1 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     line-height: 1.15;
-    margin-bottom: 8px;
+    margin-bottom: 3px;
 }
 
 .header h1 span {
@@ -143,68 +143,70 @@ body::before {
 }
 
 .subtitle {
-    font-size: 0.95rem;
-    color: var(--text-muted);
-    font-weight: 500;
-    max-width: 720px;
-    margin: 0 auto;
-    line-height: 1.5;
+    display: none;
 }
 
 /* ==========================================================================
-   Tab Navigation System (8 Unified Tabs)
+   Tab Navigation System (8 Unified Tabs - Elevated, No Scroll)
    ========================================================================== */
 .nav-tab-container {
     position: sticky;
-    top: 14px;
+    top: 4px;
     z-index: 100;
-    margin: 20px 0 28px;
-    background: rgba(14, 14, 20, 0.88);
+    margin: 4px 0 14px;
+    overflow: visible;
+    background: rgba(14, 14, 20, 0.92);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: 6px;
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6), 0 0 20px rgba(239, 68, 68, 0.05);
+    padding: 4px;
+    box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.6), 0 0 16px rgba(239, 68, 68, 0.05);
 }
 
 .nav-tabs {
     display: flex;
     align-items: center;
-    gap: 6px;
-    overflow-x: auto;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(239, 68, 68, 0.3) transparent;
-    padding-bottom: 2px;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 4px 6px;
+    overflow: visible;
+    overflow-x: visible;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .nav-tabs::-webkit-scrollbar {
-    height: 4px;
+    display: none;
+    width: 0;
+    height: 0;
 }
 
 .nav-tabs::-webkit-scrollbar-thumb {
-    background: rgba(239, 68, 68, 0.4);
-    border-radius: 4px;
+    display: none;
 }
 
 .tab-link {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 10px 15px;
+    gap: 6px;
+    padding: 7px 11px;
     border-radius: var(--radius-md);
     background: transparent;
     border: 1px solid transparent;
     color: var(--text-muted);
     font-family: inherit;
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     font-weight: 700;
     letter-spacing: 0.2px;
     text-decoration: none;
     white-space: nowrap;
     cursor: pointer;
     transition: all var(--transition-fast);
-    flex-shrink: 0;
+    flex: 1 1 auto;
+    max-width: max-content;
     user-select: none;
 }
 
@@ -814,9 +816,17 @@ body::before {
     align-items: center;
     gap: 6px;
     border-bottom: 1px solid var(--border);
-    margin-bottom: 18px;
-    overflow-x: auto;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+    overflow-x: visible;
+    scrollbar-width: none;
     padding-bottom: 2px;
+}
+
+.subtabs-bar::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
 }
 
 .subtab-btn {
@@ -1281,138 +1291,7 @@ body::before {
 }
 
 
-/* ==========================================================================
-   Tool 1: FireHawk Bones & Offset Finder Engine Styles
-   ========================================================================== */
-.dumper-popup {
-    position: relative;
-    width: 100%;
-    margin-bottom: 18px;
-    z-index: 10;
-    display: block;
-    animation: dumperCardIn 0.35s cubic-bezier(.22, 1, .36, 1) both;
-}
-@keyframes dumperCardIn {
-    from { opacity: 0; transform: translateY(-8px) scale(0.98); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
-}
-.dumper-popup.dumper-popup-hiding {
-    animation: dumperCardOut 0.25s ease-in forwards;
-}
-@keyframes dumperCardOut {
-    from { opacity: 1; transform: translateY(0) scale(1); max-height: 220px; }
-    to { opacity: 0; transform: translateY(-10px) scale(0.98); max-height: 0; padding: 0; margin: 0; overflow: hidden; }
-}
-.dumper-popup-card {
-    position: relative;
-    width: 100%;
-    padding: 1rem 1.25rem;
-    background: linear-gradient(155deg, rgba(15, 23, 42, 0.96) 0%, rgba(10, 15, 28, 0.98) 100%);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(59, 130, 246, 0.35);
-    border-radius: 14px;
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08) inset, 0 12px 32px rgba(0, 0, 0, 0.5), 0 0 28px rgba(59, 130, 246, 0.15);
-    overflow: hidden;
-    text-align: left;
-}
-.dumper-popup-ring {
-    position: absolute;
-    top: -1px; left: 8%; right: 8%;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.95), rgba(124, 58, 237, 0.85), transparent);
-    border-radius: 999px;
-}
-.dumper-popup-close {
-    position: absolute;
-    top: 0.75rem; right: 0.75rem;
-    width: 26px; height: 26px;
-    border-radius: 6px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(255, 255, 255, 0.05);
-    color: rgba(255, 255, 255, 0.5);
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    transition: background 0.15s, color 0.15s, border-color 0.15s;
-}
-.dumper-popup-close:hover { background: rgba(225, 29, 72, 0.2); color: #fda4af; border-color: rgba(225, 29, 72, 0.4); }
-.dumper-popup-header { margin-bottom: 0.55rem; }
-.dumper-popup-badge {
-    display: inline-block;
-    padding: 3px 8px;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    color: #60a5fa;
-    background: rgba(59, 130, 246, 0.15);
-    border: 1px solid rgba(59, 130, 246, 0.3);
-    border-radius: 999px;
-    text-transform: uppercase;
-}
-.dumper-popup-main { display: flex; gap: 0.85rem; align-items: flex-start; margin-bottom: 0.75rem; }
-.dumper-popup-icon {
-    width: 38px; height: 38px;
-    border-radius: 10px;
-    background: rgba(59, 130, 246, 0.15);
-    border: 1px solid rgba(59, 130, 246, 0.35);
-    display: flex; align-items: center; justify-content: center;
-    color: #60a5fa;
-    flex-shrink: 0;
-    box-shadow: 0 0 16px rgba(59, 130, 246, 0.2);
-}
-.dumper-popup-content { flex: 1; min-width: 0; }
-.dumper-popup-title { font-size: 0.98rem; font-weight: 700; color: #f8fafc; margin: 0 0 0.25rem 0; }
-.dumper-popup-body { font-size: 0.82rem; color: #94a3b8; line-height: 1.45; margin: 0; }
-.dumper-popup-body code { background: rgba(59, 130, 246, 0.15); color: #93c5fd; padding: 1px 5px; border-radius: 4px; font-family: var(--font-mono, monospace); font-size: 0.8rem; }
-.dumper-popup-body strong { color: #c7d2fe; font-weight: 600; }
-.dumper-popup-actions { display: flex; gap: 0.6rem; margin-bottom: 0.6rem; }
-.dumper-popup-btn-primary {
-    flex: 1.3;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.45rem;
-    padding: 0.6rem 0.95rem;
-    background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
-    border: none;
-    border-radius: 9px;
-    color: #fff;
-    font-size: 0.8rem;
-    font-weight: 700;
-    font-family: inherit;
-    text-decoration: none;
-    cursor: pointer;
-    box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
-    transition: filter 0.18s, transform 0.15s;
-}
-.dumper-popup-btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
-.dumper-popup-btn-secondary {
-    flex: 0.8;
-    padding: 0.6rem 0.85rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 9px;
-    color: #94a3b8;
-    font-size: 0.78rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.15s, color 0.15s;
-}
-.dumper-popup-btn-secondary:hover { background: rgba(255, 255, 255, 0.09); color: #e2e8f0; }
-.dumper-popup-footer { display: flex; justify-content: flex-end; border-top: 1px solid rgba(255, 255, 255, 0.06); padding-top: 0.5rem; }
-.dumper-popup-btn-never {
-    background: transparent;
-    border: none;
-    color: rgba(148, 163, 184, 0.6);
-    font-size: 0.72rem;
-    font-weight: 500;
-    cursor: pointer;
-    padding: 0.2rem 0.4rem;
-    border-radius: 4px;
-    transition: color 0.15s;
-}
-.dumper-popup-btn-never:hover { color: #f43f5e; }
-
+/* Tool 1 Engine Styles */
 /* Chips */
 .hex-chip, .chip-hex {
     display: inline-block;

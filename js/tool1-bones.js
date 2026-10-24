@@ -548,35 +548,6 @@ const Tool1Bones = (function () {
             el.btnDownloadGenerated.addEventListener('click', downloadGeneratedCode);
         }
 
-        // Dumper Popup Close / Dismiss
-        const dumperPopup = document.getElementById('dumperPopup');
-        const closeBtn = document.getElementById('dumperPopupClose');
-        const dismissBtn = document.getElementById('dumperPopupDismiss');
-        const neverBtn = document.getElementById('dumperPopupNever');
-
-        function dismissDumperPopup() {
-            if (!dumperPopup) return;
-            dumperPopup.classList.add('dumper-popup-hiding');
-            setTimeout(() => {
-                dumperPopup.style.display = 'none';
-                dumperPopup.classList.remove('dumper-popup-hiding');
-            }, 250);
-        }
-
-        if (closeBtn) closeBtn.addEventListener('click', dismissDumperPopup);
-        if (dismissBtn) dismissBtn.addEventListener('click', dismissDumperPopup);
-        if (neverBtn) {
-            neverBtn.addEventListener('click', () => {
-                try { localStorage.setItem('fh_hide_dumper_popup', 'true'); } catch (e) {}
-                dismissDumperPopup();
-                if (window.NullApp && window.NullApp.showToast) window.NullApp.showToast('Preference saved');
-            });
-        }
-        try {
-            if (dumperPopup && localStorage.getItem('fh_hide_dumper_popup') === 'true') {
-                dumperPopup.style.display = 'none';
-            }
-        } catch (e) {}
     }
 
     function setupDragDrop(dropZone, fileHandler) {
