@@ -16,6 +16,7 @@
 <body>
     <!-- Ambient Glow Orbs & Particles Background Matching Null-Auth -->
     <div class="particles-container">
+        <canvas id="particlesCanvas"></canvas>
         <div class="glow-orb orb-1"></div>
         <div class="glow-orb orb-2"></div>
         <div class="glow-orb orb-3"></div>
@@ -28,7 +29,18 @@
                 NULL&trade; REVERSE ENGINEERING &bull; DEVELOPER TOOLKIT
             </div>
             <h1>NULL <span>TOOLS</span></h1>
-            <p class="subtitle">Complete unified reverse-engineering suite: Il2CppDumper bone extraction, signature cleaning, AOB diffing, collider calculations, pattern shifts, 2-tap offset analysis, and multi-language byte forge.</p>
+                        <p class="subtitle">Complete unified reverse-engineering suite: Il2CppDumper bone extraction, signature cleaning, AOB diffing, collider calculations, pattern shifts, 2-tap offset analysis, and multi-language byte forge.</p>
+            <div class="header-actions">
+                <button type="button" class="header-action-btn" id="btnCommandPalette" title="Search all tools (Ctrl+K)">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    <span>Search</span>
+                    <kbd>Ctrl+K</kbd>
+                </button>
+                <button type="button" class="header-action-btn" id="btnShortcutsHelp" title="View keyboard shortcuts (?)">
+                    <kbd>?</kbd>
+                    <span>Shortcuts</span>
+                </button>
+            </div>
         </header>
 
         <!-- 8-Tab Navigation Bar -->
@@ -1118,6 +1130,35 @@
             </div>
         </div>
 
+                <!-- Command Palette Modal -->
+        <div class="modal-backdrop" id="commandPaletteModal" style="display:none;" role="dialog" aria-modal="true">
+            <div class="modal-dialog glass-panel" style="max-width:540px;">
+                <div class="command-palette-header">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    <input type="text" id="paletteSearchInput" placeholder="Jump to tool or feature (1-8, bones, aob, collider, offsets...)" autocomplete="off" />
+                    <kbd class="palette-kbd">ESC</kbd>
+                </div>
+                <div class="command-palette-results" id="paletteResults"></div>
+            </div>
+        </div>
+
+        <!-- Keyboard Shortcuts Modal -->
+        <div class="modal-backdrop" id="shortcutsModal" style="display:none;" role="dialog" aria-modal="true">
+            <div class="modal-dialog glass-panel" style="max-width:480px;">
+                <div class="modal-header">
+                    <h3>?? Keyboard Navigation &amp; Shortcuts</h3>
+                    <button type="button" class="modal-close" id="closeShortcutsModal">&times;</button>
+                </div>
+                <div class="shortcuts-grid">
+                    <div class="shortcut-item"><span>Direct Switch to Tool 1 - 8</span> <div><kbd>1</kbd> .. <kbd>8</kbd></div></div>
+                    <div class="shortcut-item"><span>Next / Previous Tool</span> <div><kbd>&larr;</kbd> <kbd>&rarr;</kbd></div></div>
+                    <div class="shortcut-item"><span>Quick Search &amp; Command Palette</span> <div><kbd>Ctrl+K</kbd> or <kbd>/</kbd></div></div>
+                    <div class="shortcut-item"><span>Toggle Shortcuts Cheat Sheet</span> <div><kbd>?</kbd></div></div>
+                    <div class="shortcut-item"><span>Close Modals / Deselect</span> <div><kbd>Esc</kbd></div></div>
+                </div>
+            </div>
+        </div>
+
         <!-- Global Toast Notification -->
         <div class="toast-notification" id="globalToast" role="status" aria-live="polite">
             <span class="toast-icon">✓</span>
@@ -1143,4 +1184,5 @@
     <script src="js/app.js"></script>
 </body>
 </html>
+
 

@@ -178,46 +178,217 @@ const NullApp = (function () {
         }
         switchTab(initialHash, false);
     }
-    function initParticles() {
+    // ------------------------------------------------------------------------
+    // Command Palette & Keyboard Shortcuts System
+    // ------------------------------------------------------------------------
+    const TOOLS_LIST = [
+        { id: '#bones-offset-finder', num: '1', title: 'Bones Offset Finder', tag: 'DUMP', desc: 'dump.cs & libil2cpp.so 21 canonical bones & dual AOB studio' },
+        { id: '#aob-cleaner', num: '2', title: 'AOB Cleaner', tag: 'MASK', desc: 'Signature studio with 14 opcode whitelist & live hex masking' },
+        { id: '#aob-merger', num: '3', title: 'AOB Merger', tag: 'DIFF', desc: 'Dual signature differ with auto wildcards and diff analysis' },
+        { id: '#collider-offset', num: '4', title: 'Collider Offset', tag: 'MATH', desc: 'Basic read/write & collider relative delta calculator' },
+        { id: '#offsets-finder', num: '5', title: 'Offsets Finder', tag: 'SHIFT', desc: 'Step-based opcode pattern variations & shift generator' },
+        { id: '#offsets-calculator', num: '6', title: 'Offsets Calculator', tag: '2-TAP', desc: '2-tap runtime memory read/write offset projection engine' },
+        { id: '#byte-forge', num: '7', title: 'Byte Forge', tag: 'CODE', desc: 'Multi-language byte format converter (C++, C#, Python, MASM)' },
+        { id: '#external-bones', num: '8', title: 'External Bones', tag: 'ESP', desc: 'Chest reference bone delta calculator for ESP overlays' }
+    ];
+    function initCommandPalette() {
         if (typeof document === 'undefined')
             return;
-        const container = document.querySelector('.particles-container');
-        if (!container)
+        const paletteModal = document.getElementById('commandPaletteModal');
+        const searchInput = document.getElementById('paletteSearchInput');
+        const resultsContainer = document.getElementById('paletteResults');
+        const btnOpen = document.getElementById('btnCommandPalette');
+        const shortcutsModal = document.getElementById('shortcutsModal');
+        const btnShortcuts = document.getElementById('btnShortcutsHelp');
+        const btnCloseShortcuts = document.getElementById('closeShortcutsModal');
+        if (!paletteModal || !resultsContainer)
             return;
-        const colorPalette = [
-            { color: 'rgba(239, 68, 68, 0.45)', glow: '0 0 12px rgba(239, 68, 68, 0.7)' },
-            { color: 'rgba(239, 68, 68, 0.30)', glow: '0 0 8px rgba(239, 68, 68, 0.5)' },
-            { color: 'rgba(220, 38, 38, 0.40)', glow: '0 0 15px rgba(220, 38, 38, 0.6)' },
-            { color: 'rgba(255, 255, 255, 0.20)', glow: '0 0 6px rgba(255, 255, 255, 0.4)' },
-            { color: 'rgba(168, 85, 247, 0.30)', glow: '0 0 12px rgba(168, 85, 247, 0.5)' }
-        ];
-        const animations = ['animate-float-slow', 'animate-float-medium', 'animate-pulse-glow'];
-        const fragment = document.createDocumentFragment();
-        for (let i = 0; i < 50; i++) {
-            const palette = colorPalette[Math.floor(Math.random() * colorPalette.length)];
-            const dot = document.createElement('div');
-            const size = Math.floor(Math.random() * 5) + 2;
-            const x = Math.floor(Math.random() * 100);
-            const y = Math.floor(Math.random() * 100);
-            const duration = Math.floor(Math.random() * 12) + 5;
-            const delay = Math.floor(Math.random() * 8);
-            const anim = animations[Math.floor(Math.random() * animations.length)];
-            dot.className = "particle-dot " + anim;
-            dot.style.width = size + "px";
-            dot.style.height = size + "px";
-            dot.style.left = x + "%";
-            dot.style.top = y + "%";
-            dot.style.backgroundColor = palette.color;
-            dot.style.boxShadow = palette.glow;
-            dot.style.animationDuration = duration + "s";
-            dot.style.animationDelay = delay + "s";
-            fragment.appendChild(dot);
+        function renderResults(query = '') {
+            if (!resultsContainer)
+                return;
+            const q = query.trim().toLowerCase();
+            const filtered = TOOLS_LIST.filter(t => !q || t.title.toLowerCase().includes(q) || t.desc.toLowerCase().includes(q) || t.num === q);
+            resultsContainer.innerHTML = '';
+            filtered.forEach((t, idx) => {
+                const item = document.createElement('div');
+                item.className = 'palette-item' + (idx === 0 ? ' active' : '');
+                item.innerHTML = '<div class="palette-item-left"><span class="palette-item-num">' + t.num + '</span><div><strong>' + t.title + '</strong><div style="font-size:0.75rem;color:var(--text-dim);">' + t.desc + '</div></div></div><span class="tab-badge-pill">' + t.tag + '</span>';
+                item.addEventListener('click', () => {
+                    switchTab(t.id, true);
+                    closePalette();
+                });
+                resultsContainer.appendChild(item);
+            });
         }
-        container.appendChild(fragment);
+        function openPalette() {
+            paletteModal.style.display = 'flex';
+            if (searchInput) {
+                searchInput.value = '';
+                searchInput.focus();
+            }
+            renderResults();
+        }
+        function closePalette() {
+            paletteModal.style.display = 'none';
+        }
+        function openShortcuts() {
+            if (shortcutsModal)
+                shortcutsModal.style.display = 'flex';
+        }
+        function closeShortcuts() {
+            if (shortcutsModal)
+                shortcutsModal.style.display = 'none';
+        }
+        if (btnOpen)
+            btnOpen.addEventListener('click', openPalette);
+        if (btnShortcuts)
+            btnShortcuts.addEventListener('click', openShortcuts);
+        if (btnCloseShortcuts)
+            btnCloseShortcuts.addEventListener('click', closeShortcuts);
+        paletteModal.addEventListener('click', (e) => {
+            if (e.target === paletteModal)
+                closePalette();
+        });
+        if (shortcutsModal) {
+            shortcutsModal.addEventListener('click', (e) => {
+                if (e.target === shortcutsModal)
+                    closeShortcuts();
+            });
+        }
+        if (searchInput) {
+            searchInput.addEventListener('input', () => renderResults(searchInput.value));
+            searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    const firstActive = resultsContainer.querySelector('.palette-item');
+                    if (firstActive)
+                        firstActive.click();
+                }
+            });
+        }
+        window.addEventListener('keydown', (e) => {
+            const activeElem = document.activeElement;
+            const tag = (activeElem && activeElem.tagName) ? activeElem.tagName.toLowerCase() : '';
+            const isInput = tag === 'input' || tag === 'textarea' || (activeElem && activeElem.isContentEditable);
+            if ((e.ctrlKey && e.key.toLowerCase() === 'k') || (e.key === '/' && !isInput)) {
+                e.preventDefault();
+                openPalette();
+                return;
+            }
+            if (e.key === '?' && !isInput) {
+                e.preventDefault();
+                openShortcuts();
+                return;
+            }
+            if (e.key === 'Escape') {
+                closePalette();
+                closeShortcuts();
+            }
+        });
     }
-    // Initialize Everything on DOM Ready
+    // ------------------------------------------------------------------------
+    // High-Performance 60FPS Interactive Canvas Particle System
+    // ------------------------------------------------------------------------
+    function initCanvasParticles() {
+        if (typeof window === 'undefined' || typeof document === 'undefined')
+            return;
+        const canvas = document.getElementById('particlesCanvas');
+        if (!canvas)
+            return;
+        const ctx = canvas.getContext('2d');
+        if (!ctx)
+            return;
+        let width = (canvas.width = window.innerWidth);
+        let height = (canvas.height = window.innerHeight);
+        const mouse = { x: -1000, y: -1000, radius: 120 };
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+        const palette = [
+            { color: '239, 68, 68', glow: 'rgba(239, 68, 68, 0.6)' },
+            { color: '220, 38, 38', glow: 'rgba(220, 38, 38, 0.5)' },
+            { color: '255, 255, 255', glow: 'rgba(255, 255, 255, 0.4)' },
+            { color: '168, 85, 247', glow: 'rgba(168, 85, 247, 0.5)' },
+            { color: '6, 182, 212', glow: 'rgba(6, 182, 212, 0.4)' }
+        ];
+        const particleCount = Math.min(55, Math.floor((width * height) / 22000));
+        const particles = [];
+        for (let i = 0; i < particleCount; i++) {
+            const pColor = palette[Math.floor(Math.random() * palette.length)];
+            const baseAlpha = Math.random() * 0.35 + 0.15;
+            particles.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                vx: (Math.random() - 0.5) * 0.5,
+                vy: (Math.random() - 0.5) * 0.5,
+                radius: Math.random() * 2 + 1,
+                color: pColor.color,
+                glow: pColor.glow,
+                baseAlpha,
+                currentAlpha: baseAlpha
+            });
+        }
+        function render() {
+            if (!ctx)
+                return;
+            ctx.clearRect(0, 0, width, height);
+            for (let i = 0; i < particles.length; i++) {
+                const p = particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < 0)
+                    p.x = width;
+                else if (p.x > width)
+                    p.x = 0;
+                if (p.y < 0)
+                    p.y = height;
+                else if (p.y > height)
+                    p.y = 0;
+                const dx = p.x - mouse.x;
+                const dy = p.y - mouse.y;
+                const dist = Math.hypot(dx, dy);
+                if (dist < mouse.radius) {
+                    const angle = Math.atan2(dy, dx);
+                    const force = (mouse.radius - dist) / mouse.radius;
+                    p.x += Math.cos(angle) * force * 2;
+                    p.y += Math.sin(angle) * force * 2;
+                    p.currentAlpha = Math.min(0.9, p.baseAlpha + 0.35);
+                }
+                else {
+                    p.currentAlpha += (p.baseAlpha - p.currentAlpha) * 0.05;
+                }
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = "rgba(" + p.color + ", " + p.currentAlpha + ")";
+                ctx.shadowColor = p.glow;
+                ctx.shadowBlur = 8;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+                for (let j = i + 1; j < particles.length; j++) {
+                    const p2 = particles[j];
+                    const dist2 = Math.hypot(p.x - p2.x, p.y - p2.y);
+                    if (dist2 < 80) {
+                        const alpha = (1 - dist2 / 80) * 0.12;
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = "rgba(239, 68, 68, " + alpha + ")";
+                        ctx.lineWidth = 0.7;
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(render);
+        }
+        render();
+    }
     function init() {
-        initParticles();
+        initCanvasParticles();
+        initCommandPalette();
         initRouting();
         // Initialize All 8 Tools
         if (typeof Tool1Bones !== 'undefined' && Tool1Bones.init)
