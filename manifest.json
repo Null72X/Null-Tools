@@ -1,7 +1,7 @@
 {
-  "name": "Null Tools · Byte Forge & Offsets",
+  "name": "Null Tools",
   "short_name": "Null Tools",
-  "description": "Transform bytes across C#, C++, and Python & External Bones Finder",
+  "description": "Null Tools",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#070709",
