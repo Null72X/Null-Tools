@@ -1946,7 +1946,7 @@ body::before {
 }
 
 /* ==========================================================================
-   NULL-AUTH DASHBOARD & SIDEBAR TAB LAYOUT (EXACT REFERENCE DESIGN)
+   NULL-AUTH DASHBOARD & SIDEBAR TAB LAYOUT (1:1 EXACT SPECIFICATION)
    ========================================================================== */
 .app-layout {
     display: flex;
@@ -1956,14 +1956,15 @@ body::before {
     z-index: 1;
 }
 
-/* Sidebar Navigation */
+/* Sidebar Navigation - Exact Match to Null-Auth Sidebar.tsx */
 .sidebar {
     width: 256px;
     min-width: 256px;
-    background: rgba(9, 9, 12, 0.94);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    max-width: 256px;
+    background: rgba(9, 9, 11, 0.90);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border-right: 1px solid rgba(39, 39, 42, 0.80);
     display: flex;
     flex-direction: column;
     height: 100vh;
@@ -1972,16 +1973,17 @@ body::before {
     user-select: none;
     -webkit-user-select: none;
     z-index: 40;
-    box-shadow: 12px 0 35px rgba(0, 0, 0, 0.55);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 }
 
+/* Brand Logo Header (h-16 px-6 border-b border-zinc-800/80 gap-3) */
 .sidebar-brand {
     height: 64px;
     min-height: 64px;
     display: flex;
     align-items: center;
-    padding: 0 18px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 0 24px;
+    border-bottom: 1px solid rgba(39, 39, 42, 0.80);
     gap: 12px;
     position: relative;
     overflow: hidden;
@@ -1991,19 +1993,19 @@ body::before {
     width: 36px;
     height: 36px;
     border-radius: 8px;
-    background: rgba(69, 10, 10, 0.85);
-    border: 1px solid rgba(220, 38, 38, 0.6);
+    background: rgba(69, 10, 10, 0.80);
+    border: 1px solid rgba(153, 27, 27, 0.60);
     display: flex;
     align-items: center;
     justify-content: center;
     color: #ef4444;
-    box-shadow: 0 4px 14px rgba(69, 10, 10, 0.6);
+    box-shadow: 0 10px 15px -3px rgba(69, 10, 10, 0.60);
     flex-shrink: 0;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .brand-icon-box:hover {
-    transform: scale(1.08);
+    transform: scale(1.10);
 }
 
 .brand-shield-icon {
@@ -2018,58 +2020,63 @@ body::before {
 }
 
 .brand-title {
-    font-size: 1.05rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.125rem;
     font-weight: 800;
     color: #ffffff;
-    letter-spacing: 0.3px;
+    letter-spacing: 0.025em;
     display: flex;
     align-items: center;
     gap: 6px;
-    line-height: 1.2;
+    line-height: 1.75rem;
 }
 
 .brand-sparkle-icon {
+    width: 14px;
+    height: 14px;
     color: #ef4444;
 }
 
 .brand-badge {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    padding: 1px 7px;
+    gap: 6px;
+    padding: 2px 8px;
     border-radius: 9999px;
-    background: rgba(239, 68, 68, 0.1);
-    border: 1px solid rgba(239, 68, 68, 0.2);
+    background: rgba(239, 68, 68, 0.10);
+    border: 1px solid rgba(239, 68, 68, 0.20);
     color: #f87171;
-    font-size: 8.5px;
-    font-weight: 800;
-    letter-spacing: 0.8px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    margin-top: 2px;
+    margin-top: -2px;
     width: fit-content;
 }
 
-/* Sidebar Nav */
+/* Sidebar Nav (flex-1 px-3.5 py-6 space-y-1.5) */
 .sidebar-nav {
     flex: 1;
-    padding: 14px 12px;
+    padding: 24px 14px;
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 6px;
     overflow-y: auto;
 }
 
+/* Tab Links (flex items-center justify-between px-3.5 py-2.5 rounded-lg text-xs font-semibold) */
 .sidebar-link {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 12px;
+    padding: 10px 14px;
     border-radius: 8px;
-    font-size: 0.78rem;
+    font-size: 12px;
     font-weight: 600;
+    line-height: 1rem;
     color: #a1a1aa;
     text-decoration: none !important;
-    transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 150ms ease;
     border: 1px solid transparent;
     background: transparent;
     cursor: pointer;
@@ -2077,22 +2084,23 @@ body::before {
 
 .sidebar-link:hover {
     color: #f4f4f5;
-    background: rgba(24, 24, 27, 0.7);
-    border-color: rgba(255, 255, 255, 0.05);
+    background: rgba(24, 24, 27, 0.60);
+    border-color: rgba(255, 255, 255, 0.04);
 }
 
+/* Active Tab Link (bg-zinc-900 text-red-400 border border-zinc-800 shadow-sm font-bold) */
 .sidebar-link.active {
     background: #18181b;
     color: #f87171;
-    border: 1px solid rgba(255, 255, 255, 0.09);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    border: 1px solid #27272a;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     font-weight: 700;
 }
 
 .sidebar-link-left {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     min-width: 0;
 }
 
@@ -2100,11 +2108,16 @@ body::before {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     color: #a1a1aa;
     flex-shrink: 0;
-    transition: color 0.15s ease;
+    transition: color 150ms ease;
+}
+
+.sidebar-link-icon svg {
+    width: 16px;
+    height: 16px;
 }
 
 .sidebar-link.active .sidebar-link-icon {
@@ -2115,15 +2128,17 @@ body::before {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-size: 12px;
 }
 
+/* Active Indicator Dot (w-1.5 h-1.5 rounded-full bg-red-500) */
 .tab-active-dot {
     display: none;
     width: 6px;
     height: 6px;
     border-radius: 50%;
     background: #ef4444;
-    box-shadow: 0 0 8px #ef4444;
+    box-shadow: 0 0 6px rgba(239, 68, 68, 0.6);
     flex-shrink: 0;
 }
 
@@ -2131,24 +2146,25 @@ body::before {
     display: block;
 }
 
-/* Sidebar Footer */
+/* Sidebar Footer (p-3.5 border-t border-zinc-800/80 space-y-2) */
 .sidebar-footer {
-    padding: 12px;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 14px;
+    border-top: 1px solid rgba(39, 39, 42, 0.80);
     display: flex;
     flex-direction: column;
     gap: 8px;
-    background: rgba(9, 9, 12, 0.6);
+    background: rgba(9, 9, 11, 0.60);
 }
 
+/* Status Box (px-2.5 py-2 rounded-lg bg-zinc-900/70 border border-zinc-800/80) */
 .sidebar-status-box {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 8px 10px;
     border-radius: 8px;
-    background: rgba(24, 24, 27, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(24, 24, 27, 0.70);
+    border: 1px solid rgba(39, 39, 42, 0.80);
 }
 
 .sidebar-status-left {
@@ -2158,53 +2174,58 @@ body::before {
     min-width: 0;
 }
 
+/* Green Pulse Dot (w-2 h-2 rounded-full bg-emerald-400 shrink-0) */
 .sidebar-status-dot {
-    width: 7px;
-    height: 7px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
     background: #34d399;
-    box-shadow: 0 0 8px #34d399;
+    box-shadow: 0 0 8px rgba(52, 211, 153, 0.6);
     flex-shrink: 0;
 }
 
 .sidebar-status-text {
-    font-size: 0.72rem;
+    font-size: 12px;
     font-weight: 600;
     color: #e4e4e7;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .sidebar-status-badge {
-    font-size: 9px;
-    font-weight: 800;
+    font-size: 10px;
+    font-weight: 700;
     color: #71717a;
-    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
+/* Action Button */
 .sidebar-action-btn {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 8px 10px;
+    padding: 8px 12px;
     border-radius: 8px;
-    font-size: 0.75rem;
+    font-size: 12px;
     font-weight: 600;
     color: #a1a1aa;
     background: transparent;
     border: 1px solid transparent;
     cursor: pointer;
-    transition: all 0.15s ease;
+    transition: all 150ms ease;
 }
 
 .sidebar-action-btn:hover {
     color: #f87171;
-    background: rgba(239, 68, 68, 0.1);
-    border-color: rgba(239, 68, 68, 0.2);
+    background: rgba(239, 68, 68, 0.10);
+    border-color: rgba(239, 68, 68, 0.20);
 }
 
 .sidebar-kbd {
-    padding: 1px 6px;
+    padding: 2px 6px;
     border-radius: 4px;
     background: #27272a;
     border: 1px solid #3f3f46;
@@ -2213,7 +2234,7 @@ body::before {
     font-family: var(--font-mono);
 }
 
-/* Right Main Content Area */
+/* Right Main Content Area (flex-1 flex flex-col min-w-0) */
 .main-content-wrapper {
     flex: 1;
     display: flex;
@@ -2223,18 +2244,17 @@ body::before {
     overflow-y: auto;
 }
 
-/* Workspace Topbar Header (Null-Auth Header.tsx match) */
+/* Workspace Topbar Header Matching Null-Auth Header.tsx */
 .workspace-topbar {
-    height: 64px;
     min-height: 64px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 0 28px;
+    border-bottom: 1px solid rgba(39, 39, 42, 0.80);
+    padding: 14px 32px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: rgba(9, 9, 12, 0.55);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
+    background: rgba(9, 9, 11, 0.50);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     position: sticky;
     top: 0;
     z-index: 30;
@@ -2243,7 +2263,7 @@ body::before {
 .topbar-tool-info {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 3px;
     min-width: 0;
 }
 
@@ -2254,37 +2274,34 @@ body::before {
 }
 
 .topbar-tool-title {
-    font-size: 1.25rem;
-    font-weight: 800;
+    font-size: 1.5rem;
+    font-weight: 700;
     color: #ffffff;
-    letter-spacing: -0.3px;
+    letter-spacing: -0.025em;
     margin: 0;
-    line-height: 1.2;
+    line-height: 1.25;
 }
 
 .topbar-badge {
     display: inline-flex;
     align-items: center;
-    padding: 2px 7px;
+    padding: 2px 8px;
     border-radius: 9999px;
     font-size: 9px;
-    font-weight: 800;
-    letter-spacing: 0.8px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    background: rgba(239, 68, 68, 0.1);
-    border: 1px solid rgba(239, 68, 68, 0.25);
+    background: rgba(239, 68, 68, 0.10);
+    border: 1px solid rgba(239, 68, 68, 0.20);
     color: #f87171;
 }
 
 .topbar-tool-subheading {
-    font-size: 0.72rem;
+    font-size: 12px;
     color: #a1a1aa;
     margin: 0;
     line-height: 1.4;
-    max-width: 700px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    max-width: 750px;
 }
 
 .topbar-actions {
@@ -2294,16 +2311,17 @@ body::before {
     flex-shrink: 0;
 }
 
+/* Workspace Body (p-8 matching Null-Auth DashboardLayout) */
 .workspace-body {
     flex: 1;
-    padding: 24px 28px 48px;
-    max-width: 1400px;
+    padding: 32px;
+    max-width: 1440px;
     width: 100%;
     margin: 0 auto;
     box-sizing: border-box;
 }
 
-/* Responsive adjustments */
+/* Responsive collapse on smaller devices */
 @media (max-width: 900px) {
     .app-layout {
         flex-direction: column;
@@ -2311,32 +2329,33 @@ body::before {
     .sidebar {
         width: 100%;
         min-width: 100%;
+        max-width: 100%;
         height: auto;
         position: static;
         box-shadow: none;
         border-right: none;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        border-bottom: 1px solid rgba(39, 39, 42, 0.80);
     }
     .sidebar-nav {
         flex-direction: row;
         overflow-x: auto;
-        padding: 8px 12px;
+        padding: 10px 14px;
         gap: 6px;
     }
     .sidebar-link {
-        padding: 8px 10px;
+        padding: 8px 12px;
         white-space: nowrap;
     }
     .sidebar-footer {
         display: none;
     }
     .workspace-topbar {
-        padding: 10px 16px;
+        padding: 12px 16px;
         height: auto;
         flex-wrap: wrap;
         gap: 10px;
     }
     .workspace-body {
-        padding: 16px 12px 40px;
+        padding: 20px 14px 40px;
     }
 }
